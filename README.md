@@ -37,32 +37,29 @@
         -keepattributes *Annotation*
 
         -dontwarn com.squareup.okhttp.**
-        -dontwarn rx.**
-        -dontwarn retrofit.**
         -dontwarn okio.**
+        -dontwarn retrofit.**
+        -dontwarn rx.**
 
         -keep interface com.squareup.okhttp.** { *; }
         -keep class com.squareup.okhttp.** { *; }
-        -keep class sun.misc.Unsafe { *; }
         -keep class retrofit.** { *; }
-        -keepclasseswithmembers class * {
-          @retrofit.http.* ;
-        }
-        
+        -keep class sun.misc.Unsafe { *; }
+        -keepclasseswithmembers class * { @retrofit.http.* ; }
+
+        -keep interface com.applanga.android.ApplangaCallback
         -keep public class com.applanga.android.Applanga
-        -keepclassmembers public class com.applanga.android.Applanga {
-          *;
-        }
-        
-        -keep class com.applanga.android.ApplangaCallback
-        -keepclassmembers class com.applanga.android.ApplangaCallback {
-          *;
-        }
-        
         -keep public class com.applanga.android.request.ApiResult
-        -keepclassmembers class com.applanga.android.request.ApiResult {
-          *;
-        }
+        -keep public class com.applanga.android.request.ApiResultLanguage
+        -keep public class com.applanga.android.request.ApiResultLanguageEntry
+        -keep public class com.applanga.android.request.ApplangaRequest
+        -keepclassmembers interface com.applanga.android.ApplangaCallback { *; }
+        -keepclassmembers public class com.applanga.android.Applanga { *; }
+        -keepclassmembers public class com.applanga.android.request.ApiResult { *; }
+        -keepclassmembers public class com.applanga.android.request.ApiResultLanguage { *; }
+        -keepclassmembers public class com.applanga.android.request.ApiResultLanguageEntry { *; }
+        -keepclassmembers public class com.applanga.android.request.ApplangaRequest { *; }
+
 
 ##Configuration
 1. Download the Applanga *settingsfile* for your app from the Applanga App Overview by clicking ***[download settings]***. (The filename should reflect your bundle id or package name as lowercase string and dots replaced with underscores with the ending .applanga)
