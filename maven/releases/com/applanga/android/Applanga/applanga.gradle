@@ -1,0 +1,71 @@
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+
+        def buildType = variant.buildType.name
+        def mainLayoutDir = "$projectDir/src/main/res/layout"
+        def buildLayoutDir = "$projectDir/src/$buildType/res/layout"
+        def flavorLayoutDir = ""
+
+        if(variant.productFlavors.size() > 0)
+        {
+            def flavor = variant.getVariantData().getVariantConfiguration().getFlavorName()
+            flavorLayoutDir = "$projectDir/src/$flavor/res/layout"
+        }
+
+        def variantBuildDir = "$variant.mergeResources.outputDir/layout"
+
+        def taskName = "applangaCopyFiles$output.name"
+        final def task = task("$taskName"(type: Copy) {
+            description = 'Replaces String ID References with String ID values in all packaged Layout files'
+
+            from(mainLayoutDir) {
+                include '**/*.xml'
+                filter { String line -> line.replaceAll('@string/', '') }
+            }
+            from(buildLayoutDir) {
+                include '**/*.xml'
+                filter { String line -> line.replaceAll('@string/', '') }
+            }
+            if(variant.productFlavors.size() > 0)
+            {
+                from(flavorLayoutDir) {
+                    include '**/*.xml'
+                    filter { String line -> line.replaceAll('@string/', '') }
+                }
+            }
+
+            into variantBuildDir
+        })
+
+        task.mustRunAfter variant.mergeResources
+        output.processResources.dependsOn task
+
+
+        final def applangaParseIgnoredStrings = tasks.create(name: "applangaParseIgnoredStrings$output.name") << {
+            def buildValues = "$variant.mergeResources.outputDir/values/values.xml"
+            def ignoredStringsFile = new File("$variant.mergeResources.outputDir/raw/applanga_ignore.strings");
+            def ignoredStrings = "";
+            def parsedValuesXml = (new XmlParser()).parse(buildValues)
+
+            parsedValuesXml.children().each{ element ->
+                if(element.name() == "string") {
+                    if(element.@translatable != null) {
+                        if(element.@translatable == "false" || element.@translatable == false) {
+                            //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
+                            ignoredStrings = ignoredStrings + element.@name + ","
+                        }
+                    }
+                }
+            }
+            def rawFolder = new File("$variant.mergeResources.outputDir/raw");
+            if(rawFolder.exists()) {
+                ignoredStringsFile.createNewFile();
+                ignoredStringsFile.write(ignoredStrings)
+            }
+        }
+
+        applangaParseIgnoredStrings.mustRunAfter task
+        output.processResources.dependsOn applangaParseIgnoredStrings
+
+    }
+}
