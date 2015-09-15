@@ -2,25 +2,25 @@
 ***
 *Version:* 1.0.1
 
-*URL:* <http://applanga.com> 
+*URL:* <https://applanga.com> 
 ***
 
 ##Installation
-1. Download the latest release of the Applanga Android SDK from [Github](https://github.com/applanga/sdk-android/blob/mvn-repo/maven/releases/com/applanga/android/Applanga/1.0.1/Applanga-1.0.1.aar?raw=true). Unzip it, then drag and drop Applanga.aar into your project's app/libs folder. **Note**: if you are using drag and drop on OSX you may need to hold down the option key.
+1. Add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga SDK into your App.
 
-2. Add the Applanga SDK to your list of dependencies in your **build.gradle** script.
+		apply from: 'https://raw.github.com/applanga/sdk-android/mvn-repo/maven/applanga.gradle'
 
-        compile(name:'Applanga', ext:'aar')
+        dependencies {
+    		compile 'com.applanga.android:Applanga:1.0.1'
+		}
+		
+2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
 
-3. Make sure that the **build.gradle** script contains a configuration that marks the libs directory as a flatDir:
-
-        repositories {
-          flatDir {
-            dirs 'libs'
-          }
-        }
-
-4. Add the permission **android.permission.INTERNET** in your **AndroidManifest.xml** file to allow your App internet access, which is needed for Applanga to function. 
+		dependencies {
+    		compile 'com.android.support:appcompat-v7:+'
+		}
+			
+3. Add the permission **android.permission.INTERNET** in your **AndroidManifest.xml** file to allow your App internet access, which is needed for Applanga to function. 
 
         <uses-permission android:name="android.permission.INTERNET" />
 
