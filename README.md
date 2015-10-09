@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.2
+*Version:* 1.0.3
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/mvn-repo/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.2'
+    		compile 'com.applanga.android:Applanga:1.0.3'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
