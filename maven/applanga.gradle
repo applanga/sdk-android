@@ -71,5 +71,5 @@ android.applicationVariants.all { variant ->
 }
 
 repositories {
-    maven { url 'https://raw.github.com/applanga/sdk-android/mvn-repo/maven/releases/' }
+    maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
 }

@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.4
+*Version:* 1.0.5
 
 *URL:* <https://applanga.com> 
 ***
@@ -8,10 +8,10 @@
 ##Installation
 1. Add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga SDK into your App.
 
-		apply from: 'https://raw.github.com/applanga/sdk-android/mvn-repo/maven/applanga.gradle'
+		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.4'
+    		compile 'com.applanga.android:Applanga:1.0.5'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
