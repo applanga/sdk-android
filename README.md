@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.8
+*Version:* 1.0.9
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.8'
+    		compile 'com.applanga.android:Applanga:1.0.9'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -177,9 +177,9 @@ Once Applanga is integrated and configured it is synchronizing your local string
             public void onLocalizeFinished(boolean success) {
 				//called if update is complete
             }
-        }); 
-  	
-  8. **Change Language**
+        });
+ 
+8. **Change Language**
   
   	You can change your app's language at runtime using the following call: 
   	
@@ -192,8 +192,8 @@ Once Applanga is integrated and configured it is synchronizing your local string
   		Applanga.setLanguage(null); 
   		
   	For the app to reset to device language it needs to be restarted however.
-  	
-  9. **WebViews**
+  
+9. **WebViews**
 	
 	Applanga can also translate content in your WebViews if they have JavaScript enabled.
 	
