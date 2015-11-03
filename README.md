@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.7
+*Version:* 1.0.8
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.7'
+    		compile 'com.applanga.android:Applanga:1.0.8'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -184,7 +184,6 @@ Once Applanga is integrated and configured it is synchronizing your local string
   	You can change your app's language at runtime using the following call: 
   	
 		boolean success = Applanga.setLanguage(language);
-  	 
   	 
   	 *language* must be the iso string of a language that has been added in 	the dashboard. 
   	The return value will be *true* if the language could be set, or if it already was the 	current language, otherwise it will be *false*. After a successful call you should  	recreate the current activity, for the changes to take effect.
