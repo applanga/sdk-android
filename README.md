@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.6
+*Version:* 1.0.7
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.6'
+    		compile 'com.applanga.android:Applanga:1.0.7'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -178,8 +178,23 @@ Once Applanga is integrated and configured it is synchronizing your local string
 				//called if update is complete
             }
         }); 
-    			
-8. **WebViews**
+  	
+  8. **Change Language**
+  
+  	You can change your app's language at runtime using the following call: 
+  	
+		boolean success = Applanga.setLanguage(language);
+  	 
+  	 
+  	 *language* must be the iso string of a language that has been added in 	the dashboard. 
+  	The return value will be *true* if the language could be set, or if it already was the 	current language, otherwise it will be *false*. After a successful call you should  	recreate the current activity, for the changes to take effect.
+  	The set language will be saved, to reset to the 	device language call:
+  		
+  		Applanga.setLanguage(null); 
+  		
+  	For the app to reset to device language it needs to be restarted however.
+  	
+  9. **WebViews**
 	
 	Applanga can also translate content in your WebViews if they have JavaScript enabled.
 	
@@ -187,15 +202,14 @@ Once Applanga is integrated and configured it is synchronizing your local string
         myWebView.getSettings().setJavaScriptEnabled(true);
 
         myWebView.loadUrl("html_file_path"); 
-        
-        
+   
 	To initalize Applanga for your webcontent you need to initialize Applanga from JavaScript:
 	
 		<script type="text/javascript">
     		var applanga = Applanga({});
 		</script>
 		
-	7.1 **Strings**
+	9.1 **Strings**
 		
 	The inner text and html of tags wich have a ```applanga-text="APPLANGA_ID"``` attribute will be replaced with the translated value of ***APPLANGA_ID***
 	
@@ -203,8 +217,7 @@ Once Applanga is integrated and configured it is synchronizing your local string
 			***This will be replaced with the value of APPLANGA_ID***
 		</div>
 	
-	
-	7.2 **Arguments**
+	9.2 **Arguments**
 	
 	You can pass arguments with the ```applanga-args``` attribute.
 	By default the arguments are parsed as a comma seperated list wich then will replace fields as %{arrayIndex}.  
@@ -231,8 +244,7 @@ Once Applanga is integrated and configured it is synchronizing your local string
 			***and formatted with json arguments***
 		</div> 
 	
-	
-	7.3 **Pluralisation**
+	9.3 **Pluralisation**
 		
 	To pluralize a html tag you can pass the ```applanga-plural-rule``` attribute with the value ```zero```, ```one```, ```two```, ```few```, ```many``` and ```other```.
 	
@@ -246,14 +258,14 @@ Once Applanga is integrated and configured it is synchronizing your local string
 			***This will be replaced with the pluralized value of APPLANGA_ID***
 		</div> 	
 	
-	7.4 **Update Content**
+	9.4 **Update Content**
 	
 	To trigger a content update from a WebView use javascript:
 		
 		applanga.updateGroups("GroupA, GroupB", "de, en, fr", function(success){
         	//called if update is complete
     	});				
-8. To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
+10. To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
 
 		@Override
     	public boolean dispatchTouchEvent(MotionEvent ev) {
