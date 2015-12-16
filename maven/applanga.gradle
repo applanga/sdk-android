@@ -48,7 +48,7 @@ android.applicationVariants.all { variant ->
             def parsedValuesXml = (new XmlParser()).parse(buildValues)
 
             parsedValuesXml.children().each{ element ->
-                if(element.name() == "string") {
+                if(element.name() == "string" || element.name() == "string-array" ) {
                     if(element.@translatable != null) {
                         if(element.@translatable == "false" || element.@translatable == false) {
                             //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
