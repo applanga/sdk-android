@@ -1,4 +1,14 @@
-android.applicationVariants.all { variant ->
+def variantsList
+
+if(android.hasProperty("applicationVariants")) {
+    variantsList = android.applicationVariants
+} else if(android.hasProperty("libraryVariants")) {
+    variantsList = android.libraryVariants
+} else if(android.hasProperty("testVariants")) {
+    variantsList = android.testVariants
+}
+
+variantsList.all { variant ->
     variant.outputs.each { output ->
 
         def buildType = variant.buildType.name
