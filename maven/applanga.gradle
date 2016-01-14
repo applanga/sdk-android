@@ -1,5 +1,6 @@
 def variantsList
 
+
 if(android.hasProperty("applicationVariants")) {
     variantsList = android.applicationVariants
 } else if(android.hasProperty("libraryVariants")) {
@@ -7,51 +8,60 @@ if(android.hasProperty("applicationVariants")) {
 } else if(android.hasProperty("testVariants")) {
     variantsList = android.testVariants
 }
-
+ 
 variantsList.all { variant ->
+
+    def buildVariant = variant.variantData.getVariantConfiguration().getFullName().capitalize();
+    def buildType = variant.buildType.name
+
+    def mainLayoutDir = "$projectDir/src/main/res/layout"
+    def buildLayoutDir = "$projectDir/src/$buildType/res/layout"
+    def flavorLayoutDir = ""
+
+    def variantBuildDir = "$variant.mergeResources.outputDir/layout"
+    def bundleBuildDirBase = ""
+    def bundleBuildDir = "" 
+
+    def packageTaskName = "package"+buildVariant+"Resources"
+    if(tasks.hasProperty(packageTaskName)){
+        bundleBuildDirBase = tasks[packageTaskName].outputDir
+        bundleBuildDir = "$bundleBuildDirBase/layout"
+    }
+
+    def inputDirs = [ mainLayoutDir, buildLayoutDir ]
+    if(variant.variantData.getVariantConfiguration().hasFlavors()) {  
+        def flavor = variant.getVariantData().getVariantConfiguration().getFlavorName()
+        flavorLayoutDir = "$projectDir/src/$flavor/res/layout"
+        inputDirs = [ mainLayoutDir, buildLayoutDir, flavorLayoutDir]
+    }
+
     variant.outputs.each { output ->
 
-        def buildType = variant.buildType.name
-        def mainLayoutDir = "$projectDir/src/main/res/layout"
-        def buildLayoutDir = "$projectDir/src/$buildType/res/layout"
-        def flavorLayoutDir = ""
-
-        if(variant.productFlavors.size() > 0)
-        {
-            def flavor = variant.getVariantData().getVariantConfiguration().getFlavorName()
-            flavorLayoutDir = "$projectDir/src/$flavor/res/layout"
-        }
-
-        def variantBuildDir = "$variant.mergeResources.outputDir/layout"
-
-        def taskName = "applangaCopyFiles$output.name"
-        final def task = task("$taskName"(type: Copy) {
+        def taskNameMerge = "applangaMerge$buildVariant"
+        final def task1 = task("$taskNameMerge"(type: Copy){
             description = 'Replaces String ID References with String ID values in all packaged Layout files'
-
-            from(mainLayoutDir) {
-                include '**/*.xml'
-                filter { String line -> line.replaceAll('@string/', '') }
-            }
-            from(buildLayoutDir) {
-                include '**/*.xml'
-                filter { String line -> line.replaceAll('@string/', '') }
-            }
-            if(variant.productFlavors.size() > 0)
-            {
-                from(flavorLayoutDir) {
+            inputDirs.each{ inputDir ->
+                from(inputDir) {
                     include '**/*.xml'
                     filter { String line -> line.replaceAll('@string/', '') }
                 }
             }
-
-            into variantBuildDir
+                into variantBuildDir
         })
 
-        task.mustRunAfter variant.mergeResources
-        output.processResources.dependsOn task
+        def taskNameBundle = "applangaBundle$buildVariant"
+        final def task2 = task("$taskNameBundle"(type: Copy){
+            description = 'Replaces String ID References with String ID values in all packaged Layout files'
+            inputDirs.each{ inputDir ->
+                from(inputDir) {
+                    include '**/*.xml'
+                    filter { String line -> line.replaceAll('@string/', '') }
+                }
+            }
+                into bundleBuildDir
+        })
 
-
-        final def applangaParseIgnoredStrings = tasks.create(name: "applangaParseIgnoredStrings$output.name") << {
+        final def applangaParseIgnoredStrings = tasks.create(name: "applangaParseIgnoredStrings$buildVariant") << {
             def buildValues = "$variant.mergeResources.outputDir/values/values.xml"
             def ignoredStringsFile = new File("$variant.mergeResources.outputDir/raw/applanga_ignore.strings");
             def ignoredStrings = "";
@@ -59,7 +69,9 @@ variantsList.all { variant ->
 
             parsedValuesXml.children().each{ element ->
                 if(element.name() == "string" || element.name() == "string-array" ) {
-                    if(element.@translatable != null) {
+                //println element.@name
+                if(element.@translatable != null) {
+                    println "translatable: "+ element.@translatable + " - Element: " + element.@name
                         if(element.@translatable == "false" || element.@translatable == false) {
                             //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
                             ignoredStrings = ignoredStrings + element.@name + ","
@@ -67,16 +79,34 @@ variantsList.all { variant ->
                     }
                 }
             }
+
             def rawFolder = new File("$variant.mergeResources.outputDir/raw");
             if(rawFolder.exists()) {
                 ignoredStringsFile.createNewFile();
                 ignoredStringsFile.write(ignoredStrings)
             }
+
+            /*
+            if(tasks.hasProperty(packageTaskName))
+            {
+                def rawFolderPack = new File("$bundleBuildDirBase/raw");
+                if(rawFolderPack.exists()) {
+                    def ignoredStringsFilePack = new File("$bundleBuildDirBase/raw/applanga_ignore.strings");
+                    ignoredStringsFilePack.createNewFile();
+                    ignoredStringsFilePack.write(ignoredStrings)
+                }
+            }*/
         }
 
-        applangaParseIgnoredStrings.mustRunAfter task
-        output.processResources.dependsOn applangaParseIgnoredStrings
+        variant.mergeResources.finalizedBy(task1)
 
+        if(tasks.hasProperty(packageTaskName))
+        {
+            tasks[packageTaskName].finalizedBy(task2)
+        }
+
+        applangaParseIgnoredStrings.mustRunAfter task1
+        output.processResources.dependsOn applangaParseIgnoredStrings
     }
 }
 

@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.10
+*Version:* 1.0.11
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.10'
+    		compile 'com.applanga.android:Applanga:1.0.11'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -26,9 +26,9 @@
 
 
 ##Configuration
-1. Download the Applanga *settingsfile* for your app from the Applanga App Overview by clicking ***[Download Settings]***. 
+1. Download the Applanga *Settings File* for your app from the Applanga App Overview by clicking ***[Download Settings]***. 
  
-2. Add the *settingsfile* to your apps resources res/raw directory.
+2. Add the Applanga *Settings File* to your apps resources res/raw directory.
 
 
 ##Usage
