@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.11
+*Version:* 1.0.12
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.11'
+    		compile 'com.applanga.android:Applanga:1.0.12'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -26,13 +26,13 @@
 
 
 ##Configuration
-1. Download the Applanga *Settings File* for your app from the Applanga App Overview by clicking ***[Download Settings]***. 
+1. Download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***. 
  
-2. Add the Applanga *Settings File* to your apps resources res/raw directory.
+2. Add the *Applanga Settings File* to your apps resources res/raw directory.
 
 
 ##Usage
-Once Applanga is integrated and configured it is synchronizing your local strings with the Applanga dashboard every time you start your app or if new missing strings are found.
+Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://applanga.com/#!/docs#draft_on_device_testing) if new missing strings are found.
 
 1. The easiest way to initialize ```Applanga``` in your Application is by extending your Application from ```ApplangaApplication```.
 
@@ -81,7 +81,7 @@ Once Applanga is integrated and configured it is synchronizing your local string
     		...
     	}
 
-6. **Code Localisation**
+6. **Code Localization**
  
 	6.1 **Strings** 
 
@@ -136,13 +136,13 @@ Once Applanga is integrated and configured it is synchronizing your local string
 	So the ***zero*** pluralized ID for ***"APPLANGA_ID"*** is ***"APPLANGA_ID[zero]"***
                
 
-7. **UI Localisation**
+7. **UI Localization**
 	
 	After you've made programmatic changes to your UI Elements you should call one of the following methods to update you UI.
 	
 	7.1 **Activities**
 	
-	Activity localisation is always automatically triggered when a Activity is loaded or resumed. (onResume)
+	Activity localization is always automatically triggered when a Activity is loaded or resumed. (onResume)
 	
 	If you want to trigger it manually use:
 	
@@ -247,8 +247,7 @@ Once Applanga is integrated and configured it is synchronizing your local string
 		</div>
 	
 	Direct call : `Applanga.getString('APPLANGA_ID', 'arg1,arg2,etc')`
-		
-	
+
 	To define a different separator instead of ```,``` e.g. if your arguments contain commas use ```applanga-args-separator```.
 	
 		<div applanga-text="APPLANGA_ID" applanga-args="arg1;arg2;etc"
@@ -303,3 +302,26 @@ Once Applanga is integrated and configured it is synchronizing your local string
         	Applanga.dispatchTouchEvent(ev, this);
 			return super.dispatchTouchEvent(ev);
     	}
+
+##Optional settings
+
+You can specify a set of default groups and languages in the manifest, which will be updated on every Applanga.update() or Applanga.updateGroups() call. These groups and languages will be added to any that are specified in the call itself, they will *always* be requested.
+	The Parameter value must be a string, with a list of groups or languages separated by commata.
+
+1. **Specify default groups**
+        		
+        		<application>
+        			...
+			    	<meta-data android:name="ApplangaUpdateGroups" 
+			    	android:value="turorial,chapter1,chapter2"/>
+			    	...
+				</application>
+	
+2. **Specify default languages**
+
+        		<application>
+        			...
+			    	<meta-data android:name="ApplangaUpdateLanguages" 
+			    	android:value="en,de-at,fr"/>
+			    	...
+				</application>

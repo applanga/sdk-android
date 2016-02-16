@@ -36,6 +36,7 @@ variantsList.all { variant ->
     }
 
     variant.outputs.each { output ->
+        def excludedXMLTags = ['layout_behavior']
 
         def taskNameMerge = "applangaMerge$buildVariant"
         final def task1 = task("$taskNameMerge"(type: Copy){
@@ -43,7 +44,16 @@ variantsList.all { variant ->
             inputDirs.each{ inputDir ->
                 from(inputDir) {
                     include '**/*.xml'
-                    filter { String line -> line.replaceAll('@string/', '') }
+                    filter { String line ->
+                        def replace = true
+                        excludedXMLTags.any { tag ->
+                            if(line.contains(':' + tag + '=')){
+                                replace = false
+                            }
+                        }
+                        (replace) ? line.replaceAll('@string/', '') :  line
+                    }
+
                 }
             }
                 into variantBuildDir
@@ -55,7 +65,15 @@ variantsList.all { variant ->
             inputDirs.each{ inputDir ->
                 from(inputDir) {
                     include '**/*.xml'
-                    filter { String line -> line.replaceAll('@string/', '') }
+                    filter { String line ->
+                        def replace = true
+                        excludedXMLTags.any { tag ->
+                            if(line.contains(':' + tag + '=')){
+                                replace = false
+                            }
+                        }
+                        (replace) ? line.replaceAll('@string/', '') :  line
+                    }
                 }
             }
                 into bundleBuildDir
