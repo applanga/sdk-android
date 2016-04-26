@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.13
+*Version:* 1.0.14
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.13'
+    		compile 'com.applanga.android:Applanga:1.0.14'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -23,7 +23,16 @@
 3. Add the permission **android.permission.INTERNET** in your **AndroidManifest.xml** file to allow your App internet access, which is needed for Applanga to function. 
 
         <uses-permission android:name="android.permission.INTERNET" />
+4. **Proguard:** In order to keep all SDK functionality fully available when using Proguard, please make sure that the following lines are part of your proguard configuration:
 
+		-keep class **.R$* {	
+			<fields>;
+		}
+		
+		-keepattributes JavascriptInterface
+		-keepclassmembers class * {
+			@android.webkit.JavascriptInterface <methods>;
+		}
 
 ##Configuration
 1. Download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***. 
@@ -55,12 +64,15 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 3. To have a ```Activities``` strings automatically localized ovverride the ```getResources``` method in all Activities like this.
 		
-		@Override
+    	@Override
     	public Resources getResources() {
-        	return getApplication().getResources();
+           if(getApplication() != null) {
+				return getApplication().getResources();
+           } else {
+				return super.getResources();
+           }
     	}
-
-
+		
 4. To have a ```Menu``` automatically localized use the Applanga ```MenuInflater```.
 		
 		@Override
