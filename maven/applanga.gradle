@@ -80,40 +80,42 @@ variantsList.all { variant ->
         })
 
         final def applangaParseIgnoredStrings = tasks.create(name: "applangaParseIgnoredStrings$buildVariant") << {
-            def buildValues = "$variant.mergeResources.outputDir/values/values.xml"
-            def ignoredStringsFile = new File("$variant.mergeResources.outputDir/raw/applanga_ignore.strings");
-            def ignoredStrings = "";
-            def parsedValuesXml = (new XmlParser()).parse(buildValues)
+            def buildValues = new File("$variant.mergeResources.outputDir/values/values.xml")
+            if(buildValues.exists()){
+                def ignoredStringsFile = new File("$variant.mergeResources.outputDir/raw/applanga_ignore.strings");
+                def ignoredStrings = "";
+                def parsedValuesXml = (new XmlParser()).parse(buildValues)
 
-            parsedValuesXml.children().each{ element ->
-                if(element.name() == "string" || element.name() == "string-array" ) {
-                //println element.@name
-                if(element.@translatable != null) {
-                    println "translatable: "+ element.@translatable + " - Element: " + element.@name
-                        if(element.@translatable == "false" || element.@translatable == false) {
-                            //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
-                            ignoredStrings = ignoredStrings + element.@name + ","
+                parsedValuesXml.children().each{ element ->
+                    if(element.name() == "string" || element.name() == "string-array" ) {
+                    //println element.@name
+                    if(element.@translatable != null) {
+                        println "translatable: "+ element.@translatable + " - Element: " + element.@name
+                            if(element.@translatable == "false" || element.@translatable == false) {
+                                //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
+                                ignoredStrings = ignoredStrings + element.@name + ","
+                            }
                         }
                     }
                 }
-            }
 
-            def rawFolder = new File("$variant.mergeResources.outputDir/raw");
-            if(rawFolder.exists()) {
-                ignoredStringsFile.createNewFile();
-                ignoredStringsFile.write(ignoredStrings)
-            }
-
-            /*
-            if(tasks.hasProperty(packageTaskName))
-            {
-                def rawFolderPack = new File("$bundleBuildDirBase/raw");
-                if(rawFolderPack.exists()) {
-                    def ignoredStringsFilePack = new File("$bundleBuildDirBase/raw/applanga_ignore.strings");
-                    ignoredStringsFilePack.createNewFile();
-                    ignoredStringsFilePack.write(ignoredStrings)
+                def rawFolder = new File("$variant.mergeResources.outputDir/raw");
+                if(rawFolder.exists()) {
+                    ignoredStringsFile.createNewFile();
+                    ignoredStringsFile.write(ignoredStrings)
                 }
-            }*/
+
+                /*
+                if(tasks.hasProperty(packageTaskName))
+                {
+                    def rawFolderPack = new File("$bundleBuildDirBase/raw");
+                    if(rawFolderPack.exists()) {
+                        def ignoredStringsFilePack = new File("$bundleBuildDirBase/raw/applanga_ignore.strings");
+                        ignoredStringsFilePack.createNewFile();
+                        ignoredStringsFilePack.write(ignoredStrings)
+                    }
+                }*/
+            }
         }
 
         variant.mergeResources.finalizedBy(task1)
