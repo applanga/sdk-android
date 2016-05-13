@@ -14,36 +14,38 @@ variantsList.all { variant ->
     def buildVariant = variant.variantData.getVariantConfiguration().getFullName().capitalize();
     def buildType = variant.buildType.name
 
-    def mainLayoutDir = "$projectDir/src/main/res/layout"
-    def buildLayoutDir = "$projectDir/src/$buildType/res/layout"
+    def mainLayoutDir = "$projectDir/src/main/res"
+    def buildLayoutDir = "$projectDir/src/$buildType/res"
     def flavorLayoutDir = ""
 
-    def variantBuildDir = "$variant.mergeResources.outputDir/layout"
+    def variantBuildDir = "$variant.mergeResources.outputDir"
     def bundleBuildDirBase = ""
     def bundleBuildDir = "" 
 
     def packageTaskName = "package"+buildVariant+"Resources"
     if(tasks.hasProperty(packageTaskName)){
         bundleBuildDirBase = tasks[packageTaskName].outputDir
-        bundleBuildDir = "$bundleBuildDirBase/layout"
+        bundleBuildDir = "$bundleBuildDirBase"
     }
 
     def inputDirs = [ mainLayoutDir, buildLayoutDir ]
     if(variant.variantData.getVariantConfiguration().hasFlavors()) {  
         def flavor = variant.getVariantData().getVariantConfiguration().getFlavorName()
-        flavorLayoutDir = "$projectDir/src/$flavor/res/layout"
+        flavorLayoutDir = "$projectDir/src/$flavor/res"
         inputDirs = [ mainLayoutDir, buildLayoutDir, flavorLayoutDir]
     }
 
     variant.outputs.each { output ->
-        def includedXMLTags = ['text','hint']
+        def includedXMLTags = ['text','hint','title'/*,'contentDescription'*/]
 
         def taskNameMerge = "applangaMerge$buildVariant"
         final def task1 = task("$taskNameMerge"(type: Copy){
             description = 'Replaces String ID References with String ID values in all packaged Layout files'
             inputDirs.each{ inputDir ->
                 from(inputDir) {
-                    include '**/*.xml'
+                    include 'layout/**/*.xml'
+                    include 'menu/**/*.xml'
+                    includeEmptyDirs = false
                     filter { String line ->
                         def replace = false
                         includedXMLTags.any { tag ->
@@ -64,7 +66,9 @@ variantsList.all { variant ->
             description = 'Replaces String ID References with String ID values in all packaged Layout files'
             inputDirs.each{ inputDir ->
                 from(inputDir) {
-                    include '**/*.xml'
+                    include 'layout/**/*.xml'
+                    include 'menu/**/*.xml'
+                    includeEmptyDirs = false
                     filter { String line ->
                         def replace = false
                         includedXMLTags.any { tag ->
