@@ -36,7 +36,7 @@ variantsList.all { variant ->
     }
 
     variant.outputs.each { output ->
-        def includedXMLTags = ['text','hint','title'/*,'contentDescription'*/]
+        def includedXMLTags = ['text','hint','title','dialogTitle','summary','dialogMessage','negativeButtonText','positiveButtonText','summaryOff','summaryOn','switchTextOff','switchTextOn'/*,'contentDescription'*/]
 
         def taskNameMerge = "applangaMerge$buildVariant"
         final def task1 = task("$taskNameMerge"(type: Copy){
@@ -45,11 +45,12 @@ variantsList.all { variant ->
                 from(inputDir) {
                     include 'layout/**/*.xml'
                     include 'menu/**/*.xml'
+                    include 'xml**/**/*.xml'
                     includeEmptyDirs = false
                     filter { String line ->
                         def replace = false
                         includedXMLTags.any { tag ->
-                            if(line.contains(':' + tag + '=')){
+                            if(line.contains('android:' + tag + '=')){
                                 replace = true
                             }
                         }
@@ -68,11 +69,12 @@ variantsList.all { variant ->
                 from(inputDir) {
                     include 'layout/**/*.xml'
                     include 'menu/**/*.xml'
+                    include 'xml**/**/*.xml'
                     includeEmptyDirs = false
                     filter { String line ->
                         def replace = false
                         includedXMLTags.any { tag ->
-                            if(line.contains(':' + tag + '=')){
+                            if(line.contains('android:' + tag + '=')){
                                 replace = true
                             }
                         }
