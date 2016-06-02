@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.19
+*Version:* 1.0.21
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.19'
+    		compile 'com.applanga.android:Applanga:1.0.21'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -73,12 +73,12 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
            }
     	}
 		
-4. To have a ```Menu``` automatically localized use the Applanga ```MenuInflater```.
-		
+4. To have a ```Menu``` automatically localized use the Applanga ```MenuInflater```. Please use ```Applanga.getMenuInflater(getMenuInflater())```, supplying your original MenuInflater as a parameter. Do not use the old deprecated Applanga.getMenuInflater().
+
 		@Override
     	public boolean onCreateOptionsMenu(Menu menu) {
         	// Inflate the menu; this adds items to the action bar if it is present.
-        	Applanga.getMenuInflater().inflate(R.menu.my, menu);
+        	Applanga.getMenuInflater(getMenuInflater()).inflate(R.menu.my, menu);
         	return true;
     	}
 
@@ -88,7 +88,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 			...
 			@Override
 			public android.view.MenuInflater getMenuInflater() {
-        		return com.applanga.android.Applanga.getMenuInflater();
+        		return com.applanga.android.Applanga.getMenuInflater(super.getMenuInflater());
     		}
     		...
     	}
