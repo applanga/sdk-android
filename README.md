@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.21
+*Version:* 1.0.22
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.21'
+    		compile 'com.applanga.android:Applanga:1.0.22'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -127,7 +127,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	6.3 **Pluralisation**
 		
 		// get translated string in given pluralisation rule (one)
-		Applanga.getString("APPLANGA_ID", Applanga.PluralRule.ALPluralRuleOne)
+		Applanga.getString("APPLANGA_ID", Applanga.PluralRule.One);
 		
 	Available pluralisation rules:
 	
@@ -213,7 +213,12 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
   		
   		Applanga.setLanguage(null); 
   		
-  	For the app to reset to device language it needs to be restarted however.
+  	For the app to reset to the device language it needs to be restarted.
+  	
+  	The *language* parameter is expected in the format **[language]-[region]** or 	**[language]_[region]** with region being optional. Examples: "fr_CA", "en-us", "de". 
+  	
+  	If you have problems switching to a specific language you can update your settings file 	or specifically request that language within an update content call (see **8. Update Content**). You can also 	specify the language as a default language to have it requested on each update call (see **Optional settings**).
+
   
 10. **WebViews**
 	
@@ -325,7 +330,7 @@ You can specify a set of default groups and languages in the manifest, which wil
         		<application>
         			...
 			    	<meta-data android:name="ApplangaUpdateGroups" 
-			    	android:value="turorial,chapter1,chapter2"/>
+			    	android:value="tutorial,chapter1,chapter2"/>
 			    	...
 				</application>
 	
