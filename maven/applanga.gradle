@@ -247,7 +247,7 @@ variantsList.all { variant ->
 
         applangaParseIgnoredStrings.mustRunAfter task1
         output.processResources.dependsOn applangaParseIgnoredStrings
-        applangaParseIgnoredStrings.dependsOn applangaParseAllowedStrings
+        //applangaParseIgnoredStrings.dependsOn applangaParseAllowedStrings
     }
 }
 
