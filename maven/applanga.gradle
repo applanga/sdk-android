@@ -21,6 +21,66 @@ def getValidXmlFiles(inputDirs){
     return validXmlFiles
 }
 
+def getStyleFiles(inputDirs){
+        // get all xml files in value dir (buildtype|flavor|main)
+    def set = [] as Set
+    inputDirs.each{ inputDir ->
+        def FileTree tree = fileTree(inputDir){
+            include "values**/**"
+        }
+        tree.matching{
+            include '*.xml'
+        }
+        set.addAll(tree.getFiles())
+    }
+
+    def styleFiles = []
+    set.each { f -> styleFiles << f}
+    return styleFiles
+}
+
+def getStyleStrings(node, includedXMLTags){
+    def strings = [] as Set
+    node.childNodes().each { child ->
+        child.attributes().each{ attribute ->
+            includedXMLTags.each { tag ->
+            String androidTag = "android:" + tag
+            if(attribute.getKey().equals("name") && attribute.getValue().equals(androidTag) && child.text().contains("@string/")){
+                try{
+                    strings << child.text()
+                    } catch (Exception){
+
+                    }
+                }
+            }
+        }
+       getStyleStrings(child, includedXMLTags).each{ strings << it }
+    }
+    return strings
+}
+
+//style xml differs from layout files
+def replaceAtStringForStyle(node,includedXMLTags, string) {
+    node.childNodes().each { child ->
+        child.attributes().each{ attribute ->
+            includedXMLTags.each { tag ->
+                String androidTag = "android:" + tag
+                if(attribute.getValue().equals(androidTag) && child.text().equals(string)){
+                    try{
+                            child.replaceBody(string.replace("@string/", "")) // replaceBody is from NodeChildren - groovy.util.slurpersupport
+                        } catch (Exception e){
+                    }
+                }
+            }
+        }
+
+        // recursive
+        replaceAtStringForStyle(child, includedXMLTags, string)
+    }
+
+    return node
+}
+
 def replaceAtString(node,includedXMLTags) {
     node.childNodes().each { child ->
 
@@ -82,14 +142,49 @@ variantsList.all { variant ->
 
     // get relevant xml files before merging
     def validXmlFiles = getValidXmlFiles(inputDirs)
+    def styleFiles = getStyleFiles(inputDirs)
+
     //println validXmlFiles
     variant.outputs.each { output ->
         def includedXMLTags = ['text','hint','title','dialogTitle','summary','dialogMessage','negativeButtonText','positiveButtonText','summaryOff','summaryOn','switchTextOff','switchTextOn'/*,'contentDescription'*/]
 
         def taskNameMerge = "applangaMerge$buildVariant"
         final def task1 = task("$taskNameMerge"() << {
-            description = 'Replaces String ID References with String ID values in all packaged Layout files'
+            description = 'Replaces String ID References with String ID values in all packaged Layout, Menu, Xml, Value files'
             
+            // <!-- STYLE XML
+            def FileTree variantBuildDirTreeStyles = fileTree(variantBuildDir){
+                include 'values**/**/*.xml'
+            }
+            variantBuildDirTreeStyles.matching {
+                include '*.xml'
+            }
+
+            def styleFilesBuildDir = [] as Set
+            styleFilesBuildDir = variantBuildDirTreeStyles.getFiles()
+
+            // get all strings which should be replaced
+            def styleStringsToReplace = [] as Set
+            styleFiles.each{ file -> 
+                getStyleStrings(new XmlSlurper(false,false).parse(file.getAbsolutePath()), includedXMLTags).each{
+                    styleStringsToReplace << it
+                }
+            }
+                
+            styleFilesBuildDir.each{ f ->
+                def sXml = new XmlSlurper(false, false).parse(f)
+
+                styleStringsToReplace.each{ s ->
+                    replaceAtStringForStyle(sXml, includedXMLTags, s)
+                }
+
+                def sXmlFileString = groovy.xml.XmlUtil.serialize(sXml)
+                f.delete()
+                f.write sXmlFileString // style xml save to file
+            }
+
+            // STYLE XML -->
+
             def FileTree variantBuildDirTree = fileTree(variantBuildDir){
                 include 'layout**/**/*.xml'
                 include 'menu**/**/*.xml'
@@ -125,8 +220,41 @@ variantsList.all { variant ->
 
         def taskNameBundle = "applangaBundle$buildVariant"
         final def task2 = task("$taskNameBundle"() << {
-            description = 'Replaces String ID References with String ID values in all packaged Layout files'
+            description = 'Replaces String ID References with String ID values in all packaged Layout, Menu, Xml, Value files'
             
+            // <!-- STYLE XML
+            def FileTree variantBuildDirTreeStyles = fileTree(variantBuildDir){
+                include 'values**/**/*.xml'
+            }
+            variantBuildDirTreeStyles.matching {
+                include '*.xml'
+            }
+
+            def styleFilesBuildDir = [] as Set
+            styleFilesBuildDir = variantBuildDirTreeStyles.getFiles()
+
+            // get all strings which should be replaced
+            def styleStringsToReplace = [] as Set
+            styleFiles.each{ file -> 
+                getStyleStrings(new XmlSlurper(false,false).parse(file.getAbsolutePath()), includedXMLTags).each{
+                    styleStringsToReplace << it
+                }
+            }
+                
+            styleFilesBuildDir.each{ f ->
+                def sXml = new XmlSlurper(false, false).parse(f)
+
+                styleStringsToReplace.each{ s ->
+                    replaceAtStringForStyle(sXml, includedXMLTags, s)
+                }
+
+                def sXmlFileString = groovy.xml.XmlUtil.serialize(sXml)
+                f.delete()
+                f.write sXmlFileString // style xml save to file
+            }
+
+            // STYLE XML -->
+
             def FileTree variantBuildDirTree = fileTree(variantBuildDir){
                 include 'layout**/**/*.xml'
                 include 'menu**/**/*.xml'
