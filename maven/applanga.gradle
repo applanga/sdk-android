@@ -180,7 +180,7 @@ variantsList.all { variant ->
 
                 def sXmlFileString = groovy.xml.XmlUtil.serialize(sXml)
                 f.delete()
-                f.write sXmlFileString // style xml save to file
+                f.write(sXmlFileString, 'UTF-8') // style xml save to file
             }
 
             // STYLE XML -->
@@ -213,7 +213,7 @@ variantsList.all { variant ->
                     //println "modified file: " + f.getPath()
                     def xmlFileString = groovy.xml.XmlUtil.serialize(fXml)
                     f.delete()
-                    f.write xmlFileString
+                    f.write(xmlFileString, 'UTF-8')
                 }
             }
         })
@@ -250,7 +250,7 @@ variantsList.all { variant ->
 
                 def sXmlFileString = groovy.xml.XmlUtil.serialize(sXml)
                 f.delete()
-                f.write sXmlFileString // style xml save to file
+                f.write(sXmlFileString, 'UTF-8') // style xml save to file
             }
 
             // STYLE XML -->
@@ -283,7 +283,7 @@ variantsList.all { variant ->
                     //println "modified file: " + f.getPath()
                     def xmlFileString = groovy.xml.XmlUtil.serialize(fXml)
                     f.delete()
-                    f.write xmlFileString
+                    f.write(xmlFileString, 'UTF-8')
                 }
             }
         })
@@ -293,7 +293,15 @@ variantsList.all { variant ->
             if(buildValues.exists()){
                 def ignoredStringsFile = new File("$variant.mergeResources.outputDir/raw/applanga_ignore.strings");
                 def ignoredStrings = "";
-                def parsedValuesXml = (new XmlParser()).parse(buildValues)
+                def parsedValuesXml
+                try{
+                    // can fail on windows due to wrong xml encoding (windows-1252 instead of UTF-8)
+                    parsedValuesXml = (new XmlParser()).parse(buildValues)
+                } catch (Exception) {
+                    groovy.util.CharsetToolkit toolkit = new CharsetToolkit(buildValues)
+                    //logger.error toolkit.getCharset().displayName()
+                    parsedValuesXml = (new XmlParser()).parseText(buildValues.getText(toolkit.getCharset().displayName()))
+                }
 
                 parsedValuesXml.children().each{ element ->
                     if(element.name() == "string" || element.name() == "string-array" ) {
@@ -311,7 +319,7 @@ variantsList.all { variant ->
                 def rawFolder = new File("$variant.mergeResources.outputDir/raw");
                 if(rawFolder.exists()) {
                     ignoredStringsFile.createNewFile();
-                    ignoredStringsFile.write(ignoredStrings)
+                    ignoredStringsFile.write(ignoredStrings, 'UTF-8')
                 }
 
                 /*
@@ -341,20 +349,30 @@ variantsList.all { variant ->
 
                 tree.getFiles().each(){ f ->
                     def parsedValuesXml = (new XmlParser()).parse(f)
+                    // parsedValuesXml instance of node
+                    // parsedValuesXml.children() instance of list
                     parsedValuesXml.children().each { element ->
-                        if(element.name() == "string" || element.name() == "string-array" ) {
-                            //println element.@name
-                            if(element.@translatable != null) {
-                                //println "translatable: "+ element.@translatable + " - Element: " + element.@name
-                                if((element.@translatable == true) || (element.@translatable == "true")) {
-                                    //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
-                                    allowedStrings = allowedStrings + element.@name + ","
-                                }
-                            } else {
-                                //println "translatable: false - Element: " + element.@name
-                                allowedStrings = allowedStrings + element.@name + ","
-                            }
-                        }
+                    	// element instance of Node
+                    	if(element instanceof groovy.util.Node){
+	                        if(element.name() == "string" || element.name() == "string-array" ) {
+	                            //println element.@name
+	                            if(element.@translatable != null) {
+	                                //println "translatable: "+ element.@translatable + " - Element: " + element.@name
+	                                if((element.@translatable == true) || (element.@translatable == "true")) {
+	                                    //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
+	                                    allowedStrings = allowedStrings + element.@name + ","
+	                                }
+	                            } else {
+	                                //println "translatable: false - Element: " + element.@name
+	                                allowedStrings = allowedStrings + element.@name + ","
+	                            }
+	                        }
+	                    } else {
+	                    	try {
+	                    		logger.error "$element in file $f is not a Node. Please contact Applanga for support." // does that ever fail?
+	                    	} catch(Exception){}
+                            throw new GradleException("Please contact Applanga for support. Error in file: $f")
+	                    }
                     }
                 }
             }
@@ -362,7 +380,7 @@ variantsList.all { variant ->
             def rawFolder = new File("$variant.mergeResources.outputDir/raw");
             if(rawFolder.exists()) {
                 allowedStringsFile.createNewFile();
-                allowedStringsFile.write(allowedStrings)
+                allowedStringsFile.write(allowedStrings, 'UTF-8')
             }
         }
 
