@@ -317,10 +317,11 @@ variantsList.all { variant ->
                 }
 
                 def rawFolder = new File("$variant.mergeResources.outputDir/raw");
-                if(rawFolder.exists()) {
-                    ignoredStringsFile.createNewFile();
-                    ignoredStringsFile.write(ignoredStrings, 'UTF-8')
+                if(!rawFolder.exists()) {
+                    rawFolder.mkdir();
                 }
+                ignoredStringsFile.createNewFile();
+                ignoredStringsFile.write(ignoredStrings, 'UTF-8')
 
                 /*
                 if(tasks.hasProperty(packageTaskName))
@@ -393,7 +394,7 @@ variantsList.all { variant ->
 
         applangaParseIgnoredStrings.mustRunAfter task1
         output.processResources.dependsOn applangaParseIgnoredStrings
-        //applangaParseIgnoredStrings.dependsOn applangaParseAllowedStrings
+        applangaParseIgnoredStrings.dependsOn applangaParseAllowedStrings
     }
 }
 
