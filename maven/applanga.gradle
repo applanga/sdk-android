@@ -310,17 +310,23 @@ variantsList.all { variant ->
                         println "translatable: "+ element.@translatable + " - Element: " + element.@name
                             if(element.@translatable == "false" || element.@translatable == false) {
                                 //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
-                                ignoredStrings = ignoredStrings + element.@name + ","
+                                
+                                def ignoreElement = element.@name
+                                // if element contains "." we have to have two versions, the original and underscores instead of points
+                                ignoreElement = ignoreElement.contains('.') ? ignoreElement.replaceAll('\\.','_') + "," + ignoreElement : ignoreElement;
+
+                                ignoredStrings = ignoredStrings + ignoreElement + ","
                             }
                         }
                     }
                 }
 
                 def rawFolder = new File("$variant.mergeResources.outputDir/raw");
-                if(rawFolder.exists()) {
-                    ignoredStringsFile.createNewFile();
-                    ignoredStringsFile.write(ignoredStrings, 'UTF-8')
+                if(!rawFolder.exists()) {
+                    rawFolder.mkdir();
                 }
+                ignoredStringsFile.createNewFile();
+                ignoredStringsFile.write(ignoredStrings, 'UTF-8')
 
                 /*
                 if(tasks.hasProperty(packageTaskName))
@@ -356,16 +362,26 @@ variantsList.all { variant ->
                     	if(element instanceof groovy.util.Node){
 	                        if(element.name() == "string" || element.name() == "string-array" ) {
 	                            //println element.@name
+
+                                def addToAllowedStrings = false
+
 	                            if(element.@translatable != null) {
 	                                //println "translatable: "+ element.@translatable + " - Element: " + element.@name
 	                                if((element.@translatable == true) || (element.@translatable == "true")) {
 	                                    //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
-	                                    allowedStrings = allowedStrings + element.@name + ","
+	                                    addToAllowedStrings = true
 	                                }
 	                            } else {
 	                                //println "translatable: false - Element: " + element.@name
-	                                allowedStrings = allowedStrings + element.@name + ","
+	                                addToAllowedStrings = true
 	                            }
+                                if(addToAllowedStrings){
+                                    def allowedElement = element.@name
+                                    //same as for ignored strings
+                                    allowedElement = allowedElement.contains('.') ? allowedElement.replaceAll('\\.','_') + "," + allowedElement : allowedElement;
+
+                                    allowedStrings = allowedStrings + allowedElement + ","
+                                }
 	                        }
 	                    } else {
 	                    	try {

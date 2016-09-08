@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.26
+*Version:* 1.0.27
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.26'
+    		compile 'com.applanga.android:Applanga:1.0.27'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -92,15 +92,25 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
     		}
     		...
     	}
+6. If you use preferences you need to call on Applanga to localize the preferences after they have been set up in your preferences activity or preferences fragment:
+	
+		
+		/* 
+			init your preferences
+			e.G. addPreferencesFromResource(R.xml.preferences); 
+		*/
+		
+		Applanga.localizePreferences(getPreferenceScreen());
+Keys will not be localized.
 
-6. **Code Localization**
+7. **Code Localization**
  
-	6.1 **Strings** 
+	7.1 **Strings** 
 
 		// get translated string for the current device locale
         Applanga.getString("APPLANGA_ID");
 
-	6.2 **Arguments**
+	7.2 **Arguments**
         
         // get translated string with formatted arguments
         // using the default string format %s %d etc
@@ -124,7 +134,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
     
     *"This value of the argument called someArg is awesome and the value of anotherArg is crazy. You can reuse arguments multiple times in your text wich is awesome, crazy and awesome."*    
         
-	6.3 **Pluralisation**
+	7.3 **Pluralisation**
 		
 		// get translated string in given pluralisation rule (one)
 		Applanga.getString("APPLANGA_ID", Applanga.PluralRule.One);
@@ -148,11 +158,11 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	So the ***zero*** pluralized ID for ***"APPLANGA_ID"*** is ***"APPLANGA_ID[zero]"***
                
 
-7. **UI Localization**
+8. **UI Localization**
 	
 	After you've made programmatic changes to your UI Elements you should call one of the following methods to update you UI.
 	
-	7.1 **Activities**
+	8.1 **Activities**
 	
 	Activity localization is always automatically triggered when a Activity is loaded or resumed. (onResume)
 	
@@ -161,17 +171,17 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 		// localize a Activity and all its Views
 		Applanga.localizeActivity(activity);
 		
-	7.2 **Views**
+	8.2 **Views**
 	
 		// localize a View and all its children
 		Applanga.localizeView(view);
 		
-	7.3 **Menus**
+	8.3 **Menus**
 		
 		// localize a Menu
 		Applanga.localizeMenu(menu);
 
-8. **Update Content**
+9. **Update Content**
  
 	To trigger an update call:
 	 	
@@ -201,7 +211,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
             }
         });
  
-9. **Change Language**
+10. **Change Language**
   
   	You can change your app's language at runtime using the following call: 
   	
@@ -220,7 +230,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
   	If you have problems switching to a specific language you can update your settings file 	or specifically request that language within an update content call (see **8. Update Content**). You can also 	specify the language as a default language to have it requested on each update call (see **Optional settings**).
 
   
-10. **WebViews**
+11. **WebViews**
 	
 	Applanga can also translate content in your WebViews if they have JavaScript enabled.
 	
@@ -243,7 +253,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
     		window.initApplanga();
 		</script>	
 		   
-	10.1 **Strings**
+	11.1 **Strings**
 		
 	The inner text and html of tags wich have a ```applanga-text="APPLANGA_ID"``` attribute will be replaced with the translated value of ***APPLANGA_ID***
 	
@@ -253,7 +263,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	
 	Alternatively you can call `Applanga.getString('APPLANGA_ID')` directly.
 	
-	10.2 **Arguments**
+	11.2 **Arguments**
 	
 	You can pass arguments with the ```applanga-args``` attribute.
 	By default the arguments are parsed as a comma seperated list wich then will replace fields as %{arrayIndex}.  
@@ -286,7 +296,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 		
 	 Direct call : `Applanga.getString('APPLANGA_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
 	
-	10.3 **Pluralisation**
+	11.3 **Pluralisation**
 		
 	To pluralize a html tag you can pass the ```applanga-plural-rule``` attribute with the value ```zero```, ```one```, ```two```, ```few```, ```many``` and ```other```.
 	
@@ -304,7 +314,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 		
 	Direct call : `Applanga.getQuantityString('APPLANGA_ID', 42)` or with arguments : 	`applanga.getQuantityString('APPLANGA_ID', 42, 'arg1;arg2;etc', ';')`	
 	
-	10.4 **Update Content**
+	11.4 **Update Content**
 	
 	To trigger a content update from a WebView use javascript:
 		
@@ -312,7 +322,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
         	//called if update is complete
     	});				
 	
-10. To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
+12. To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
 
 		@Override
     	public boolean dispatchTouchEvent(MotionEvent ev) {
