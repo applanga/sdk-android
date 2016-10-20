@@ -407,7 +407,9 @@ variantsList.all { variant ->
             tasks[packageTaskName].finalizedBy(task2)
         }
 
-        applangaParseIgnoredStrings.mustRunAfter task1
+        task1.finalizedBy(applangaParseIgnoredStrings);
+
+        //applangaParseIgnoredStrings.mustRunAfter task1
         output.processResources.dependsOn applangaParseIgnoredStrings
         //applangaParseIgnoredStrings.dependsOn applangaParseAllowedStrings
     }

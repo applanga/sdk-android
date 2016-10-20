@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.27
+*Version:* 1.0.29
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.27'
+    		compile 'com.applanga.android:Applanga:1.0.29'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -33,6 +33,14 @@
 		-keepclassmembers class * {
 			@android.webkit.JavascriptInterface <methods>;
 		}
+5. The easiest way to initialize ```Applanga``` in your Application is by extending your Application from ```ApplangaApplication```.
+
+		import com.applanga.android.ApplangaApplication;
+
+        public class MyApplication extends ApplangaApplication {
+			...
+		}
+	***NOTE:*** *If you cannot extend ApplangaApplication, you have to call Applanga.init(), followed by Applanga.update() manually (see **Update Content**).*
 
 ##Configuration
 1. Download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***. 
@@ -43,15 +51,8 @@
 ##Usage
 Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://applanga.com/#!/docs#draft_on_device_testing) if new missing strings are found.
 
-1. The easiest way to initialize ```Applanga``` in your Application is by extending your Application from ```ApplangaApplication```.
 
-		import com.applanga.android.ApplangaApplication;
-
-        public class MyApplication extends ApplangaApplication {
-			...
-		}
-
-2. To get notified on Localization Updates (e.g. to show a LoadingScreen at beginning of your App) override the ```onLocalizeFinished``` method.
+2. To get notified on Localization Updates (e.g. to show a LoadingScreen at beginning of your App) override the ```onLocalizeFinished``` method in your Application class ( assuming you extend ApplangaApplication ).
 
 		public class MyApplication extends ApplangaApplication {
 			...
