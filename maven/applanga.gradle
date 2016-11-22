@@ -304,7 +304,7 @@ variantsList.all { variant ->
                 }
 
                 parsedValuesXml.children().each{ element ->
-                    if(element.name() == "string" || element.name() == "string-array" ) {
+                    if(element.name() == "string" || element.name() == "string-array" || element.name() == "plurals") {
                     //println element.@name
                     if(element.@translatable != null) {
                         println "translatable: "+ element.@translatable + " - Element: " + element.@name
@@ -360,10 +360,16 @@ variantsList.all { variant ->
                     parsedValuesXml.children().each { element ->
                     	// element instance of Node
                     	if(element instanceof groovy.util.Node){
-	                        if(element.name() == "string" || element.name() == "string-array" ) {
-	                            //println element.@name
-
+	                        if(element.name() == "string" || element.name() == "string-array" || element.name() == "plurals" ) {
+                                def allowedElement = element.@name
                                 def addToAllowedStrings = false
+                                //avoiding duplicates
+                                def alreadyExistingInAllowedStrings = false
+                                allowedStrings.split(',').each{ value ->
+                                	if(allowedElement.equals(value)){
+                                		alreadyExistingInAllowedStrings = true
+                                	}
+                                }
 
 	                            if(element.@translatable != null) {
 	                                //println "translatable: "+ element.@translatable + " - Element: " + element.@name
@@ -375,8 +381,7 @@ variantsList.all { variant ->
 	                                //println "translatable: false - Element: " + element.@name
 	                                addToAllowedStrings = true
 	                            }
-                                if(addToAllowedStrings){
-                                    def allowedElement = element.@name
+                                if(addToAllowedStrings && !alreadyExistingInAllowedStrings){
                                     //same as for ignored strings
                                     allowedElement = allowedElement.contains('.') ? allowedElement.replaceAll('\\.','_') + "," + allowedElement : allowedElement;
 
@@ -394,10 +399,12 @@ variantsList.all { variant ->
             }
 
             def rawFolder = new File("$variant.mergeResources.outputDir/raw");
-            if(rawFolder.exists()) {
-                allowedStringsFile.createNewFile();
-                allowedStringsFile.write(allowedStrings, 'UTF-8')
-            }
+                if(!rawFolder.exists()) {
+                    rawFolder.mkdir();
+                }
+            allowedStringsFile.createNewFile();
+            allowedStringsFile.write(allowedStrings, 'UTF-8')
+
         }
 
         variant.mergeResources.finalizedBy(task1)
@@ -407,7 +414,8 @@ variantsList.all { variant ->
             tasks[packageTaskName].finalizedBy(task2)
         }
 
-        task1.finalizedBy(applangaParseIgnoredStrings);
+        task1.finalizedBy(applangaParseAllowedStrings);
+        applangaParseAllowedStrings.finalizedBy(applangaParseIgnoredStrings);
 
         //applangaParseIgnoredStrings.mustRunAfter task1
         output.processResources.dependsOn applangaParseIgnoredStrings

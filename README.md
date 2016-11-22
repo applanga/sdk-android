@@ -1,6 +1,6 @@
 #Applanga SDK for Android
 ***
-*Version:* 1.0.29
+*Version:* 1.0.30
 
 *URL:* <https://applanga.com> 
 ***
@@ -11,7 +11,7 @@
 		apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
 
         dependencies {
-    		compile 'com.applanga.android:Applanga:1.0.29'
+    		compile 'com.applanga.android:Applanga:1.0.30'
 		}
 		
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
@@ -52,7 +52,9 @@
 Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://applanga.com/#!/docs#draft_on_device_testing) if new missing strings are found.
 
 
-2. To get notified on Localization Updates (e.g. to show a LoadingScreen at beginning of your App) override the ```onLocalizeFinished``` method in your Application class ( assuming you extend ApplangaApplication ).
+1. **Callbacks**
+	
+	To get notified on Localization Updates (e.g. to show a LoadingScreen at beginning of your App) override the ```onLocalizeFinished``` method in your Application class ( assuming you extend ApplangaApplication ).
 
 		public class MyApplication extends ApplangaApplication {
 			...
@@ -63,7 +65,9 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
     		...
     	}
 
-3. To have a ```Activities``` strings automatically localized ovverride the ```getResources``` method in all Activities like this.
+2. **Activities**
+
+	To have a ```Activities``` strings automatically localized ovverride the ```getResources``` method in all Activities like this.
 		
     	@Override
     	public Resources getResources() {
@@ -74,7 +78,9 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
            }
     	}
 		
-4. To have a ```Menu``` automatically localized use the Applanga ```MenuInflater```. Please use ```Applanga.getMenuInflater(getMenuInflater())```, supplying your original MenuInflater as a parameter. Do not use the old deprecated Applanga.getMenuInflater().
+3. **Menus**
+
+	To have a ```Menu``` automatically localized use the Applanga ```MenuInflater```. Please use ```Applanga.getMenuInflater(getMenuInflater())```, supplying your original MenuInflater as a parameter. Do not use the old deprecated Applanga.getMenuInflater().
 
 		@Override
     	public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,7 +89,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
         	return true;
     	}
 
-5. You should also override the ```getMenuInflater``` method of your Activities to have menus automatically translated if possible.
+	You should also override the ```getMenuInflater``` method of your Activities to have menus automatically translated if possible.
 
 		public class MyActivity extends ActionBarActivity {
 			...
@@ -93,8 +99,9 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
     		}
     		...
     	}
-6. If you use preferences you need to call on Applanga to localize the preferences after they have been set up in your preferences activity or preferences fragment:
-	
+4. **Preferences**
+
+	If you use preferences you need to call on Applanga to localize the preferences after they have been set up in your preferences activity or preferences fragment:
 		
 		/* 
 			init your preferences
@@ -102,23 +109,24 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 		*/
 		
 		Applanga.localizePreferences(getPreferenceScreen());
-Keys will not be localized.
+		
+	Keys will not be localized.
 
-7. **Code Localization**
+5. **Code Localization**
  
-	7.1 **Strings** 
+	5.1 **Strings** 
 
 		// get translated string for the current device locale
         Applanga.getString("APPLANGA_ID");
 
-	7.2 **Arguments**
+	5.2 **Arguments**
         
         // get translated string with formatted arguments
         // using the default string format %s %d etc
         // @see http://developer.android.com/reference/java/util/Formatter.html
         Applanga.getString("APPLANGA_ID", "arg1", "arg2", "etc.");
         
-     **Named Arguments**
+	5.3 **Named Arguments**
                 
         // if you pass a string map you can get translated string
         // with named arguments. %{someArg} %{anotherArg} etc.
@@ -135,7 +143,7 @@ Keys will not be localized.
     
     *"This value of the argument called someArg is awesome and the value of anotherArg is crazy. You can reuse arguments multiple times in your text wich is awesome, crazy and awesome."*    
         
-	7.3 **Pluralisation**
+	5.4 **Pluralisation**
 		
 		// get translated string in given pluralisation rule (one)
 		Applanga.getString("APPLANGA_ID", Applanga.PluralRule.One);
@@ -158,12 +166,11 @@ Keys will not be localized.
 	
 	So the ***zero*** pluralized ID for ***"APPLANGA_ID"*** is ***"APPLANGA_ID[zero]"***
                
-
-8. **UI Localization**
+6. **UI Localization**
 	
 	After you've made programmatic changes to your UI Elements you should call one of the following methods to update you UI.
 	
-	8.1 **Activities**
+	6.1 **Activities**
 	
 	Activity localization is always automatically triggered when a Activity is loaded or resumed. (onResume)
 	
@@ -172,17 +179,17 @@ Keys will not be localized.
 		// localize a Activity and all its Views
 		Applanga.localizeActivity(activity);
 		
-	8.2 **Views**
+	6.2 **Views**
 	
 		// localize a View and all its children
 		Applanga.localizeView(view);
 		
-	8.3 **Menus**
+	6.3 **Menus**
 		
 		// localize a Menu
 		Applanga.localizeMenu(menu);
 
-9. **Update Content**
+7. **Update Content**
  
 	To trigger an update call:
 	 	
@@ -212,7 +219,7 @@ Keys will not be localized.
             }
         });
  
-10. **Change Language**
+8. **Change Language**
   
   	You can change your app's language at runtime using the following call: 
   	
@@ -229,9 +236,8 @@ Keys will not be localized.
   	The *language* parameter is expected in the format **[language]-[region]** or 	**[language]_[region]** with region being optional. Examples: "fr_CA", "en-us", "de". 
   	
   	If you have problems switching to a specific language you can update your settings file 	or specifically request that language within an update content call (see **8. Update Content**). You can also 	specify the language as a default language to have it requested on each update call (see **Optional settings**).
-
   
-11. **WebViews**
+9. **WebViews**
 	
 	Applanga can also translate content in your WebViews if they have JavaScript enabled.
 	
@@ -254,7 +260,7 @@ Keys will not be localized.
     		window.initApplanga();
 		</script>	
 		   
-	11.1 **Strings**
+	9.1 **Strings**
 		
 	The inner text and html of tags wich have a ```applanga-text="APPLANGA_ID"``` attribute will be replaced with the translated value of ***APPLANGA_ID***
 	
@@ -264,7 +270,7 @@ Keys will not be localized.
 	
 	Alternatively you can call `Applanga.getString('APPLANGA_ID')` directly.
 	
-	11.2 **Arguments**
+	9.2 **Arguments**
 	
 	You can pass arguments with the ```applanga-args``` attribute.
 	By default the arguments are parsed as a comma seperated list wich then will replace fields as %{arrayIndex}.  
@@ -297,7 +303,7 @@ Keys will not be localized.
 		
 	 Direct call : `Applanga.getString('APPLANGA_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
 	
-	11.3 **Pluralisation**
+	9.3 **Pluralisation**
 		
 	To pluralize a html tag you can pass the ```applanga-plural-rule``` attribute with the value ```zero```, ```one```, ```two```, ```few```, ```many``` and ```other```.
 	
@@ -315,7 +321,7 @@ Keys will not be localized.
 		
 	Direct call : `Applanga.getQuantityString('APPLANGA_ID', 42)` or with arguments : 	`applanga.getQuantityString('APPLANGA_ID', 42, 'arg1;arg2;etc', ';')`	
 	
-	11.4 **Update Content**
+	9.4 **Update Content**
 	
 	To trigger a content update from a WebView use javascript:
 		
@@ -323,13 +329,57 @@ Keys will not be localized.
         	//called if update is complete
     	});				
 	
-12. To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
+10. **Draft Mode**
+
+	To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
 
 		@Override
     	public boolean dispatchTouchEvent(MotionEvent ev) {
         	Applanga.dispatchTouchEvent(ev, this);
 			return super.dispatchTouchEvent(ev);
     	}
+
+11. **Automatic Screenshot Upload**
+ 	
+ 	The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta data such as the current language, resolution and the Applanga translated strings that are visible, 	including their positions.
+ 	Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta data: language, app version, device, plattform, OS and resolution. 
+ 	
+ 	You can read more here: [Manage Tags](https://applanga.com/#!/docs#manage_tags) and here: [Uploading screenshots](https://applanga.com/#!/docs#uploading_screenshots).
+ 	
+ 	11.1 **Make screenshots manually**
+ 	
+ 	To manually make a screenshot you first have to set your app into [draft mode](https://applanga.com/#!/docs#draft_on_device_testing).
+ 	 
+ 	 With your app in draft mode all you have to do is to make a two finger swipe downwards.
+ 	This will show the screenshot menu and load a list of [tags](https://applanga.com/#!/docs#manage_tags). 
+ 	
+ 	The two finger swipe will work in activities that pass on their mouse events via ***dispatchTouchEvent*** as shown previously.
+ 	
+ 	You can now choose a tag and press *capture screenshot* to capture and upload a screenshot including all meta data for the currently visible screen and assign it to the selected tag.
+ 	Tags have to be created in the dashboard before they are available in the screenshot menu.
+ 	
+ 	11.2 **Display screenshot menu programmatically**
+ 	
+ 	You also have the option to display the screenshot menu programmatically, this also requires the app to be in draft mode:
+		
+		Applanga.setScreenShotMenuVisible(true);
+
+ 	11.3 **Make screenshots programmatically**
+ 	
+ 	To create a screenshot programmatically you call the following function:
+
+        String tag = "Mainmenu";
+        List<String> applangaIDs =  new ArrayList<>();
+        applangaIDs("StringID1");
+        applangaIDs("StringID2");
+        Applanga.captureScreenshot(tag, applangaIDs);
+        
+ 	The Applanga SDK tries to find all IDs on the screen but you can also pass additional IDs in the **applangaIDs** parameter.
+
+ 	11.4 **Make screenshots during UITests**
+ 	
+ 	To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
+    
 
 ##Optional settings
 
