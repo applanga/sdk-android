@@ -1,5 +1,32 @@
 def variantsList
 
+
+//path should not end with '/'!
+//create path if does'nt exist
+def createFileSafe(pathToFileDir, fileName){
+    //logger.error "${pathToFileDir}/${fileName}"
+    def fileDir = new File(pathToFileDir);
+    if(!fileDir.exists()){
+        fileDir.mkdirs();//mkdir != mkdirs (!)
+    }
+    def file = new File(pathToFileDir + "/" + fileName);
+    file.createNewFile();
+    return file;
+}
+
+def getValidXmlParser(File f){
+    def result
+    try{
+        // can fail on windows due to wrong xml encoding (windows-1252 instead of UTF-8)
+        result = (new XmlParser()).parse(f)
+    } catch (Exception) {
+        //guess encoding and parse again
+        groovy.util.CharsetToolkit toolkit = new CharsetToolkit(f)
+        result = (new XmlParser()).parseText(f.getText(toolkit.getCharset().displayName()))
+    }
+    return result
+}
+
 def getValidXmlFiles(inputDirs){
     // get all xml files in value dir (buildtype|flavor|main)
 
@@ -291,20 +318,11 @@ variantsList.all { variant ->
         final def applangaParseIgnoredStrings = tasks.create(name: "applangaParseIgnoredStrings$buildVariant") << {
             def buildValues = new File("$variant.mergeResources.outputDir/values/values.xml")
             if(buildValues.exists()){
-                def ignoredStringsFile = new File("$variant.mergeResources.outputDir/raw/applanga_ignore.strings");
                 def ignoredStrings = "";
-                def parsedValuesXml
-                try{
-                    // can fail on windows due to wrong xml encoding (windows-1252 instead of UTF-8)
-                    parsedValuesXml = (new XmlParser()).parse(buildValues)
-                } catch (Exception) {
-                    groovy.util.CharsetToolkit toolkit = new CharsetToolkit(buildValues)
-                    //logger.error toolkit.getCharset().displayName()
-                    parsedValuesXml = (new XmlParser()).parseText(buildValues.getText(toolkit.getCharset().displayName()))
-                }
+                def parsedValuesXml = getValidXmlParser(buildValues) // to avoid encoding errors (mostly windows)
 
                 parsedValuesXml.children().each{ element ->
-                    if(element.name() == "string" || element.name() == "string-array" ) {
+                    if(element.name() == "string" || element.name() == "string-array" || element.name() == "plurals") {
                     //println element.@name
                     if(element.@translatable != null) {
                         println "translatable: "+ element.@translatable + " - Element: " + element.@name
@@ -321,11 +339,7 @@ variantsList.all { variant ->
                     }
                 }
 
-                def rawFolder = new File("$variant.mergeResources.outputDir/raw");
-                if(!rawFolder.exists()) {
-                    rawFolder.mkdir();
-                }
-                ignoredStringsFile.createNewFile();
+                File ignoredStringsFile = createFileSafe("$variant.mergeResources.outputDir/raw", "applanga_ignore.strings");
                 ignoredStringsFile.write(ignoredStrings, 'UTF-8')
 
                 /*
@@ -342,7 +356,6 @@ variantsList.all { variant ->
         }
 
         final def applangaParseAllowedStrings = tasks.create(name: "applangaParseAllowedStrings$buildVariant") << {
-            def allowedStringsFile = new File("$variant.mergeResources.outputDir/raw/applanga_allow.strings");
             def allowedStrings = "";
 
             inputDirs.each { inputDir -> 
@@ -354,16 +367,23 @@ variantsList.all { variant ->
                 }
 
                 tree.getFiles().each(){ f ->
-                    def parsedValuesXml = (new XmlParser()).parse(f)
+                    def parsedValuesXml = getValidXmlParser(f) // to avoid encoding errors (mostly windows)
+
                     // parsedValuesXml instance of node
                     // parsedValuesXml.children() instance of list
                     parsedValuesXml.children().each { element ->
                         // element instance of Node
                         if(element instanceof groovy.util.Node){
-                            if(element.name() == "string" || element.name() == "string-array" ) {
-                                //println element.@name
-
+                            if(element.name() == "string" || element.name() == "string-array" || element.name() == "plurals" ) {
+                                def allowedElement = element.@name
                                 def addToAllowedStrings = false
+                                //avoiding duplicates
+                                def alreadyExistingInAllowedStrings = false
+                                allowedStrings.split(',').each{ value ->
+                                    if(allowedElement.equals(value)){
+                                        alreadyExistingInAllowedStrings = true
+                                    }
+                                }
 
                                 if(element.@translatable != null) {
                                     //println "translatable: "+ element.@translatable + " - Element: " + element.@name
@@ -375,8 +395,7 @@ variantsList.all { variant ->
                                     //println "translatable: false - Element: " + element.@name
                                     addToAllowedStrings = true
                                 }
-                                if(addToAllowedStrings){
-                                    def allowedElement = element.@name
+                                if(addToAllowedStrings && !alreadyExistingInAllowedStrings){
                                     //same as for ignored strings
                                     allowedElement = allowedElement.contains('.') ? allowedElement.replaceAll('\\.','_') + "," + allowedElement : allowedElement;
 
@@ -393,11 +412,9 @@ variantsList.all { variant ->
                 }
             }
 
-            def rawFolder = new File("$variant.mergeResources.outputDir/raw");
-            if(rawFolder.exists()) {
-                allowedStringsFile.createNewFile();
-                allowedStringsFile.write(allowedStrings, 'UTF-8')
-            }
+            def allowedStringsFile = createFileSafe("$variant.mergeResources.outputDir/raw","applanga_allow.strings");
+            allowedStringsFile.write(allowedStrings, 'UTF-8')
+
         }
 
         variant.mergeResources.finalizedBy(task1)
@@ -407,7 +424,8 @@ variantsList.all { variant ->
             tasks[packageTaskName].finalizedBy(task2)
         }
 
-        task1.finalizedBy(applangaParseIgnoredStrings);
+        task1.finalizedBy(applangaParseAllowedStrings);
+        applangaParseAllowedStrings.finalizedBy(applangaParseIgnoredStrings);
 
         //applangaParseIgnoredStrings.mustRunAfter task1
         output.processResources.dependsOn applangaParseIgnoredStrings
