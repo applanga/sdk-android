@@ -22,6 +22,7 @@ def getValidXmlParser(File f){
     } catch (Exception) {
         //guess encoding and parse again
         groovy.util.CharsetToolkit toolkit = new CharsetToolkit(f)
+        logger.error "warning: $f is not proper UTF-8, indicate encoding!"
         result = (new XmlParser()).parseText(f.getText(toolkit.getCharset().displayName()))
     }
     return result
@@ -161,8 +162,10 @@ variantsList.all { variant ->
 
     def inputDirs = [ mainLayoutDir, buildLayoutDir ]
     def flavor = ""
+    def flavorRootDir = ""
     if(variant.variantData.getVariantConfiguration().hasFlavors()) {  
         flavor = variant.getVariantData().getVariantConfiguration().getFlavorName()
+        flavorRootDir = "$projectDir/src/$flavor"
         flavorLayoutDir = "$projectDir/src/$flavor/res"
         inputDirs = [ mainLayoutDir, buildLayoutDir, flavorLayoutDir]
     }
@@ -403,10 +406,7 @@ variantsList.all { variant ->
                                 }
                             }
                         } else {
-                            try {
-                                logger.error "$element in file $f is not a Node. Please contact Applanga for support." // does that ever fail?
-                            } catch(Exception){}
-                            throw new GradleException("Please contact Applanga for support. Error in file: $f")
+                            throw new GradleException("The resource file: $f is corrupt. $element is not a Node. Please contact Applanga for support.")
                         }
                     }
                 }
@@ -416,6 +416,26 @@ variantsList.all { variant ->
             allowedStringsFile.write(allowedStrings, 'UTF-8')
 
         }
+
+        final def applangaSetPackageName = tasks.create(name: "applangaSetPackageName$buildVariant") << {
+            
+            def originalPackageName = variant.getGenerateBuildConfig().buildConfigPackageName;
+
+            [output.processManifest.manifestOutputFile,
+             output.processManifest.instantRunManifestOutputFile
+            ].forEach({ File manifestOutFile ->
+                if (manifestOutFile.exists()) {
+                    def mergedManifestParser = getValidXmlParser(manifestOutFile)
+                    def packageNameNode = new Node(null, 'meta-data', ["android:name":'ApplangaResourcePackage', "android:value":"$originalPackageName"])
+                    mergedManifestParser.find { element -> element.name() == 'application' }.children().add(packageNameNode)
+                    def mergedManifestString = groovy.xml.XmlUtil.serialize(mergedManifestParser)
+                    manifestOutFile.write(mergedManifestString, 'UTF-8')
+                }
+            })
+
+        }
+        applangaSetPackageName.dependsOn(output.processManifest)
+        output.processManifest.finalizedBy(applangaSetPackageName)
 
         variant.mergeResources.finalizedBy(task1)
 
