@@ -1,6 +1,3 @@
-def variantsList
-
-
 //path should not end with '/'!
 //create path if does'nt exist
 def createFileSafe(pathToFileDir, fileName){
@@ -28,20 +25,17 @@ def getValidXmlParser(File f){
     return result
 }
 
-def getValidXmlFiles(inputDirs){
+def getValidXmlFiles(inputFiletrees){
     // get all xml files in value dir (buildtype|flavor|main)
 
     def set = [] as Set
-    inputDirs.each{ inputDir ->
-        def FileTree tree = fileTree(inputDir){
-            include "layout**/**"
-            include "menu**/**"
-            include "xml**/**"
+    inputFiletrees.each{ inputFiletree ->
+        inputFiletree = inputFiletree.matching {
+            include "layout**/*.xml"
+            include "menu**/*.xml"
+            include "xml**/*.xml"
         }
-        tree.matching{
-            include '*.xml'
-        }
-        set.addAll(tree.getFiles())
+        set.addAll(inputFiletree.getFiles())
     }
 
     def validXmlFiles = []
@@ -49,17 +43,14 @@ def getValidXmlFiles(inputDirs){
     return validXmlFiles
 }
 
-def getStyleFiles(inputDirs){
+def getStyleFiles(inputFiletrees){
         // get all xml files in value dir (buildtype|flavor|main)
     def set = [] as Set
-    inputDirs.each{ inputDir ->
-        def FileTree tree = fileTree(inputDir){
-            include "values**/**"
+    inputFiletrees.each{ inputFiletree ->
+        inputFiletree = inputFiletree.matching {
+            include "values**/*.xml"
         }
-        tree.matching{
-            include '*.xml'
-        }
-        set.addAll(tree.getFiles())
+        set.addAll(inputFiletree.getFiles())
     }
 
     def styleFiles = []
@@ -128,66 +119,61 @@ def replaceAtString(node,includedXMLTags) {
         // recursive
         replaceAtString(child, includedXMLTags)
     }
-
     return node
 }
 
+def checkForDuplicates(commaSeperatedString, element){
+    def duplicated = false
+    commaSeperatedString.split(',').each{ value ->
+        if(element.equals(value)){
+            duplicated = true
+        }
+    }
+    return duplicated
+}
+
+def variantsList
+def isLibrary = false;
 
 if(android.hasProperty("applicationVariants")) {
     variantsList = android.applicationVariants
 } else if(android.hasProperty("libraryVariants")) {
+    isLibrary = true;
     variantsList = android.libraryVariants
-} else if(android.hasProperty("testVariants")) {
-    variantsList = android.testVariants
 }
- 
+//if(android.hasProperty("testVariants")) {}
 variantsList.all { variant ->
 
     def buildVariant = variant.variantData.getVariantConfiguration().getFullName().capitalize();
-    def buildType = variant.buildType.name
-
-    def mainLayoutDir = "$projectDir/src/main/res"
-    def buildLayoutDir = "$projectDir/src/$buildType/res"
-    def flavorLayoutDir = ""
-
-    def variantBuildDir = "$variant.mergeResources.outputDir"
-    def bundleBuildDirBase = ""
-    def bundleBuildDir = "" 
-
-    def packageTaskName = "package"+buildVariant+"Resources"
-    if(tasks.hasProperty(packageTaskName)){
-        bundleBuildDirBase = tasks[packageTaskName].outputDir
-        bundleBuildDir = "$bundleBuildDirBase"
+    def variantBuildDir = variant.mergeResources.outputDir
+    def packageLibraryTaskName = "package"+buildVariant+"Resources";
+    //library config
+    if(isLibrary){
+        if(tasks.hasProperty(packageLibraryTaskName)){
+            //override output for libraries
+            variantBuildDir = tasks[packageLibraryTaskName].outputDir
+        }
     }
-
-    def inputDirs = [ mainLayoutDir, buildLayoutDir ]
-    def flavor = ""
-    def flavorRootDir = ""
-    if(variant.variantData.getVariantConfiguration().hasFlavors()) {  
-        flavor = variant.getVariantData().getVariantConfiguration().getFlavorName()
-        flavorRootDir = "$projectDir/src/$flavor"
-        flavorLayoutDir = "$projectDir/src/$flavor/res"
-        inputDirs = [ mainLayoutDir, buildLayoutDir, flavorLayoutDir]
+    def sourceSetsFiletrees = []
+    variant.getSourceSets().each{
+        sourceSetsFiletrees << it.getRes().getSourceFiles() // get res dir as a filetree
     }
 
     // get relevant xml files before merging
-    def validXmlFiles = getValidXmlFiles(inputDirs)
-    def styleFiles = getStyleFiles(inputDirs)
+    def validXmlFiles = getValidXmlFiles(sourceSetsFiletrees)
+    def styleFiles = getStyleFiles(sourceSetsFiletrees)
 
     //println validXmlFiles
     variant.outputs.each { output ->
         def includedXMLTags = ['text','hint','title','dialogTitle','summary','dialogMessage','negativeButtonText','positiveButtonText','summaryOff','summaryOn','switchTextOff','switchTextOn'/*,'contentDescription'*/]
 
         def taskNameMerge = "applangaMerge$buildVariant"
-        final def task1 = task("$taskNameMerge"() << {
+        final def applangaMerge = task("$taskNameMerge"() << {
             description = 'Replaces String ID References with String ID values in all packaged Layout, Menu, Xml, Value files'
             
             // <!-- STYLE XML
             def FileTree variantBuildDirTreeStyles = fileTree(variantBuildDir){
                 include 'values**/**/*.xml'
-            }
-            variantBuildDirTreeStyles.matching {
-                include '*.xml'
             }
 
             def styleFilesBuildDir = [] as Set
@@ -219,79 +205,6 @@ variantsList.all { variant ->
                 include 'layout**/**/*.xml'
                 include 'menu**/**/*.xml'
                 include 'xml**/**/*.xml'
-            }
-            variantBuildDirTree.matching {
-                include '*.xml'
-            }
-
-            def files = [] as Set
-            files = variantBuildDirTree.getFiles()
-
-            files.each { f ->
-                def matching = false
-
-                validXmlFiles.each { vf ->
-                    if(vf.equals(f.getName())){
-                        matching = true
-                    }
-                }
-
-                if(matching){
-                    def fXml = new XmlSlurper(false, false).parse(f)
-                    fXml = replaceAtString(fXml, includedXMLTags)
-                    
-                    //println "modified file: " + f.getPath()
-                    def xmlFileString = groovy.xml.XmlUtil.serialize(fXml)
-                    f.delete()
-                    f.write(xmlFileString, 'UTF-8')
-                }
-            }
-        })
-
-        def taskNameBundle = "applangaBundle$buildVariant"
-        final def task2 = task("$taskNameBundle"() << {
-            description = 'Replaces String ID References with String ID values in all packaged Layout, Menu, Xml, Value files'
-            
-            // <!-- STYLE XML
-            def FileTree variantBuildDirTreeStyles = fileTree(variantBuildDir){
-                include 'values**/**/*.xml'
-            }
-            variantBuildDirTreeStyles.matching {
-                include '*.xml'
-            }
-
-            def styleFilesBuildDir = [] as Set
-            styleFilesBuildDir = variantBuildDirTreeStyles.getFiles()
-
-            // get all strings which should be replaced
-            def styleStringsToReplace = [] as Set
-            styleFiles.each{ file -> 
-                getStyleStrings(new XmlSlurper(false,false).parse(file.getAbsolutePath()), includedXMLTags).each{
-                    styleStringsToReplace << it
-                }
-            }
-                
-            styleFilesBuildDir.each{ f ->
-                def sXml = new XmlSlurper(false, false).parse(f)
-
-                styleStringsToReplace.each{ s ->
-                    replaceAtStringForStyle(sXml, includedXMLTags, s)
-                }
-
-                def sXmlFileString = groovy.xml.XmlUtil.serialize(sXml)
-                f.delete()
-                f.write(sXmlFileString, 'UTF-8') // style xml save to file
-            }
-
-            // STYLE XML -->
-
-            def FileTree variantBuildDirTree = fileTree(variantBuildDir){
-                include 'layout**/**/*.xml'
-                include 'menu**/**/*.xml'
-                include 'xml**/**/*.xml'
-            }
-            variantBuildDirTree.matching {
-                include '*.xml'
             }
 
             def files = [] as Set
@@ -319,7 +232,7 @@ variantsList.all { variant ->
         })
 
         final def applangaParseIgnoredStrings = tasks.create(name: "applangaParseIgnoredStrings$buildVariant") << {
-            def buildValues = new File("$variant.mergeResources.outputDir/values/values.xml")
+            def buildValues = new File("${variantBuildDir}/values/values.xml")
             if(buildValues.exists()){
                 def ignoredStrings = "";
                 def parsedValuesXml = getValidXmlParser(buildValues) // to avoid encoding errors (mostly windows)
@@ -341,35 +254,39 @@ variantsList.all { variant ->
                         }
                     }
                 }
+                def ignoreFileName = !isLibrary ? "applanga_ignore.strings" : applicationId.replaceAll('\\.','_') + "_applanga_ignore.strings"
 
-                File ignoredStringsFile = createFileSafe("$variant.mergeResources.outputDir/raw", "applanga_ignore.strings");
-                ignoredStringsFile.write(ignoredStrings, 'UTF-8')
-
-                /*
-                if(tasks.hasProperty(packageTaskName))
-                {
-                    def rawFolderPack = new File("$bundleBuildDirBase/raw");
-                    if(rawFolderPack.exists()) {
-                        def ignoredStringsFilePack = new File("$bundleBuildDirBase/raw/applanga_ignore.strings");
-                        ignoredStringsFilePack.createNewFile();
-                        ignoredStringsFilePack.write(ignoredStrings)
+                //merge ignore strings with library strings
+                if(!isLibrary){
+                    def FileTree applangaIgnoreFileTree = fileTree("${variantBuildDir}/raw"){
+                        include '*_applanga_ignore.strings'
                     }
-                }*/
+                    applangaIgnoreFileTree.getFiles().each{ f ->
+                        try {
+                            def ignoredStringsLibrary = new File(f.getAbsolutePath()).getText('UTF-8')
+                            ignoredStringsLibrary.split(',').each{ item ->
+                                if(!checkForDuplicates(ignoredStrings, item)){
+                                    ignoredStrings = ignoredStrings + item + ","
+                                }
+                            }
+                        } catch (e) {}
+                    }
+
+                }
+                File ignoredStringsFile = createFileSafe("${variantBuildDir}/raw", ignoreFileName);
+                ignoredStringsFile.write(ignoredStrings, 'UTF-8')
             }
         }
 
         final def applangaParseAllowedStrings = tasks.create(name: "applangaParseAllowedStrings$buildVariant") << {
             def allowedStrings = "";
 
-            inputDirs.each { inputDir -> 
-                def FileTree tree = fileTree(inputDir){
-                    include "values**/**"
-                }
-                tree.matching{
-                    include '*.xml'
+            sourceSetsFiletrees.each { sourceSetsFiletree -> 
+                sourceSetsFiletree = sourceSetsFiletree.matching {
+                    include "values**/*.xml"
                 }
 
-                tree.getFiles().each(){ f ->
+                sourceSetsFiletree.getFiles().each(){ f ->
                     def parsedValuesXml = getValidXmlParser(f) // to avoid encoding errors (mostly windows)
 
                     // parsedValuesXml instance of node
@@ -411,8 +328,25 @@ variantsList.all { variant ->
                     }
                 }
             }
-
-            def allowedStringsFile = createFileSafe("$variant.mergeResources.outputDir/raw","applanga_allow.strings");
+            def allowFileName = !isLibrary ? "applanga_allow.strings" : applicationId.replaceAll('\\.','_') + "_applanga_allow.strings"
+            //merge allow strings from other librarys
+            if(!isLibrary){
+                def FileTree applangaAllowFileTree = fileTree("${variantBuildDir}/raw"){
+                    include '*_applanga_allow.strings'
+                }
+                applangaAllowFileTree.getFiles().each{ f ->
+                    try {
+                        //merge allowed strings with library strings
+                        def allowedStringsLibrary = new File(f.getAbsolutePath()).getText('UTF-8')
+                        allowedStringsLibrary.split(',').each{ item ->
+                            if(!checkForDuplicates(allowedStrings, item)){
+                                allowedStrings = allowedStrings + item + ","
+                            }
+                        }
+                    } catch (e) {}
+                }
+            }
+            def allowedStringsFile = createFileSafe("${variantBuildDir}/raw", allowFileName);
             allowedStringsFile.write(allowedStrings, 'UTF-8')
 
         }
@@ -421,9 +355,13 @@ variantsList.all { variant ->
             
             def originalPackageName = variant.getGenerateBuildConfig().buildConfigPackageName;
 
-            [output.processManifest.manifestOutputFile,
-             output.processManifest.instantRunManifestOutputFile
-            ].forEach({ File manifestOutFile ->
+            def manifests = [output.processManifest.manifestOutputFile]
+            try{ // in case there is no instan-run manifest
+                manifests.add(output.processManifest.instantRunManifestOutputFile)
+            } catch (e){}
+            
+            manifests.each
+            { manifestOutFile ->
                 if (manifestOutFile.exists()) {
                     def mergedManifestParser = getValidXmlParser(manifestOutFile)
                     def packageNameNode = new Node(null, 'meta-data', ["android:name":'ApplangaResourcePackage', "android:value":"$originalPackageName"])
@@ -431,23 +369,25 @@ variantsList.all { variant ->
                     def mergedManifestString = groovy.xml.XmlUtil.serialize(mergedManifestParser)
                     manifestOutFile.write(mergedManifestString, 'UTF-8')
                 }
-            })
+            }
 
         }
         applangaSetPackageName.dependsOn(output.processManifest)
-        output.processManifest.finalizedBy(applangaSetPackageName)
 
-        variant.mergeResources.finalizedBy(task1)
-
-        if(tasks.hasProperty(packageTaskName))
-        {
-            tasks[packageTaskName].finalizedBy(task2)
+        if(!isLibrary){
+            variant.mergeResources.finalizedBy(applangaMerge)
+            output.processManifest.finalizedBy(applangaSetPackageName) // only if it's not a library
+        } else {
+            if(tasks.hasProperty(packageLibraryTaskName))
+                {
+                    tasks[packageLibraryTaskName].finalizedBy(applangaMerge)
+                }
         }
 
-        task1.finalizedBy(applangaParseAllowedStrings);
+        applangaMerge.finalizedBy(applangaParseAllowedStrings);
         applangaParseAllowedStrings.finalizedBy(applangaParseIgnoredStrings);
 
-        //applangaParseIgnoredStrings.mustRunAfter task1
+        //applangaParseIgnoredStrings.mustRunAfter applangaMerge
         output.processResources.dependsOn applangaParseIgnoredStrings
         //applangaParseIgnoredStrings.dependsOn applangaParseAllowedStrings
     }
