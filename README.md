@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 1.0.37
+*Version:* 1.0.39
 
 *URL:* <https://applanga.com> 
 ***
@@ -14,7 +14,7 @@
 	
 	```
 	dependencies {
-			compile 'com.applanga.android:Applanga:1.0.37'
+			compile 'com.applanga.android:Applanga:1.0.39'
 	}
 	```
 	
@@ -45,7 +45,7 @@
 	}
 	```
 
-5. The easiest way to initialize ```Applanga``` in your Application is by extending your Application from ```ApplangaApplication```.
+5. The easiest way to initialize **Applanga** in your Application is by extending your `Application` class from ```ApplangaApplication```.
 
 	```java
 	import com.applanga.android.ApplangaApplication;
@@ -55,7 +55,18 @@
 	}
 	```
 
-	***NOTE:*** *If you cannot extend ApplangaApplication, you have to call Applanga.init(), followed by Applanga.update() manually (see **Update Content**).*
+	If you do not have an `Application` class you can simply add the following to the `<application .../>` section of your AndroidManifest.xml
+	
+	```xml
+	<application
+			android:name="com.applanga.android.ApplangaApplication"
+			...
+			>
+				...
+	</application>
+	``` 
+	***NOTE:*** *If you cannot extend ApplangaApplication, you have to call Applanga.init(), followed by Applanga.update() in your `Application` class manually (see **Update Content**).*
+	
 
 ## Configuration
 1. Download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***. 
@@ -191,7 +202,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	Other
 	```
 	
-	you can also specify a quantity and Applanga will pick the best pluralisation rule based on: [http://unicode.org/.../language_plural_rules.html	](http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html)
+	you can also specify a quantity and Applanga will pick the best pluralisation rule based on: [http://www.unicode.org/...plurals.html	](http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html)
 	
 	```java
 	// get a string in the given quantity
@@ -417,6 +428,8 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
  	Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta data: language, app version, device, plattform, OS and resolution. 
  	
  	You can read more here: [Manage Tags](https://applanga.com/#!/docs#manage_tags) and here: [Uploading screenshots](https://applanga.com/#!/docs#uploading_screenshots).
+ 	
+ 	**NOTE:** To capture screenshots the app need the permission to *“Draw over other apps”* so on the first try to make a screenshot the app might redirect you to the permissions screen to enable it.
  	
  	11.1 **Make screenshots manually**
  	
