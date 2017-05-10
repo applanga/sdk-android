@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 1.0.40
+*Version:* 1.0.41
 
 *URL:* <https://applanga.com> 
 ***
@@ -14,7 +14,7 @@
 	
 	```
 	dependencies {
-			compile 'com.applanga.android:Applanga:1.0.40'
+			compile 'com.applanga.android:Applanga:1.0.41'
 	}
 	```
 	
