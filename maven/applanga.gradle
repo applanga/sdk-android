@@ -79,14 +79,14 @@ def getStyleStrings(node, includedXMLTags){
 }
 
 //style xml differs from layout files
-def replaceAtStringForStyle(node,includedXMLTags, string) {
+def replaceAtStringForStyle(node,includedXMLTags, stringToReplace) {
     node.childNodes().each { child ->
         child.attributes().each{ attribute ->
             includedXMLTags.each { tag ->
                 String androidTag = "android:" + tag
-                if(attribute.getValue().equals(androidTag) && child.text().equals(string)){
+                if(attribute.getValue().equals(androidTag) && child.text().equals(stringToReplace)){
                     try{
-                            child.replaceBody(string.replace("@string/", "")) // replaceBody is from NodeChildren - groovy.util.slurpersupport
+                            child.replaceBody(stringToReplace.replace("@string/", "")) // replaceBody is from NodeChildren - groovy.util.slurpersupport
                         } catch (Exception e){
                     }
                 }
@@ -94,7 +94,7 @@ def replaceAtStringForStyle(node,includedXMLTags, string) {
         }
 
         // recursive
-        replaceAtStringForStyle(child, includedXMLTags, string)
+        replaceAtStringForStyle(child, includedXMLTags, stringToReplace)
     }
 
     return node
@@ -107,10 +107,23 @@ def replaceAtString(node,includedXMLTags) {
             includedXMLTags.each { tag ->
                 String androidTag = "android:" + tag
                 if(attribute.getKey().equals(androidTag) && attribute.getValue().contains("@string/")){
-                    //println "TAG MATCH:"+attribute.getValue()
-                    try{
+                    
+                    def applangaKey = '';
+
+                    // don't always replace @string  --> better tag the view
+                    if(tag.equals('text')){
+                        applangaKey = 'APPLANGA_TEXT_STRINGID_KEY';                        
+                    }
+                    else if(tag.equals('hint')){
+                        applangaKey = 'APPLANGA_HINT_STRINGID_KEY';
+                    }
+                    if( ! applangaKey.equals('')){
+                        def viewTagXml = '<tag android:id="' + '@id/' + applangaKey + '" android:value="' + attribute.getValue().replace("@string/", "") + '"/>';
+                        def viewTag = new XmlSlurper(false,false).parseText(viewTagXml);
+                        child.addChild(viewTag);
+                    } else {
+                        // if no tag is set -> fallback: replace @string
                         child.attributes()[attribute.getKey()] = attribute.getValue().replace("@string/", "")
-                        } catch (Exception){
                     }
                 }
             }
@@ -122,9 +135,9 @@ def replaceAtString(node,includedXMLTags) {
     return node
 }
 
-def checkForDuplicates(commaSeperatedString, element){
+def checkForDuplicates(commaSeparatedString, element){
     def duplicated = false
-    commaSeperatedString.split(',').each{ value ->
+    commaSeparatedString.split(',').each{ value ->
         if(element.equals(value)){
             duplicated = true
         }
