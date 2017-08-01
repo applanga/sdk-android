@@ -1,26 +1,37 @@
 # Applanga SDK for Android
 ***
-*Version:* 1.0.48
+*Version:* 2.0.49
 
 *URL:* <https://applanga.com> 
 ***
 
 ## Installation
-1. Add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga SDK into your App.
+***NOTE:*** *The Applanga installation setup has changed! The old implementation of `applanga.gradle` should be removed, instead the Applanga Plugin will be introduced.*
 
-	```
-	apply from: 'https://raw.github.com/applanga/sdk-android/master/maven/applanga.gradle'
-	```
-	
-	```
+***IMPORTANT***: ***Applanga SDK** and **Applanga Plugin** should always have the **same version number**!*
+1. Add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga Plugin and Applanga SDK into your App.
+
+    ```gradle
 	dependencies {
-			compile 'com.applanga.android:Applanga:1.0.48'
+		compile 'com.applanga.android:Applanga:2.0.49'
 	}
-	```
-	
+	buildscript {
+		repositories {
+			maven {
+				url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
+			}
+			jcenter()
+		}
+		dependencies {
+			classpath  'com.applanga.android:plugin:2.0.49'
+		}
+	}
+	apply plugin: 'applanga'
+    ```
+
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
 
-	```
+	```gradle
 	dependencies {
 			compile 'com.android.support:appcompat-v7:+'
 	}
@@ -91,23 +102,8 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 			...
 	}
 	```
-
-2. **Activities**
-
-	To have a ```Activities``` strings automatically localized ovverride the ```getResources``` method in all Activities like this.
 	
-	```java
-    @Override
-    public Resources getResources() {
-			if(getApplication() != null) {
-					return getApplication().getResources();
-			} else {
-					return super.getResources();
-			}
-	}
-	```
-	
-3. **Menus**
+2. **Menus**
 
 	To have a ```Menu``` automatically localized use the Applanga ```MenuInflater```. Please use ```Applanga.getMenuInflater(getMenuInflater())```, supplying your original MenuInflater as a parameter. Do not use the old deprecated Applanga.getMenuInflater().
 	
@@ -133,7 +129,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	}
 	```
 
-4. **Preferences**
+3. **Preferences**
 
 	If you use preferences you need to call on Applanga to localize the preferences after they have been set up in your preferences activity or preferences fragment:
 	
@@ -147,13 +143,13 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 	Keys will not be localized.
 
-5. **Code Localization**
+4. **Code Localization**
  
 	5.1 **Strings**
 	
 	```java
 	// get translated string for the current device locale
-	Applanga.getString("APPLANGA_ID");
+	Applanga.getString("APPLANGA_ID", "DEFAULT_VALUE");
 	```
 	
 	5.2 **Arguments**
@@ -162,7 +158,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	// get translated string with formatted arguments
 	// using the default string format %s %d etc
 	// @see http://developer.android.com/reference/java/util/Formatter.html
-	Applanga.getString("APPLANGA_ID", "arg1", "arg2", "etc.");
+	Applanga.getString("APPLANGA_ID", "DEFAULT_VALUE", "arg1", "arg2", "etc.");
 	```
 
 	5.3 **Named Arguments**
@@ -206,14 +202,14 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	
 	```java
 	// get a string in the given quantity
-	Applanga.getQuantityString("APPLANGA_ID", quantity);
+	Applanga.getQuantityString("APPLANGA_ID", "DEFAULT_VALUE", quantity);
 	```
 	
 	In the dashboard you create a **puralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`.
 	
 	So the ***zero*** pluralized ID for ***"APPLANGA_ID"*** is ***"APPLANGA_ID[zero]"***
                
-6. **UI Localization**
+5. **UI Localization**
 	
 	After you've made programmatic changes to your UI Elements you should call one of the following methods to update you UI.
 	
@@ -242,7 +238,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	Applanga.localizeMenu(menu);
 	```
 	
-7. **Update Content**
+6. **Update Content**
  
 	To trigger an update call:
 	
@@ -276,7 +272,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	});
 	```
 
-8. **Change Language**
+7. **Change Language**
   
   	You can change your app's language at runtime using the following call:
   	
@@ -298,7 +294,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
   	
   	If you have problems switching to a specific language you can update your settings file 	or specifically request that language within an update content call (see **8. Update Content**). You can also 	specify the language as a default language to have it requested on each update call (see **Optional settings**).
   
-9. **WebViews**
+8. **WebViews**
 	
 	Applanga can also translate content in your WebViews if they have JavaScript enabled.
 	
@@ -410,7 +406,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	});
 	```
 
-10. **Draft Mode**
+9. **Draft Mode**
 
 	To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
 	
@@ -422,7 +418,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	}
 	```
 
-11. **Automatic Screenshot Upload**
+10. **Automatic Screenshot Upload**
  	
  	The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta data such as the current language, resolution and the Applanga translated strings that are visible, 	including their positions.
  	Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta data: language, app version, device, plattform, OS and resolution. 
