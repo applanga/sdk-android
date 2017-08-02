@@ -108,7 +108,7 @@ def replaceAtString(node,includedXMLTags) {
                 String androidTag = "android:" + tag
                 if(attribute.getKey().equals(androidTag) && attribute.getValue().contains("@string/")){
                     
-                    def applangaKey = '';
+                    /*def applangaKey = '';
 
                     // don't always replace @string  --> better tag the view
                     if(tag.equals('text')){
@@ -122,8 +122,10 @@ def replaceAtString(node,includedXMLTags) {
                         def viewTag = new XmlSlurper(false,false).parseText(viewTagXml);
                         child.addChild(viewTag);
                     } else {
-                        // if no tag is set -> fallback: replace @string
+                        // if no tag is set -> fallback: replace @string*/
+                    try {
                         child.attributes()[attribute.getKey()] = attribute.getValue().replace("@string/", "")
+                    } catch (Exception){
                     }
                 }
             }

@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 2.0.49
+*Version:* 2.0.50
 
 *URL:* <https://applanga.com> 
 ***
@@ -13,7 +13,7 @@
 
     ```gradle
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.49'
+		compile 'com.applanga.android:Applanga:2.0.50'
 	}
 	buildscript {
 		repositories {
@@ -23,7 +23,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.49'
+			classpath  'com.applanga.android:plugin:2.0.50'
 		}
 	}
 	apply plugin: 'applanga'
