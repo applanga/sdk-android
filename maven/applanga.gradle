@@ -307,38 +307,40 @@ variantsList.all { variant ->
                     // parsedValuesXml instance of node
                     // parsedValuesXml.children() instance of list
                     parsedValuesXml.children().each { element ->
-                        // element instance of Node
-                        if(element instanceof groovy.util.Node){
-                            if(element.name() == "string" || element.name() == "string-array" || element.name() == "plurals" ) {
-                                def allowedElement = element.@name
-                                def addToAllowedStrings = false
-                                //avoiding duplicates
-                                def alreadyExistingInAllowedStrings = false
-                                allowedStrings.split(',').each{ value ->
-                                    if(allowedElement.equals(value)){
-                                        alreadyExistingInAllowedStrings = true
+                        if(!(element instanceof String)) {  // weird bug from xml parser -> somtimes element is a string if inline are only spaces
+                            // element instance of Node
+                            if(element instanceof groovy.util.Node){
+                                if(element.name() == "string" || element.name() == "string-array" || element.name() == "plurals" ) {
+                                    def allowedElement = element.@name
+                                    def addToAllowedStrings = false
+                                    //avoiding duplicates
+                                    def alreadyExistingInAllowedStrings = false
+                                    allowedStrings.split(',').each{ value ->
+                                        if(allowedElement.equals(value)){
+                                            alreadyExistingInAllowedStrings = true
+                                        }
                                     }
-                                }
 
-                                if(element.@translatable != null) {
-                                    //println "translatable: "+ element.@translatable + " - Element: " + element.@name
-                                    if((element.@translatable == true) || (element.@translatable == "true")) {
-                                        //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
+                                    if(element.@translatable != null) {
+                                        //println "translatable: "+ element.@translatable + " - Element: " + element.@name
+                                        if((element.@translatable == true) || (element.@translatable == "true")) {
+                                            //println "Name: " + element.name() + " String: " +  element.@name + ", translatable : " + element.@translatable
+                                            addToAllowedStrings = true
+                                        }
+                                    } else {
+                                        //println "translatable: false - Element: " + element.@name
                                         addToAllowedStrings = true
                                     }
-                                } else {
-                                    //println "translatable: false - Element: " + element.@name
-                                    addToAllowedStrings = true
-                                }
-                                if(addToAllowedStrings && !alreadyExistingInAllowedStrings){
-                                    //same as for ignored strings
-                                    allowedElement = allowedElement.contains('.') ? allowedElement.replaceAll('\\.','_') + "," + allowedElement : allowedElement;
+                                    if(addToAllowedStrings && !alreadyExistingInAllowedStrings){
+                                        //same as for ignored strings
+                                        allowedElement = allowedElement.contains('.') ? allowedElement.replaceAll('\\.','_') + "," + allowedElement : allowedElement;
 
-                                    allowedStrings = allowedStrings + allowedElement + ","
+                                        allowedStrings = allowedStrings + allowedElement + ","
+                                    }
                                 }
+                            } else {
+                                throw new GradleException("The resource file: $f is corrupt. $element is not a Node. Please contact Applanga for support.")
                             }
-                        } else {
-                            throw new GradleException("The resource file: $f is corrupt. $element is not a Node. Please contact Applanga for support.")
                         }
                     }
                 }

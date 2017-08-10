@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 2.0.50
+*Version:* 2.0.51
 
 *URL:* <https://applanga.com> 
 ***
@@ -8,12 +8,19 @@
 ## Installation
 ***NOTE:*** *The Applanga installation setup has changed! The old implementation of `applanga.gradle` should be removed, instead the Applanga Plugin will be introduced.*
 
+***NOTE:*** *Android Studio 3 / Android Plugin 3 users have to set `android.enableAapt2=false` in their `gradle.properties` file and then restart the gradle daemon with `./gradlew --stop`, since aapt2 is not fully supported yet.*
+
 ***IMPORTANT***: ***Applanga SDK** and **Applanga Plugin** should always have the **same version number**!*
 1. Add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga Plugin and Applanga SDK into your App.
 
     ```gradle
-	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.50'
+	repositories {
+    	maven {
+    		url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
+    	}
+    }
+    dependencies {
+		compile 'com.applanga.android:Applanga:2.0.51'
 	}
 	buildscript {
 		repositories {
@@ -23,7 +30,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.50'
+			classpath  'com.applanga.android:plugin:2.0.51'
 		}
 	}
 	apply plugin: 'applanga'
