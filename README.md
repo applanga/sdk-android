@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 2.0.51
+*Version:* 2.0.53
 
 *URL:* <https://applanga.com> 
 ***
@@ -15,12 +15,12 @@
 
     ```gradle
 	repositories {
-    	maven {
-    		url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
-    	}
-    }
-    dependencies {
-		compile 'com.applanga.android:Applanga:2.0.51'
+		maven {
+			url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
+		}
+	}
+	dependencies {
+		compile 'com.applanga.android:Applanga:2.0.53'
 	}
 	buildscript {
 		repositories {
@@ -30,11 +30,11 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.51'
+			classpath  'com.applanga.android:plugin:2.0.53'
 		}
 	}
 	apply plugin: 'applanga'
-    ```
+	```
 
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
 
