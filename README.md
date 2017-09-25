@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 2.0.53
+*Version:* 2.0.55
 
 *URL:* <https://applanga.com> 
 ***
@@ -20,7 +20,7 @@
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.53'
+		compile 'com.applanga.android:Applanga:2.0.55'
 	}
 	buildscript {
 		repositories {
@@ -30,7 +30,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.53'
+			classpath  'com.applanga.android:plugin:2.0.55'
 		}
 	}
 	apply plugin: 'applanga'
@@ -328,7 +328,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	</script>	
 	```
 	
-	9.1 **Strings**
+	8.1 **Strings**
 		
 	The inner text and html of tags wich have a ```applanga-text="APPLANGA_ID"``` attribute will be replaced with the translated value of ***APPLANGA_ID***
 
@@ -340,7 +340,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	
 	Alternatively you can call `Applanga.getString('APPLANGA_ID')` directly.
 	
-	9.2 **Arguments**
+	8.2 **Arguments**
 	
 	You can pass arguments with the ```applanga-args``` attribute.
 	By default the arguments are parsed as a comma seperated list wich then will replace fields as %{arrayIndex}. 
@@ -379,7 +379,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 	 Direct call : `Applanga.getString('APPLANGA_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
 	
-	9.3 **Pluralisation**
+	8.3 **Pluralisation**
 		
 	To pluralize a html tag you can pass the ```applanga-plural-rule``` attribute with the value ```zero```, ```one```, ```two```, ```few```, ```many``` and ```other```.
 	
@@ -403,7 +403,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 	Direct call : `Applanga.getQuantityString('APPLANGA_ID', 42)` or with arguments : 	`applanga.getQuantityString('APPLANGA_ID', 42, 'arg1;arg2;etc', ';')`	
 	
-	9.4 **Update Content**
+	8.4 **Update Content**
 	
 	To trigger a content update from a WebView use javascript:
 
