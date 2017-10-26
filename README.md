@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 2.0.65
+*Version:* 2.0.66
 
 *URL:* <https://applanga.com> 
 ***
@@ -8,19 +8,18 @@
 ## Installation
 ***NOTE:*** *The Applanga installation setup has changed! The old implementation of `applanga.gradle` should be removed, instead the Applanga Plugin will be introduced.*
 
-***NOTE:*** *Android Studio 3 / Android Plugin 3 users have to set `android.enableAapt2=false` in their `gradle.properties` file and then restart the gradle daemon with `./gradlew --stop`, since aapt2 is not fully supported yet.*
-
 ***IMPORTANT***: ***Applanga SDK** and **Applanga Plugin** should always have the **same version number**!*
+
 1. Add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga Plugin and Applanga SDK into your App.
 
-    ```gradle
+	```gradle
 	repositories {
 		maven {
 			url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/'
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.65'
+		compile 'com.applanga.android:Applanga:2.0.66'
 	}
 	buildscript {
 		repositories {
@@ -30,12 +29,11 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.65'
+			classpath  'com.applanga.android:plugin:2.0.66'
 		}
 	}
 	apply plugin: 'applanga'
 	```
-
 2. you should also add the latest ```appcompat``` library to your dependencies if you haven't already.
 
 	```gradle
@@ -43,13 +41,11 @@
 			compile 'com.android.support:appcompat-v7:+'
 	}
 	```
-	
 3. Add the permission **android.permission.INTERNET** in your **AndroidManifest.xml** file to allow your App internet access, which is needed for Applanga to function.
 
 	```xml
 	<uses-permission android:name="android.permission.INTERNET" />
-	```
-	    
+	```    
 4. **Proguard:** In order to keep all SDK functionality fully available when using Proguard, please make sure that the following lines are part of your proguard configuration.
 
 	```
@@ -62,7 +58,6 @@
 			@android.webkit.JavascriptInterface <methods>;
 	}
 	```
-
 5. The easiest way to initialize **Applanga** in your Application is by extending your `Application` class from ```ApplangaApplication```.
 
 	```java
@@ -83,12 +78,12 @@
 				...
 	</application>
 	``` 
+	
 	***NOTE:*** *If you cannot extend ApplangaApplication, you have to call Applanga.init(), followed by Applanga.update() in your `Application` class manually (see **Update Content**).*
 	
 
 ## Configuration
 1. Download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***. 
- 
 2. Add the *Applanga Settings File* to your apps resources res/raw directory.
 
 
@@ -109,66 +104,25 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 			...
 	}
 	```
+2. **String Localization**
+
+	There is not always the need to rewrite your code everywhere you want to get translated Strings. The following shows the usage with and without explicit Applanga calls:
 	
-2. **Menus**
+	2.1 **Simple String**
 
-	To have a ```Menu``` automatically localized use the Applanga ```MenuInflater```. Please use ```Applanga.getMenuInflater(getMenuInflater())```, supplying your original MenuInflater as a parameter. Do not use the old deprecated Applanga.getMenuInflater().
-	
-	```java
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-			// Inflate the menu; this adds items to the action bar if it is present.
-			Applanga.getMenuInflater(getMenuInflater()).inflate(R.menu.my, menu);
-			return true;
-	}
-	```
-
-	You should also override the ```getMenuInflater``` method of your Activities to have menus automatically translated if possible.
-
-	```java
-	public class MyActivity extends ActionBarActivity {
-			...
-			@Override
-			public android.view.MenuInflater getMenuInflater() {
-					return com.applanga.android.Applanga.getMenuInflater(super.getMenuInflater());
-			}
-			...
-	}
-	```
-
-3. **Preferences**
-
-	If you use preferences you need to call on Applanga to localize the preferences after they have been set up in your preferences activity or preferences fragment:
-	
-	```java
-	/* 
-	init your preferences e.G. addPreferencesFromResource(R.xml.preferences); 
-	*/
-		
-	Applanga.localizePreferences(getPreferenceScreen());
-	```
-
-	Keys will not be localized.
-
-4. **Code Localization**
- 
-	5.1 **Strings**
-	
 	```java
 	// get translated string for the current device locale
-	Applanga.getString("APPLANGA_ID", "DEFAULT_VALUE");
+	((Activity|Resources|Fragment)this).getString(R.string.STRING_ID);
 	```
-	
-	5.2 **Arguments**
+	2.2 **Arguments**
 	
 	```java
 	// get translated string with formatted arguments
 	// using the default string format %s %d etc
 	// @see http://developer.android.com/reference/java/util/Formatter.html
-	Applanga.getString("APPLANGA_ID", "DEFAULT_VALUE", "arg1", "arg2", "etc.");
+	((Activity|Resources|Fragment)this).getString(R.string.STRING_ID, "arg1", "arg2", "arg3");
 	```
-
-	5.3 **Named Arguments**
+	2.3 **Named Arguments**
 	
 	```java
 	// if you pass a string map you can get translated string
@@ -176,53 +130,35 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	Map<String, String> args = new Map<String, String>();
 	args.put("someArg","awesome");
 	args.put("anotherArg","crazy");
-	Applanga.getString("APPLANGA_ID", args);
+	Applanga.getString("STRING_ID", args);
 	```
 
     Example:
     	
-    *APPLANGA_ID* = *"This value of the argument called someArg is %{someArg} and the value of anotherArg is **%{anotherArg}**. You can reuse arguments multiple times in your text wich is **%{someArg}**, **%{anotherArg}** and **%{someArg}.**"*	
+    *STRING_ID* = *"This value of the argument called someArg is %{someArg} and the value of anotherArg is **%{anotherArg}**. You can reuse arguments multiple times in your text wich is **%{someArg}**, **%{anotherArg}** and **%{someArg}.**"*	
     
     gets converted to:
     
     *"This value of the argument called someArg is awesome and the value of anotherArg is crazy. You can reuse arguments multiple times in your text wich is awesome, crazy and awesome."*    
         
-	5.4 **Pluralisation**
-	
-	```java
-	// get translated string in given pluralisation rule (one)
-	Applanga.getString("APPLANGA_ID", Applanga.PluralRule.One);
-	```
-
-	Available pluralisation rules:
-	
-	```java
-	Zero,
-	One,
-	Two,
-	Few,
-	Many,
-	Other
-	```
-	
-	you can also specify a quantity and Applanga will pick the best pluralisation rule based on: [http://www.unicode.org/...plurals.html	](http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html)
-	
+	2.4 **Pluralisation**
 	```java
 	// get a string in the given quantity
-	Applanga.getQuantityString("APPLANGA_ID", "DEFAULT_VALUE", quantity);
+	((Resources)res).getQuantityString(R.string.STRING_ID, quantity);
+	
 	```
 	
-	In the dashboard you create a **puralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`.
+	In the dashboard you create a **puralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`. Plural strings also get automatically uploaded if you start the app in draft mode or with the debugger connected.
 	
-	So the ***zero*** pluralized ID for ***"APPLANGA_ID"*** is ***"APPLANGA_ID[zero]"***
+	So the ***zero*** pluralized ID for ***"STRING_ID"*** is ***"STRING_ID[zero]"***
                
-5. **UI Localization**
+3. **UI Localization**
 	
 	After you've made programmatic changes to your UI Elements you should call one of the following methods to update you UI.
 	
-	6.1 **Activities**
+	3.1 **Activities**
 	
-	Activity localization is always automatically triggered when a Activity is loaded or resumed. (onResume)
+	Activity localization is always automatically triggered when Activities layout was inflated.
 	
 	If you want to trigger it manually use:
 	
@@ -231,21 +167,14 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	Applanga.localizeActivity(activity);
 	```
 	
-	6.2 **Views**
+	3.2 **Views**
 	
 	```java
 	// localize a View and all its children
 	Applanga.localizeView(view);
 	```
 	
-	6.3 **Menus**
-	
-	```java
-	// localize a Menu
-	Applanga.localizeMenu(menu);
-	```
-	
-6. **Update Content**
+4. **Update Content**
  
 	To trigger an update call:
 	
@@ -279,7 +208,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	});
 	```
 
-7. **Change Language**
+5. **Change Language**
   
   	You can change your app's language at runtime using the following call:
   	
@@ -301,7 +230,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
   	
   	If you have problems switching to a specific language you can update your settings file 	or specifically request that language within an update content call (see **8. Update Content**). You can also 	specify the language as a default language to have it requested on each update call (see **Optional settings**).
   
-8. **WebViews**
+6. **WebViews**
 	
 	Applanga can also translate content in your WebViews if they have JavaScript enabled.
 	
@@ -328,82 +257,82 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	</script>	
 	```
 	
-	8.1 **Strings**
+	6.1 **Strings**
 		
-	The inner text and html of tags wich have a ```applanga-text="APPLANGA_ID"``` attribute will be replaced with the translated value of ***APPLANGA_ID***
+	The inner text and html of tags wich have a ```applanga-text="STRING_ID"``` attribute will be replaced with the translated value of ***STRING_ID***
 
 	```html
-	<div applanga-text="APPLANGA_ID">
-			***This will be replaced with the value of APPLANGA_ID***
+	<div applanga-text="STRING_ID">
+			***This will be replaced with the value of STRING_ID***
 	</div>
 	```
 	
-	Alternatively you can call `Applanga.getString('APPLANGA_ID')` directly.
+	Alternatively you can call `Applanga.getString('STRING_ID')` directly.
 	
-	8.2 **Arguments**
+	6.2 **Arguments**
 	
 	You can pass arguments with the ```applanga-args``` attribute.
 	By default the arguments are parsed as a comma seperated list wich then will replace fields as %{arrayIndex}. 
 
 	```html
-	<div applanga-text="APPLANGA_ID" applanga-args="arg1,arg2,etc">
-			***This will be replaced with the value of APPLANGA_ID***
+	<div applanga-text="STRING_ID" applanga-args="arg1,arg2,etc">
+			***This will be replaced with the value of STRING_ID***
 			***and formatted with arguments***
 	</div>
 	```
 	
-	Direct call : `Applanga.getString('APPLANGA_ID', 'arg1,arg2,etc')`
+	Direct call : `Applanga.getString('STRING_ID', 'arg1,arg2,etc')`
 
 	To define a different separator instead of ```,``` e.g. if your arguments contain commas use ```applanga-args-separator```.
 	
 	```html
-	<div applanga-text="APPLANGA_ID" 
+	<div applanga-text="STRING_ID" 
 		applanga-args="arg1;arg2;etc" 
 		applanga-args-separator=";">
-			***This will be replaced with the value of APPLANGA_ID***
+			***This will be replaced with the value of STRING_ID***
 			***and formatted with arguments***
 	</div> 
 	```
-	Direct call : `Applanga.getString('APPLANGA_ID', 'arg1,arg2,etc', ';')`
+	Direct call : `Applanga.getString('STRING_ID', 'arg1,arg2,etc', ';')`
 		
 	One Dimensional **JSON** Objects can also be used as ***Named Arguments*** if you add ```applanga-args-separator="json"```
 	
 	```html
-	<div applanga-text="APPLANGA_ID" 
+	<div applanga-text="STRING_ID" 
 		applanga-args="{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}"
 		applanga-args-separator="json">
-			***This will be replaced with the value of APPLANGA_ID***
+			***This will be replaced with the value of STRING_ID***
 			***and formatted with json arguments***
 	</div> 
 	```
 
-	 Direct call : `Applanga.getString('APPLANGA_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
+	 Direct call : `Applanga.getString('STRING_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
 	
-	8.3 **Pluralisation**
+	6.3 **Pluralisation**
 		
 	To pluralize a html tag you can pass the ```applanga-plural-rule``` attribute with the value ```zero```, ```one```, ```two```, ```few```, ```many``` and ```other```.
 	
 	```html
-	<div applanga-text="APPLANGA_ID" 
+	<div applanga-text="STRING_ID" 
 		applanga-plural-rule="one">
-			***This will be replaced with the pluralized value of APPLANGA_ID***
+			***This will be replaced with the pluralized value of STRING_ID***
 	</div> 
 	```
 
-	Direct call : `Applanga.getPluralString('APPLANGA_ID', 'one')` or with arguments : 	`applanga.getPluralString('APPLANGA_ID', 'one', 'arg1;arg2;etc', ';')`
+	Direct call : `Applanga.getPluralString('STRING_ID', 'one')` or with arguments : 	`applanga.getPluralString('STRING_ID', 'one', 'arg1;arg2;etc', ';')`
 		
 	You can also pluralize by quantity via `applanga-plural-quantity`
 
 	```html
-	<div applanga-text="APPLANGA_ID" 
+	<div applanga-text="STRING_ID" 
 		applanga-plural-quantity=42>
-		***This will be replaced with the pluralized value of APPLANGA_ID***
+		***This will be replaced with the pluralized value of STRING_ID***
 	</div> 
 	```
 
-	Direct call : `Applanga.getQuantityString('APPLANGA_ID', 42)` or with arguments : 	`applanga.getQuantityString('APPLANGA_ID', 42, 'arg1;arg2;etc', ';')`	
+	Direct call : `Applanga.getQuantityString('STRING_ID', 42)` or with arguments : 	`applanga.getQuantityString('STRING_ID', 42, 'arg1;arg2;etc', ';')`	
 	
-	8.4 **Update Content**
+	6.4 **Update Content**
 	
 	To trigger a content update from a WebView use javascript:
 
@@ -413,7 +342,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	});
 	```
 
-9. **Draft Mode**
+7. **Draft Mode**
 
 	To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
 	
@@ -425,7 +354,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	}
 	```
 
-10. **Automatic Screenshot Upload**
+8. **Automatic Screenshot Upload**
  	
  	The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta data such as the current language, resolution and the Applanga translated strings that are visible, 	including their positions.
  	Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta data: language, app version, device, plattform, OS and resolution. 
@@ -434,7 +363,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
  	
  	**NOTE:** To capture screenshots the app need the permission to *“Draw over other apps”* so on the first try to make a screenshot the app might redirect you to the permissions screen to enable it.
  	
- 	11.1 **Make screenshots manually**
+ 	8.1 **Make screenshots manually**
  	
  	To manually make a screenshot you first have to set your app into [draft mode](https://applanga.com/#!/docs#draft_on_device_testing).
  	 
@@ -446,7 +375,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
  	You can now choose a tag and press *capture screenshot* to capture and upload a screenshot including all meta data for the currently visible screen and assign it to the selected tag.
  	Tags have to be created in the dashboard before they are available in the screenshot menu.
  	
- 	11.2 **Display screenshot menu programmatically**
+ 	8.2 **Display screenshot menu programmatically**
  	
  	You also have the option to display the screenshot menu programmatically, this also requires the app to be in draft mode:
 	
@@ -454,7 +383,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	Applanga.setScreenShotMenuVisible(true);
 	```
 
- 	11.3 **Make screenshots programmatically**
+ 	8.3 **Make screenshots programmatically**
  	
  	To create a screenshot programmatically you call the following function:
 
@@ -468,17 +397,19 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
  	The Applanga SDK tries to find all IDs on the screen but you can also pass additional IDs in the **applangaIDs** parameter.
 
- 	11.4 **Make screenshots during UITests**
+ 	8.4 **Make screenshots during UITests**
  	
  	To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
     
 
 ## Optional settings
 
-You can specify a set of default groups and languages in the manifest, which will be updated on every Applanga.update() or Applanga.updateGroups() call. These groups and languages will be added to any that are specified in the call itself, they will *always* be requested.
+1. **Specify default groups or languages**
+
+	You can specify a set of default groups and languages in the manifest, which will be updated on every Applanga.update() or Applanga.updateGroups() call. These groups and languages will be added to any that are specified in the call itself, they will *always* be requested.
 	The Parameter value must be a string, with a list of groups or languages separated by commata.
 
-1. **Specify default groups**
+	*Specify default groups*
 
 	```xml
 	<application>
@@ -488,12 +419,24 @@ You can specify a set of default groups and languages in the manifest, which wil
 	</application>
 	```
 
-2. **Specify default languages**
+	*Specify default languages*
 
 	```xml
 	<application>
 			...
 			<meta-data android:name="ApplangaUpdateLanguages" android:value="en,de-at,fr"/>
+			...
+	</application>
+	```
+	
+2. **Optimize Applanga's performance**
+	
+	By setting "false" to "ApplangaRunBackgroundThread" Applanga's background thread won't start, by default it is set to "true". If you see String id's instead of their translations, please contact Applanga support to help us getting better. 
+	
+	```xml
+	<application>
+			...
+			<meta-data android:name="ApplangaRunBackgroundThread" android:value="false"/>
 			...
 	</application>
 	```
