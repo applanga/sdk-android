@@ -1,6 +1,6 @@
 # Applanga SDK for Android
 ***
-*Version:* 2.0.67
+*Version:* 2.0.68
 
 *URL:* <https://applanga.com> 
 ***
@@ -19,7 +19,7 @@
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.67'
+		compile 'com.applanga.android:Applanga:2.0.68'
 	}
 	buildscript {
 		repositories {
@@ -29,7 +29,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.67'
+			classpath  'com.applanga.android:plugin:2.0.68'
 		}
 	}
 	apply plugin: 'applanga'
@@ -88,7 +88,7 @@
 
 
 ## Usage
-Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://applanga.com/#!/docs#draft_on_device_testing) if new missing strings are found.
+Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://applanga.com/docs#draft_on_device_testing) if new missing strings are found.
 
 
 1. **Callbacks**
@@ -359,16 +359,16 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
  	The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta data such as the current language, resolution and the Applanga translated strings that are visible, 	including their positions.
  	Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta data: language, app version, device, plattform, OS and resolution. 
  	
- 	You can read more here: [Manage Tags](https://applanga.com/#!/docs#manage_tags) and here: [Uploading screenshots](https://applanga.com/#!/docs#uploading_screenshots).
+ 	You can read more here: [Manage Tags](https://applanga.com/docs#manage_tags) and here: [Uploading screenshots](https://applanga.com/docs#uploading_screenshots).
  	
  	**NOTE:** To capture screenshots the app need the permission to *“Draw over other apps”* so on the first try to make a screenshot the app might redirect you to the permissions screen to enable it.
  	
  	8.1 **Make screenshots manually**
  	
- 	To manually make a screenshot you first have to set your app into [draft mode](https://applanga.com/#!/docs#draft_on_device_testing).
+ 	To manually make a screenshot you first have to set your app into [draft mode](https://applanga.com/docs#draft_on_device_testing).
  	 
  	 With your app in draft mode all you have to do is to make a two finger swipe downwards.
- 	This will show the screenshot menu and load a list of [tags](https://applanga.com/#!/docs#manage_tags). 
+ 	This will show the screenshot menu and load a list of [tags](https://applanga.com/docs#manage_tags).
  	
  	The two finger swipe will work in activities that pass on their mouse events via ***dispatchTouchEvent*** as shown previously.
  	
