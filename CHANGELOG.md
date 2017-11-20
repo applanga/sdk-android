@@ -1,9 +1,14 @@
-# Applanga SDK for Android CHANGELOG
+# Applanga SDK for Android Localization CHANGELOG
 ***
-*URL:* <https://applanga.com> 
+*URL:* <https://www.applanga.com> 
 ***
 
 
+### Version 2.0.69 (20 Nov 2017)
+#### Changed
+- fixed endless loop on setContentView override
+
+---
 ### Version 2.0.68 (15 Nov 2017)
 #### Changed
 - added changelog
@@ -21,7 +26,7 @@
 ---
 ### Version 2.0.65 (19 Oct 2017)
 #### Fixed
-- Fragment issue
+- localize Fragment issue
 
 ---
 ### Version 2.0.64 (18 Oct 2017)

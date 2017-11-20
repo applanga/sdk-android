@@ -1,8 +1,8 @@
-# Applanga SDK for Android
+# Applanga SDK for Android Localization
 ***
-*Version:* 2.0.68
+*Version:* 2.0.69
 
-*URL:* <https://applanga.com> 
+*URL:* <https://www.applanga.com> 
 ***
 
 ## Installation
@@ -10,7 +10,7 @@
 
 ***IMPORTANT***: ***Applanga SDK** and **Applanga Plugin** should always have the **same version number**!*
 
-1. Add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga Plugin and Applanga SDK into your App.
+1. To localize your android app please add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga Plugin and Applanga localization SDK into your App.
 
 	```gradle
 	repositories {
@@ -19,7 +19,7 @@
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.68'
+		compile 'com.applanga.android:Applanga:2.0.69'
 	}
 	buildscript {
 		repositories {
@@ -29,7 +29,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.68'
+			classpath  'com.applanga.android:plugin:2.0.69'
 		}
 	}
 	apply plugin: 'applanga'
@@ -83,8 +83,8 @@
 	
 
 ## Configuration
-1. Download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***. 
-2. Add the *Applanga Settings File* to your apps resources res/raw directory.
+1. If you want to translate a android app with Applanga you need to download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***. 
+2. Add the *Applanga Settings File* to your apps resources res/raw directory 
 
 
 ## Usage
@@ -210,7 +210,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 5. **Change Language**
   
-  	You can change your app's language at runtime using the following call:
+  	You can change your app language at runtime using the following call:
   	
 	```java
 	boolean success = Applanga.setLanguage(language);
