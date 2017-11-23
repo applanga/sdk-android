@@ -4,6 +4,11 @@
 ***
 
 
+### Version 2.0.70 (23 Nov 2017)
+#### Changed
+- fixed MenuInflater crash on localizing menu without title
+
+---
 ### Version 2.0.69 (20 Nov 2017)
 #### Changed
 - fixed endless loop on setContentView override

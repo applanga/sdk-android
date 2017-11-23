@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 2.0.69
+*Version:* 2.0.70
 
 *URL:* <https://www.applanga.com> 
 ***
@@ -19,7 +19,7 @@
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.69'
+		compile 'com.applanga.android:Applanga:2.0.70'
 	}
 	buildscript {
 		repositories {
@@ -29,7 +29,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.69'
+			classpath  'com.applanga.android:plugin:2.0.70'
 		}
 	}
 	apply plugin: 'applanga'
@@ -144,13 +144,23 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	2.4 **Pluralisation**
 	```java
 	// get a string in the given quantity
-	((Resources)res).getQuantityString(R.string.STRING_ID, quantity);
+	((Resources)res).getQuantityString(R.plurals.STRING_ID, quantity);
 	
 	```
 	
-	In the dashboard you create a **puralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`. Plural strings also get automatically uploaded if you start the app in draft mode or with the debugger connected.
+	On the dashboard you create a **puralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`. Plural strings also get automatically uploaded if you start the app in draft mode or with the debugger connected.
 	
 	So the ***zero*** pluralized ID for ***"STRING_ID"*** is ***"STRING_ID[zero]"***
+	
+	2.5 **String-Arrays**
+	```java
+	//returns a string-array
+	((Resources)res).getStringArray(R.array.STRING_ID);
+	```
+	String-Arrays will automatically be uploaded as other strings from your string xml. The **ID**-format is the following: `STRING_ID[0]`, `STRING_ID[1]`, `STRING_ID[2]`, `STRING_ID[..]`.
+	
+	
+	
                
 3. **UI Localization**
 	
@@ -200,7 +210,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	languages.add("de");
 	languages.add("fr");
 
-	Applanga.updateGroups(groups, languages, new ApplangaCallback() {
+	Applanga.update(groups, languages, new ApplangaCallback() {
 			@Override
 			public void onLocalizeFinished(boolean success) {
 					//called if update is complete
@@ -406,7 +416,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 1. **Specify default groups or languages**
 
-	You can specify a set of default groups and languages in the manifest, which will be updated on every Applanga.update() or Applanga.updateGroups() call. These groups and languages will be added to any that are specified in the call itself, they will *always* be requested.
+	You can specify a set of default groups and languages in the manifest, which will be updated on every Applanga.update() call. These groups and languages will be added to any that are specified in the call itself, they will *always* be requested.
 	The Parameter value must be a string, with a list of groups or languages separated by commata.
 
 	*Specify default groups*
@@ -441,3 +451,4 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	</application>
 	```
 	
+
