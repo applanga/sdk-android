@@ -4,6 +4,13 @@
 ***
 
 
+### Version 2.0.71 (12 Dec 2017)
+#### Changed
+- autotranslate View.setText and setHint calls
+- ignore strings from donottranslate.xml files
+- new flag to enable automatic settings file update
+
+---
 ### Version 2.0.70 (23 Nov 2017)
 #### Changed
 - fixed MenuInflater crash on localizing menu without title

@@ -1,11 +1,13 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 2.0.70
+*Version:* 2.0.71
 
 *URL:* <https://www.applanga.com> 
 ***
 
 ## Installation
+***NOTE:*** *New Automatic Applanga Settings File Update Feature, see in Section 'Optional settings'.*
+
 ***NOTE:*** *The Applanga installation setup has changed! The old implementation of `applanga.gradle` should be removed, instead the Applanga Plugin will be introduced.*
 
 ***IMPORTANT***: ***Applanga SDK** and **Applanga Plugin** should always have the **same version number**!*
@@ -19,7 +21,7 @@
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.70'
+		compile 'com.applanga.android:Applanga:2.0.71'
 	}
 	buildscript {
 		repositories {
@@ -29,7 +31,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.70'
+			classpath  'com.applanga.android:plugin:2.0.71'
 		}
 	}
 	apply plugin: 'applanga'
@@ -88,11 +90,19 @@
 
 
 ## Usage
-Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://applanga.com/docs#draft_on_device_testing) if new missing strings are found.
 
+1. **Missing Strings**
+	Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://applanga.com/docs#draft_on_device_testing) if new missing strings are found.
 
-1. **Callbacks**
+	All strings located in your project's values folder (e.g. `strings.xml`) will be uploaded. Applanga only skips the upload if they meet the following conditions (according to [Non-translatable Strings](http://tools.android.com/recent/non-translatablestrings)):
 	
+	Strings annotated with `translatable="false"`will be ignored, e.g.:
+	```xml
+	<string name="STRING_ID_IGNORED" translatable="false">This string will not be uploaded</string>
+	```
+	Strings inside a xml file named `donottranslate.xml` or a file with the following prefix: `donottranslate-` will not be uploaded.
+
+2. **Callbacks**
 	To get notified on Localization Updates (e.g. to show a LoadingScreen at beginning of your App) override the ```onLocalizeFinished``` method in your Application class ( assuming you extend ApplangaApplication ).
 	```java
 	public class MyApplication extends ApplangaApplication {
@@ -104,17 +114,18 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 			...
 	}
 	```
-2. **String Localization**
+
+3. **String Localization**
 
 	There is not always the need to rewrite your code everywhere you want to get translated Strings. The following shows the usage with and without explicit Applanga calls:
 	
-	2.1 **Simple String**
+	3.1 **Simple String**
 
 	```java
 	// get translated string for the current device locale
 	((Activity|Resources|Fragment)this).getString(R.string.STRING_ID);
 	```
-	2.2 **Arguments**
+	3.2 **Arguments**
 	
 	```java
 	// get translated string with formatted arguments
@@ -122,7 +133,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	// @see http://developer.android.com/reference/java/util/Formatter.html
 	((Activity|Resources|Fragment)this).getString(R.string.STRING_ID, "arg1", "arg2", "arg3");
 	```
-	2.3 **Named Arguments**
+	3.3 **Named Arguments**
 	
 	```java
 	// if you pass a string map you can get translated string
@@ -141,7 +152,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
     
     *"This value of the argument called someArg is awesome and the value of anotherArg is crazy. You can reuse arguments multiple times in your text wich is awesome, crazy and awesome."*    
         
-	2.4 **Pluralisation**
+	3.4 **Pluralisation**
 	```java
 	// get a string in the given quantity
 	((Resources)res).getQuantityString(R.plurals.STRING_ID, quantity);
@@ -152,7 +163,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	
 	So the ***zero*** pluralized ID for ***"STRING_ID"*** is ***"STRING_ID[zero]"***
 	
-	2.5 **String-Arrays**
+	3.5 **String-Arrays**
 	```java
 	//returns a string-array
 	((Resources)res).getStringArray(R.array.STRING_ID);
@@ -161,30 +172,32 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	
 	
 	
-               
-3. **UI Localization**
+
+4. **UI Localization**
 	
 	After you've made programmatic changes to your UI Elements you should call one of the following methods to update you UI.
 	
-	3.1 **Activities**
+	4.1 **Activities and Dialogs**
 	
-	Activity localization is always automatically triggered when Activities layout was inflated.
+	Activity and Dialog localization is always automatically triggered when Activities layout was inflated.
 	
 	If you want to trigger it manually use:
 	
 	```java
-	// localize a Activity and all its Views
-	Applanga.localizeActivity(activity);
+	// localize a Activity and all its views
+	Applanga.localizeContentView(activity);
+	// localize a Dialog and all its views
+	Applanga.localizeContentView(dialog);
 	```
 	
-	3.2 **Views**
+	4.2 **Views**
 	
 	```java
 	// localize a View and all its children
-	Applanga.localizeView(view);
+	Applanga.localizeContentView(view);
 	```
-	
-4. **Update Content**
+
+5. **Update Content**
  
 	To trigger an update call:
 	
@@ -218,7 +231,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	});
 	```
 
-5. **Change Language**
+6. **Change Language**
   
   	You can change your app language at runtime using the following call:
   	
@@ -226,7 +239,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	boolean success = Applanga.setLanguage(language);
 	```
 	
-  	 *language* must be the iso string of a language that has been added in 	the dashboard. 
+  	*language* must be the iso string of a language that has been added in 	the dashboard. 
   	The return value will be *true* if the language could be set, or if it already was the 	current language, otherwise it will be *false*. After a successful call you should  	recreate the current activity, for the changes to take effect.
   	The set language will be saved, to reset to the 	device language call:
 	
@@ -239,8 +252,8 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
   	The *language* parameter is expected in the format **[language]-[region]** or 	**[language]_[region]** with region being optional. Examples: "fr_CA", "en-us", "de". 
   	
   	If you have problems switching to a specific language you can update your settings file 	or specifically request that language within an update content call (see **8. Update Content**). You can also 	specify the language as a default language to have it requested on each update call (see **Optional settings**).
-  
-6. **WebViews**
+
+7. **WebViews**
 	
 	Applanga can also translate content in your WebViews if they have JavaScript enabled.
 	
@@ -267,7 +280,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	</script>	
 	```
 	
-	6.1 **Strings**
+	7.1 **Strings**
 		
 	The inner text and html of tags wich have a ```applanga-text="STRING_ID"``` attribute will be replaced with the translated value of ***STRING_ID***
 
@@ -318,7 +331,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 	 Direct call : `Applanga.getString('STRING_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
 	
-	6.3 **Pluralisation**
+	7.3 **Pluralisation**
 		
 	To pluralize a html tag you can pass the ```applanga-plural-rule``` attribute with the value ```zero```, ```one```, ```two```, ```few```, ```many``` and ```other```.
 	
@@ -342,7 +355,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
 	Direct call : `Applanga.getQuantityString('STRING_ID', 42)` or with arguments : 	`applanga.getQuantityString('STRING_ID', 42, 'arg1;arg2;etc', ';')`	
 	
-	6.4 **Update Content**
+	7.4 **Update Content**
 	
 	To trigger a content update from a WebView use javascript:
 
@@ -352,7 +365,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	});
 	```
 
-7. **Draft Mode**
+8. **Draft Mode**
 
 	To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
 	
@@ -364,7 +377,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	}
 	```
 
-8. **Automatic Screenshot Upload**
+9. **Automatic Screenshot Upload**
  	
  	The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta data such as the current language, resolution and the Applanga translated strings that are visible, 	including their positions.
  	Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta data: language, app version, device, plattform, OS and resolution. 
@@ -373,7 +386,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
  	
  	**NOTE:** To capture screenshots the app need the permission to *“Draw over other apps”* so on the first try to make a screenshot the app might redirect you to the permissions screen to enable it.
  	
- 	8.1 **Make screenshots manually**
+ 	9.1 **Make screenshots manually**
  	
  	To manually make a screenshot you first have to set your app into [draft mode](https://applanga.com/docs#draft_on_device_testing).
  	 
@@ -385,7 +398,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
  	You can now choose a tag and press *capture screenshot* to capture and upload a screenshot including all meta data for the currently visible screen and assign it to the selected tag.
  	Tags have to be created in the dashboard before they are available in the screenshot menu.
  	
- 	8.2 **Display screenshot menu programmatically**
+ 	9.2 **Display screenshot menu programmatically**
  	
  	You also have the option to display the screenshot menu programmatically, this also requires the app to be in draft mode:
 	
@@ -393,7 +406,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 	Applanga.setScreenShotMenuVisible(true);
 	```
 
- 	8.3 **Make screenshots programmatically**
+ 	9.3 **Make screenshots programmatically**
  	
  	To create a screenshot programmatically you call the following function:
 
@@ -407,7 +420,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 
  	The Applanga SDK tries to find all IDs on the screen but you can also pass additional IDs in the **applangaIDs** parameter.
 
- 	8.4 **Make screenshots during UITests**
+ 	9.4 **Make screenshots during UITests**
  	
  	To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
     
@@ -438,7 +451,7 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 			...
 	</application>
 	```
-	
+
 2. **Optimize Applanga's performance**
 	
 	By setting "false" to "ApplangaRunBackgroundThread" Applanga's background thread won't start, by default it is set to "true". If you see String id's instead of their translations, please contact Applanga support to help us getting better. 
@@ -450,5 +463,15 @@ Once Applanga is integrated and configured, it synchronizes your local strings w
 			...
 	</application>
 	```
-	
 
+3. **Automatic Applanga Settings File Update**
+	
+	In case your app's user has no internet connection, new translation updates can't be fetched, so the Applanga SDK falls back to the last locally cached version. If the app was started for the first time, there are no strings locally cached yet so Applanga SDK falls back to the Applanga Settings File which contains all strings from the moment it was generated, downloaded and integrated into your app before release. 
+
+	To minimize the manual effort of updating the Applanga Settings File, we created a task which triggers the Applanga Settings File generation if changes were made and replace the old one with the new one in your app. 
+
+	**Be aware that the task will not fail if there is no internet connection, to be able to develop offline.** In this case, a warning is printed. To activate the Automatic Settings File Update put the following line into your `build.gradle`:
+
+	```
+	applanga.settingsFileAutoUpdate = true
+	```
