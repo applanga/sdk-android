@@ -4,6 +4,11 @@
 ***
 
 
+### Version 2.0.72 (4 Jan 2018)
+#### Changed
+- added kotlin support for automated getString calls etc. with the applanga plugin
+
+---
 ### Version 2.0.71 (12 Dec 2017)
 #### Changed
 - autotranslate View.setText and setHint calls
