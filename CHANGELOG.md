@@ -4,6 +4,11 @@
 ***
 
 
+### Version 2.0.73 (24 Jan 2018)
+#### Changed
+- added automatic localization support for Android AutoCompleteTextView
+
+---
 ### Version 2.0.72 (4 Jan 2018)
 #### Changed
 - added kotlin support for automated getString calls etc. with the applanga plugin
