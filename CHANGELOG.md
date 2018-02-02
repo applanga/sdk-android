@@ -3,7 +3,16 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.74 (2 Feb 2018)
+#### Changed
+- added proxy support
+- databinding support
 
+#### Fixed 
+- hint localization
+- support for Java derived classes in kotlin
+
+---
 ### Version 2.0.73 (24 Jan 2018)
 #### Changed
 - added automatic localization support for Android AutoCompleteTextView
