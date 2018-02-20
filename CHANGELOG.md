@@ -3,6 +3,11 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.75 (20 Feb 2018)
+#### Fixed
+- gradle parallel build support
+
+---
 ### Version 2.0.74 (2 Feb 2018)
 #### Changed
 - added proxy support
