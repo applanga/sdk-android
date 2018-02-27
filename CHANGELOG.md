@@ -3,6 +3,11 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.76 (27 Feb 2018)
+#### Fixed
+- resolved issue wher custom EditText setText and setHint methods crashed
+
+---
 ### Version 2.0.75 (20 Feb 2018)
 #### Fixed
 - gradle parallel build support
