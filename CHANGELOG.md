@@ -3,9 +3,18 @@
 *URL:* <https://www.applanga.com> 
 ***
 
-### Version 2.0.76 (27 Feb 2018)
+### Version 2.0.77 (8 Mar 2018)
+#### Added
+- new option to skip layout & bytecode manipulation
+
 #### Fixed
-- resolved issue wher custom EditText setText and setHint methods crashed
+- untranslated menus inflated from DataBindingUtil.inflate & MenuInflater.inflate
+- classpath crash if you used kotlin class from within java
+
+---
+### Version Version 2.0.76 (27 Feb 2018)
+#### Fixed
+- resolved issue where custom EditText setText and setHint methods crashed
 
 ---
 ### Version 2.0.75 (20 Feb 2018)
