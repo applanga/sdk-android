@@ -3,6 +3,11 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.78 (13 Mar 2018)
+#### Fixed
+- issues that where introduced with gradle parallel build support
+
+---
 ### Version 2.0.77 (8 Mar 2018)
 #### Added
 - new option to skip layout & bytecode manipulation
