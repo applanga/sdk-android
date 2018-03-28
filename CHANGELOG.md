@@ -3,6 +3,13 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.80 (28 Mar 2018)
+#### Fixed
+- possible crash on json parsing on pixel
+- android oreo screenshot permission request
+- android studio 3.1 support
+
+---
 ### Version 2.0.78 (13 Mar 2018)
 #### Fixed
 - issues that where introduced with gradle parallel build support
