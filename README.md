@@ -1,17 +1,19 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 2.0.80
+*Version:* 2.0.81
 
-*URL:* <https://www.applanga.com> 
+*Website:* <https://www.applanga.com> 
+
+*Changelog:* <https://www.applanga.com/changelog/android>
 ***
 
 
 ## Table of Contents
 
   1. [Installation](#installation)
-  1. [Configuration](#configuration)
-  1. [Usage](#usage)
-  1. [Optional settings](#optional-settings)
+  2. [Configuration](#configuration)
+  3. [Usage](#usage)
+  4. [Optional settings](#optional-settings)
 
 
 ## Installation
@@ -30,7 +32,7 @@
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.80'
+		compile 'com.applanga.android:Applanga:2.0.81'
 	}
 	buildscript {
 		repositories {
@@ -40,7 +42,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.80'
+			classpath  'com.applanga.android:plugin:2.0.81'
 		}
 	}
 	apply plugin: 'applanga'

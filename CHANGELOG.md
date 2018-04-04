@@ -3,6 +3,13 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.81 (4 Apr 2018)
+#### Fixed
+- Android O performance improvements
+- Realm incompatibilities in bytecodemanipulation
+- gradle parallel build issues for string and layout interdependencies between different modules
+
+---
 ### Version 2.0.80 (28 Mar 2018)
 #### Fixed
 - possible crash on json parsing on pixel
