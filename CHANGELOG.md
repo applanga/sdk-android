@@ -3,6 +3,15 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.82 (18 Apr 2018)
+#### Added
+- added sources.jar with Applanga.java
+
+#### Fixed
+- translation issues while using kotlin extension functions in conjunction with adapters
+- removed unused applanga handler thread if RunBackgroundThread is turned off
+
+---
 ### Version 2.0.81 (4 Apr 2018)
 #### Fixed
 - Android O performance improvements
