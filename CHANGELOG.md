@@ -3,6 +3,12 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.83 (2 May 2018)
+#### Fixed
+- TextInputLayout hint issue
+- overwrite local string cache if settings file version is newer even without calling Applanga.update()
+
+---
 ### Version 2.0.82 (18 Apr 2018)
 #### Added
 - added sources.jar with Applanga.java

@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 2.0.82
+*Version:* 2.0.83
 
 *Website:* <https://www.applanga.com> 
 
@@ -32,7 +32,7 @@
 		}
 	}
 	dependencies {
-		compile 'com.applanga.android:Applanga:2.0.82'
+		compile 'com.applanga.android:Applanga:2.0.83'
 	}
 	buildscript {
 		repositories {
@@ -42,7 +42,7 @@
 			jcenter()
 		}
 		dependencies {
-			classpath  'com.applanga.android:plugin:2.0.82'
+			classpath  'com.applanga.android:plugin:2.0.83'
 		}
 	}
 	apply plugin: 'applanga'
