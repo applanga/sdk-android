@@ -3,6 +3,14 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.86 (8 May 2018)
+#### Added
+- Usage of Androids transform API
+
+#### Fixed
+- Applanga plugin error with Android plugin 3.1.2 fixed
+
+---
 ### Version 2.0.83 (2 May 2018)
 #### Fixed
 - TextInputLayout hint issue
