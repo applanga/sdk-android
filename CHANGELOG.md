@@ -3,6 +3,19 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.87 (31 May 2018)
+#### Added
+- JavaDoc for Applanga.java
+- BackgroundThread disabled by default
+- Reflection disabled for better Android O performance
+- Delta Updates
+
+#### Fixed
+- Refactoring
+- PopupMenu issues
+- Issue missing string upload for string-arrays
+
+---
 ### Version 2.0.86 (8 May 2018)
 #### Added
 - Usage of Androids transform API
