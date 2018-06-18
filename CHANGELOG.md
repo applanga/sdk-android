@@ -3,6 +3,11 @@
 *URL:* <https://www.applanga.com> 
 ***
 
+### Version 2.0.89 (18 Jun 2018)
+#### Fixed
+- fixed internal getLocal-Call
+
+---
 ### Version 2.0.87 (31 May 2018)
 #### Added
 - JavaDoc for Applanga.java
