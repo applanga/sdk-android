@@ -1,9 +1,17 @@
 # Applanga SDK for Android Localization CHANGELOG
 ***
-*URL:* <https://www.applanga.com> 
+*Website:* <https://www.applanga.com>
+
+*Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 2.0.90 (18 Jun 2018)
+### Version 2.0.91 (25 Jun 2018)
+#### Changed
+- Updated WebView Documentation
+- Widget Support Documentation
+
+---
+### Version 2.0.89 (18 Jun 2018)
 #### Fixed
 - fixed internal getLocal-Call
 

@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 2.0.90
+*Version:* 2.0.91
 
 *Website:* <https://www.applanga.com> 
 
@@ -32,7 +32,7 @@
         }
     }
     dependencies {
-        compile 'com.applanga.android:Applanga:2.0.90'
+        compile 'com.applanga.android:Applanga:2.0.91'
     }
     buildscript {
         repositories {
@@ -42,7 +42,7 @@
             jcenter()
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:2.0.90'
+            classpath  'com.applanga.android:plugin:2.0.91'
         }
     }
     apply plugin: 'applanga'
@@ -227,6 +227,24 @@
     
     To create Bindings, according to the [Data Binding Documentation entry](#https://developer.android.com/topic/libraries/data-binding/expressions), you have two options: `DataBindingUtil.inflate(...)` or the generated `YourBinding.inflate(...)`. At the moment we only support `DataBindingUtil.inflate(...)`. If you still want to use the generated class to inflate your view, you can call `Applanga.localizeContentView(this)` after inflating your layout to overcome the issue. `this` should be the Activity context.
 
+	4.5 **Widgets**
+	
+	Since Widgets are using `RemoteViews` which inherits directly from `Object` rather than from `View` and there is no way for manual inflation, we only can provide a semi automated solution. Here we have two options (which also can work together):
+	
+	The following code is taken from the `AppWidgetProvider`-Class from the auto-generated new widget code from Android Studio. Here we set the String manually with the `context.getString`-method. Important is to set every String here with `getString`, so you have the most actualised translation from the Applanga dashboard.
+	
+	```
+	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                int appWidgetId) {
+        CharSequence widgetText = context.getString(R.string.appwidget_text);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
+        views.setTextViewText(R.id.appwidget_text, widgetText);
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+    ```
+    
+    Second option is to disable our layout manipulation for you widget layouts. This can be done via renaming your layout class to `noapplanga.xml` or `noapplanga_*.xml`. For example the Android Studio example widget layout would be named to `noapplanga_new_app_widget.xml`. Important here is, if you don't set your Strings via `getString` as described above, you will see your local translations instead of a String id, but may not the value from the dashboard. For this solution you should always have the most updated translations inside your strings.xml. You can use the [Applanga Command Line Interface](https://www.applanga.com/docs-integration/cli) to update your string xml files on every build.	
+
 5. **Update Content**
     
     To trigger an update call:
@@ -285,15 +303,16 @@
       
 7. **WebViews**
     
-    Applanga can also translate content in your WebViews if they have JavaScript enabled.
+    Applanga can also translate content in your WebViews. You have to enable JavaScript and pass your WebView to Applanga's `localizeContentView(View v)`:
     
     ```
     WebView myWebView = (WebView) findViewById(R.id.webview);
     myWebView.getSettings().setJavaScriptEnabled(true);
     myWebView.loadUrl("html_file_path");
+    Applanga.localizeContentView(myWebView);
     ```
     
-    To tell Applanga to translate your webviews you need to set the following in your Manifest:
+    You also need to set the following in your Manifest:
     
     ```
     <meta-data android:name="ApplangaTranslateWebViews" android:value="true" />
