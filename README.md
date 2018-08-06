@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 2.0.91
+*Version:* 2.0.92
 
 *Website:* <https://www.applanga.com> 
 
@@ -32,7 +32,7 @@
         }
     }
     dependencies {
-        compile 'com.applanga.android:Applanga:2.0.91'
+        implementation 'com.applanga.android:Applanga:2.0.92'
     }
     buildscript {
         repositories {
@@ -42,7 +42,7 @@
             jcenter()
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:2.0.91'
+            classpath  'com.applanga.android:plugin:2.0.92'
         }
     }
     apply plugin: 'applanga'
@@ -51,7 +51,7 @@
 
     ```gradle
     dependencies {
-            compile 'com.android.support:appcompat-v7:+'
+            implementation 'com.android.support:appcompat-v7:+'
     }
     ```
 3. Add the permission **android.permission.INTERNET** in your **AndroidManifest.xml** file to allow your App internet access, which is needed for Applanga to function.
@@ -473,6 +473,10 @@
      
      To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
     
+
+10. **Multi project setup**
+	
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 2.0.92x`.
 
 ## Optional settings
 

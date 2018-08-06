@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 2.0.92 (6 Aug 2018)
+#### Fixed
+- Android P database crash
+
+---
 ### Version 2.0.91 (25 Jun 2018)
 #### Changed
 - Updated WebView Documentation
