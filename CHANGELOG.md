@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 2.0.94 (25 Sep 2018)
+#### Fixed
+- Handling of corrupt sqlite databases
+
+---
 ### Version 2.0.93 (14 Aug 2018)
 #### Added
 - React-Native support
