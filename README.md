@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 2.0.94
+*Version:* 2.0.95
 
 *Website:* <https://www.applanga.com> 
 
@@ -32,7 +32,7 @@
         }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:2.0.94'
+        implementation 'com.applanga.android:Applanga:2.0.95'
     }
     buildscript {
         repositories {
@@ -42,7 +42,7 @@
             jcenter()
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:2.0.94'
+            classpath  'com.applanga.android:plugin:2.0.95'
         }
     }
     apply plugin: 'applanga'
@@ -476,7 +476,7 @@
 
 10. **Multi project setup**
 	
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 2.0.94x`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 2.0.95x`.
 
 ## Optional settings
 

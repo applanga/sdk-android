@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 2.0.95 (9 Oct 2018)
+#### Added
+- Gradle 4.6 functionality
+- showDraftModeDialog(Activity) to toggle the draft mode dialog without gesture
+
 ### Version 2.0.94 (25 Sep 2018)
 #### Fixed
 - Handling of corrupt sqlite databases
