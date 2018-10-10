@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 2.0.96 (10 Oct 2018)
+#### Fixed
+- Gradle 4.6 issues with some layout files
+
 ### Version 2.0.95 (9 Oct 2018)
 #### Added
 - Gradle 4.6 functionality
