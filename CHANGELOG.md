@@ -5,7 +5,7 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 2.0.97 (23 Oct 2018)
+### Version 2.0.98 (23 Oct 2018)
 #### Added
 - Support for String reference in String
 - Support for CDATA-String notation on the dashboard
