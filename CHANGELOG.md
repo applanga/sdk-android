@@ -5,6 +5,17 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 2.0.97 (23 Oct 2018)
+#### Added
+- Support for String reference in String
+- Support for CDATA-String notation on the dashboard
+- Android split binary support
+
+#### Fixed
+- Draft changes were not actualizing while in draft mode
+- Missing applanga settings file overlay fixed (also for react-native)
+- localizeMap() removes the string entry from its response if no translation is available instead of returning its key as value - for custom fallback handling (react-native)
+
 ### Version 2.0.96 (10 Oct 2018)
 #### Fixed
 - Gradle 4.6 issues with some layout files
