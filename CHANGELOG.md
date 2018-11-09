@@ -5,10 +5,16 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 2.0.100 (9 Nov 2018)
+#### Added
+- reinitialization on database corruption at runtime
+
+---
 ### Version 2.0.99 (25 Oct 2018)
 #### Fixed
 - getStringArray with String reference in String
 
+---
 ### Version 2.0.98 (23 Oct 2018)
 #### Added
 - Support for String reference in String
@@ -20,15 +26,18 @@
 - Missing applanga settings file overlay fixed (also for react-native)
 - localizeMap() removes the string entry from its response if no translation is available instead of returning its key as value - for custom fallback handling (react-native)
 
+---
 ### Version 2.0.96 (10 Oct 2018)
 #### Fixed
 - Gradle 4.6 issues with some layout files
 
+---
 ### Version 2.0.95 (9 Oct 2018)
 #### Added
 - Gradle 4.6 functionality
 - showDraftModeDialog(Activity) to toggle the draft mode dialog without gesture
 
+---
 ### Version 2.0.94 (25 Sep 2018)
 #### Fixed
 - Handling of corrupt sqlite databases
