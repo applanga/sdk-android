@@ -5,7 +5,7 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 2.0.100 (9 Nov 2018)
+### Version 2.0.101 (14 Dec 2018)
 #### Added
 - reinitialization on database corruption at runtime
 
