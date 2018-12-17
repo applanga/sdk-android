@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.102
+*Version:* 3.0.103
 
 *Website:* <https://www.applanga.com>
 
@@ -15,7 +15,8 @@
   3. [Usage](#usage)
   4. [Optional settings](#optional-settings)
 
---
+***
+
 # _Applanga 3.0 Upgrade Instructions_
 As of version **3.0** Applanga depends on [ViewPump](https://github.com/InflationX/ViewPump/tree/master/viewpump/src/main/java/io/github/inflationx/viewpump) to intercept the android view inflation process. The integration hasn't changed much but `localizeView` and `localizeContentView` have been removed from the SDK and jitpack.io needs to be added as a repository for ViewPump.
 Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asset directory for each build variant. _Do not modify this file because it is needed at runtime for the SDK._
@@ -31,14 +32,14 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.102'
+        implementation 'com.applanga.android:Applanga:3.0.103'
     }
     buildscript {
         repositories {
             maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.102'
+            classpath  'com.applanga.android:plugin:3.0.103'
         }
     }
     apply plugin: 'applanga'
@@ -401,7 +402,7 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
 
 9. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.102x`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.103x`.
 
 ## Optional settings
 

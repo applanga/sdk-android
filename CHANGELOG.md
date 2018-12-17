@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.103 (17 Dec 2018)
+#### Fixed
+- Applanga logs adjusted
+
 ### Version 3.0.102 (14 Dec 2018)
 #### Added
 - using ViewPump to intercept view inflation
