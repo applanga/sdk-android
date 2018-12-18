@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.103
+*Version:* 3.0.104
 
 *Website:* <https://www.applanga.com>
 
@@ -19,8 +19,12 @@
 
 # _Applanga 3.0 Upgrade Instructions_
 As of version **3.0** Applanga depends on [ViewPump](https://github.com/InflationX/ViewPump/tree/master/viewpump/src/main/java/io/github/inflationx/viewpump) to intercept the android view inflation process. The integration hasn't changed much but `localizeView` and `localizeContentView` have been removed from the SDK and jitpack.io needs to be added as a repository for ViewPump.
-Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asset directory for each build variant. _Do not modify this file because it is needed at runtime for the SDK._
-`gradle clean` will delete all ***applanga_meta.xml*** files.
+
+Preference items that need to be localized need to have a key please see the [Preference Localization](#usage) section for more details.
+
+Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asset directory for each build variant. **Do not modify this file because it is needed at runtime for the SDK.**
+
+To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`.
 
 ## Installation
 
@@ -32,14 +36,14 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.103'
+        implementation 'com.applanga.android:Applanga:3.0.104'
     }
     buildscript {
         repositories {
             maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.103'
+            classpath  'com.applanga.android:plugin:3.0.104'
         }
     }
     apply plugin: 'applanga'
@@ -171,7 +175,32 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
     ```
     String-Arrays will automatically be uploaded as other strings from your string xml. The **ID**-format is the following: `STRING_ID[0]`, `STRING_ID[1]`, `STRING_ID[2]`, `STRING_ID[..]`.
 
-4. **Update Content**
+4. **Preference Localization**
+
+    With Applanga's plugin Preference Localization is mostly automated as of Applanga version 3.0 but it is important that **every PreferenceItem**, even a `PreferenceCategory`, **has to have a key** - if you want to enable Applanga's localization.
+    After a preferences has been localized there will be a log output stating: "localize Preferences!".
+
+	As an example a working preference xml would look like this:
+	
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+	<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools">
+    	<PreferenceCategory
+    	android:key="example_category_key"
+    	android:title="@string/example_category_key_title">
+    		<Preference
+      		android:key="example_pref_key"
+      		android:title="@string/example_pref_title"/>
+  		</PreferenceCategory>
+  	</PreferenceScreen>
+    ```
+
+5. **Menu Localisation**
+
+    Menu localisation does not require any additional code work. It works out of the box. Important is that **every menu item has to have an id**.
+
+6. **Update Content**
 
     To trigger an update call:
 
@@ -205,7 +234,7 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
     });
     ```
 
-5. **Change Language**
+7. **Change Language**
 
       You can change your app language at runtime using the following call:
 
@@ -227,7 +256,7 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
 
       If you have problems switching to a specific language you can update your settings file     or specifically request that language within an update content call (see **8. Update Content**). You can also     specify the language as a default language to have it requested on each update call (see **Optional settings**).
 
-6. **WebViews**
+8. **WebViews**
 
     Applanga can also translate content in your WebViews. You have to enable JavaScript and pass your WebView to Applanga's `attachWebView(WebView webView)`:
 
@@ -340,7 +369,7 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
     });
     ```
 
-7. **Draft Mode**
+9. **Draft Mode**
 
     To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
 
@@ -352,7 +381,7 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
     }
     ```
 
-8. **Automatic Screenshot Upload**
+10. **Automatic Screenshot Upload**
 
      The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta data such as the current language, resolution and the Applanga translated strings that are visible,     including their positions.
      Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta data: language, app version, device, plattform, OS and resolution.
@@ -400,9 +429,9 @@ Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asse
      To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
 
 
-9. **Multi project setup**
+11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.103x`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.104x`.
 
 ## Optional settings
 
