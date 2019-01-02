@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.104
+*Version:* 3.0.105
 
 *Website:* <https://www.applanga.com>
 
@@ -36,14 +36,14 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.104'
+        implementation 'com.applanga.android:Applanga:3.0.105'
     }
     buildscript {
         repositories {
             maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.104'
+            classpath  'com.applanga.android:plugin:3.0.105'
         }
     }
     apply plugin: 'applanga'
@@ -198,7 +198,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 5. **Menu Localisation**
 
-    Menu localisation does not require any additional code work. It works out of the box. Important is that **every menu item has to have an id**.
+    Menu localisation does not require any additional code to work. Important is that **every menu item has to have an id**.
 
 6. **Update Content**
 
@@ -431,7 +431,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.104x`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.105x`.
 
 ## Optional settings
 

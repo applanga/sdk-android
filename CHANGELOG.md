@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.105 (2 Jan 2019)
+#### Fixed 
+- gradle build improvements
+
 ### Version 3.0.104 (18 Dec 2018)
 #### Fixed
 - preference localisation issues
