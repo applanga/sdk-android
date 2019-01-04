@@ -5,10 +5,17 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+
+### Version 3.0.106 (4 Jan 2019)
+#### Fixed 
+- more explicit call of plugin methods
+
+---
 ### Version 3.0.105 (2 Jan 2019)
 #### Fixed 
 - gradle build improvements
 
+---
 ### Version 3.0.104 (18 Dec 2018)
 #### Fixed
 - preference localisation issues
@@ -16,11 +23,12 @@
 #### Added
 - preference example to documentation
 
-
+---
 ### Version 3.0.103 (17 Dec 2018)
 #### Fixed
 - Applanga logs adjusted
 
+---
 ### Version 3.0.102 (14 Dec 2018)
 #### Added
 - using ViewPump to intercept view inflation
