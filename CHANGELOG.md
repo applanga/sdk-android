@@ -6,6 +6,11 @@
 ***
 
 
+### Version 3.0.107 (4 Jan 2019)
+#### Fixed 
+- plugin preference parser
+
+---
 ### Version 3.0.106 (4 Jan 2019)
 #### Fixed 
 - more explicit call of plugin methods
