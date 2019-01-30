@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.107
+*Version:* 3.0.108
 
 *Website:* <https://www.applanga.com>
 
@@ -18,7 +18,7 @@
 ***
 
 # _Applanga 3.0 Upgrade Instructions_
-As of version **3.0** Applanga depends on [ViewPump](https://github.com/InflationX/ViewPump/tree/master/viewpump/src/main/java/io/github/inflationx/viewpump) to intercept the android view inflation process. The integration hasn't changed much but `localizeView` and `localizeContentView` have been removed from the SDK and jitpack.io needs to be added as a repository for ViewPump.
+As of version **3.0** Applanga depends on [ViewPump](https://github.com/InflationX/ViewPump) to intercept the android view inflation process. The integration hasn't changed much but `localizeView` and `localizeContentView` have been removed from the SDK and jitpack.io needs to be added as a repository for [ViewPump](https://github.com/InflationX/ViewPump). (If your app already uses [ViewPump](https://github.com/InflationX/ViewPump) please see the docu section **12** about [Custom ViewPump Initialization](#usage))
 
 Preference items that need to be localized need to have a key please see the [Preference Localization](#usage) section for more details.
 
@@ -36,14 +36,14 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.107'
+        implementation 'com.applanga.android:Applanga:3.0.108'
     }
     buildscript {
         repositories {
             maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.107'
+            classpath  'com.applanga.android:plugin:3.0.108'
         }
     }
     apply plugin: 'applanga'
@@ -431,8 +431,33 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.107x`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.108x`.
 
+12. **Custom ViewPump Initialization**
+
+	If you are already using [ViewPump](https://github.com/InflationX/ViewPump) in your app for example if you use [Calligraphy](https://github.com/InflationX/Calligraphy) it is advised to initialize [ViewPump](https://github.com/InflationX/ViewPump) before `Applanga.init(...)` because that way all interceptors will stay active. If you need to initialize it at a later stage please make sure to cache and re-add the existing interceptors as shown in the sample below.
+	
+    ```java
+    //cache existing (Applanga) interceptors
+    List<Interceptor> interceptors = ViewPump.get().interceptors();
+
+    //create a new ViewPump.Builder
+    ViewPump.Builder builder = ViewPump.builder().addInterceptor(
+    								new CalligraphyInterceptor(
+                						new CalligraphyConfig.Builder()
+                        					.setDefaultFontPath("fonts/Roboto-ThinItalic.ttf")
+                        					.setFontAttrId(R.attr.fontPath)
+                        					.build()));
+
+    //re-add cached (Applanga) interceptors
+    for(int i = 0; i  < interceptors.size(); i++) {
+	    builder.addInterceptor(interceptors.get(i));
+    }
+
+    //re-initialize ViewPump
+    ViewPump.init(builder.build());
+    ```
+    
 ## Optional settings
 
 1. **Specify default groups or languages**

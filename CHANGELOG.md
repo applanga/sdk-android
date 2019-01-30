@@ -6,6 +6,11 @@
 ***
 
 
+### Version 3.0.108 (30 Jan 2019)
+#### Fixed 
+- viewpump initialization if it was initialized earlier
+
+---
 ### Version 3.0.107 (4 Jan 2019)
 #### Fixed 
 - plugin preference parser
