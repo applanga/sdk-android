@@ -5,7 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.109 (31 Jan 2019)
+#### Fixed 
+- crash on menus with not string references
 
+---
 ### Version 3.0.108 (30 Jan 2019)
 #### Fixed 
 - viewpump initialization if it was initialized earlier
