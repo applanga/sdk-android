@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.110 (6 Feb 2019)
+#### Fixed 
+- missing ids on some screenshots with Hints or EditTextView
+
+---
 ### Version 3.0.109 (31 Jan 2019)
 #### Fixed 
 - crash on menus with not string references
