@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.112 (2 May 2019)
+#### Fixed 
+- missing string upload if app is using some activities with react native or flutter
+
+---
 ### Version 3.0.110 (6 Feb 2019)
 #### Fixed 
 - missing ids on some screenshots with Hints or EditTextView
