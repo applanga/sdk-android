@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.112
+*Version:* 3.0.113
 
 *Website:* <https://www.applanga.com>
 
@@ -36,14 +36,14 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.112'
+        implementation 'com.applanga.android:Applanga:3.0.113'
     }
     buildscript {
         repositories {
             maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.112'
+            classpath  'com.applanga.android:plugin:3.0.113'
         }
     }
     apply plugin: 'applanga'
@@ -158,6 +158,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
     *"This value of the argument called someArg is awesome and the value of anotherArg is crazy. You can reuse arguments multiple times in your text wich is awesome, crazy and awesome."*
 
     3.4 **Pluralisation**
+    
     ```java
     // get a string in the given quantity
     ((Resources)res).getQuantityString(R.plurals.STRING_ID, quantity);
@@ -430,7 +431,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.112x`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.113`.
 
 12. **Custom ViewPump Initialization**
 
@@ -457,6 +458,46 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
     ViewPump.init(builder.build());
     ```
     
+13. **Robolectric Testing**
+	
+	It is possible to use Robolectric testing with the Applanga SDK but unfortunately the Applanga Plugin is not working to the full extent therefore for strings at runtime you need to use the Applanga.getString methods directly as well as manually overwriting your Activities `attachBaseContext` method as shown in the example below:
+	
+	```java
+	public class TestApplangaActivity extends Activity {
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+    		setContentView(R.layout.applanga);
+  		}
+
+		@Override
+		protected void attachBaseContext(Context newBase) {
+			super.attachBaseContext(com.applanga.android.Applanga.wrap(newBase));
+		}
+		
+		public String getLocalizedString(int resId) {
+			return com.applanga.android.Applanga.getString(resId, super.getString(resId));
+		}
+	}
+	```
+	If you run your tests through Android Studio you also need to go to edit your tests build configuration and add `-noverify` to the **VM options:** and for gradle commandline builds extend your *build.gradle* like this:
+	
+	```gradle
+    android {
+    	...
+    	testOptions {
+			unitTests {
+				includeAndroidResources = true
+				all {
+					// configure the test JVM arguments
+					jvmArgs '-noverify'
+            	}
+        	}
+    	}
+		...
+	}
+    ```
+
 ## Optional settings
 
 1. **Specify default groups or languages**

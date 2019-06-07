@@ -5,6 +5,15 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.113 (7 Jun 2019)
+#### Fixed 
+- fixed deprection warning regarding getGenerateBuildConfigProvider
+- fixed deprection warning regarding getMergeResourcesProvider
+- fixed support for Robolectric tests (see documention)
+- fixed device id for non playstore builds
+- reduced Proguard obfuscation
+
+---
 ### Version 3.0.112 (2 May 2019)
 #### Fixed 
 - missing string upload if app is using some activities with react native or flutter
