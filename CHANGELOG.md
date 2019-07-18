@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.114 (18 Jul 2019)
+#### Fixed 
+- added support for sr and sr-Latn
+
+---
 ### Version 3.0.113 (7 Jun 2019)
 #### Fixed 
 - fixed deprection warning regarding getGenerateBuildConfigProvider
