@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.114
+*Version:* 3.0.115
 
 *Website:* <https://www.applanga.com>
 
@@ -36,14 +36,15 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.114'
+        implementation 'com.applanga.android:Applanga:3.0.115'
     }
     buildscript {
         repositories {
+            jcenter()
             maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.114'
+            classpath  'com.applanga.android:plugin:3.0.115'
         }
     }
     apply plugin: 'applanga'
@@ -382,6 +383,13 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
     }
     ```
 
+    The draft mode overlay also requres the alert permission to work, please add it to your manifest like so:
+
+    ```xml
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    ```
+
+
 10. **Automatic Screenshot Upload**
 
      The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta data such as the current language, resolution and the Applanga translated strings that are visible,     including their positions.
@@ -431,7 +439,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.114`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.115`.
 
 12. **Custom ViewPump Initialization**
 
@@ -535,3 +543,15 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
     ```
     applanga.settingsFileAutoUpdate = true
     ```
+3. **Disable automatic string updates when extending the ApplangaApplication Class**
+
+    If you are initialising the sdk by extending or including the provided ApplangaApplication class, but you wish to manually control when the sdk communicates with our servers and updates to the latest strings, then you can include the following setting in your application manifest. 
+
+    ```xml
+    <application>
+            ...
+            <meta-data android:name="ApplangaInitialUpdate" android:value="false"/>
+            ...
+    </application>
+    ```
+	This setting will stop the automatic updates and allow you to call Applanga.update() at any time that suits you
