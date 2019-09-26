@@ -5,11 +5,18 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.116 (26 Sep 2019)
+#### Added
+- added check for keys longer than 997 bytes to meet database requirements
+- added check for new lines in keys
+
+---
 ### Version 3.0.115 (11 Sep 2019)
 #### Added
 - added ApplangaInitialUpdate setting
 - updated viewpump to allow for android target 29
 
+---
 ### Version 3.0.114 (18 Jul 2019)
 #### Fixed 
 - added support for sr and sr-Latn
