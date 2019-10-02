@@ -5,10 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 3.0.116 (26 Sep 2019)
+### Version 3.0.117 (2 Oct 2019)
 #### Added
 - added check for keys longer than 997 bytes to meet database requirements
 - added check for new lines in keys
+- added ApplangaDraftModeEnabled setting
 
 ---
 ### Version 3.0.115 (11 Sep 2019)

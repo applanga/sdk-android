@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.116
+*Version:* 3.0.117
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.116'
+        implementation 'com.applanga.android:Applanga:3.0.117'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://raw.github.com/applanga/sdk-android/master/maven/releases/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.116'
+            classpath  'com.applanga.android:plugin:3.0.117'
         }
     }
     apply plugin: 'applanga'
@@ -439,7 +439,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.116`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.117`.
 
 12. **Custom ViewPump Initialization**
 
@@ -560,3 +560,17 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
     </application>
     ```
 	This setting will stop the automatic updates and allow you to call Applanga.update() at any time that suits you
+	
+4. **Disable Draft Mode**
+
+    If you wish to create a build that cannot enable draft mode at any time, you can include the following setting to your manifest.
+
+    ```xml
+    <application>
+            ...
+            <meta-data android:name="ApplangaDraftModeEnabled" android:value="false"/>
+            ...
+    </application>
+    ```
+
+
