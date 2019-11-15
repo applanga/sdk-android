@@ -5,7 +5,13 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 3.0.120 (14 Nov 2019)
+### Version 3.0.121 (15 Nov 2019)
+#### Fixed
+- Fix for draft mode crash introduced in 3.0.120
+
+---
+
+###Version 3.0.120 (14 Nov 2019)
 #### Fixed
 - Fix for getString calls in androidx derived fragments
 - Fix for time picker dialog not showing correct default values
