@@ -5,19 +5,23 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.122 (19 Nov 2019)
+#### Fixed
+- support for localize hint on android.support.design.widget.TextInputLayout & com.google.android.material.textfield.TextInputLayout
+
+---
 ### Version 3.0.121 (15 Nov 2019)
 #### Fixed
 - Fix for draft mode crash introduced in 3.0.120
 
 ---
-
 ###Version 3.0.120 (14 Nov 2019)
 #### Fixed
 - Fix for getString calls in androidx derived fragments
 - Fix for time picker dialog not showing correct default values
 - Fix for android app compat and androidx dialogs 
----
 
+---
 ### Version 3.0.117 (2 Oct 2019)
 - added check for keys longer than 997 bytes to meet database requirements
 - added check for new lines in keys
