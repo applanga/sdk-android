@@ -5,10 +5,17 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.123 (30 Jan 2020)
+
+#### Added
+- Sending current language when reporting an issue
+
+---
 ### Version 3.0.122 (19 Nov 2019)
 #### Fixed
 - support for localize hint on android.support.design.widget.TextInputLayout & com.google.android.material.textfield.TextInputLayout
-
+#### Added
+- Including strings with missing keys when taking a screen shot
 ---
 ### Version 3.0.121 (15 Nov 2019)
 #### Fixed
