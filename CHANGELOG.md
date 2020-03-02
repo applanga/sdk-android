@@ -5,8 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 3.0.123 (30 Jan 2020)
+### Version 3.0.124 (2 Mar 2020)
+#### Added
+- Screenshot interface for Flutter to provide a Bitmap of the current view
 
+---
+### Version 3.0.123 (30 Jan 2020)
 #### Added
 - Sending current language when reporting an issue
 
@@ -14,15 +18,17 @@
 ### Version 3.0.122 (19 Nov 2019)
 #### Fixed
 - support for localize hint on android.support.design.widget.TextInputLayout & com.google.android.material.textfield.TextInputLayout
+
 #### Added
 - Including strings with missing keys when taking a screen shot
+
 ---
 ### Version 3.0.121 (15 Nov 2019)
 #### Fixed
 - Fix for draft mode crash introduced in 3.0.120
 
 ---
-###Version 3.0.120 (14 Nov 2019)
+### Version 3.0.120 (14 Nov 2019)
 #### Fixed
 - Fix for getString calls in androidx derived fragments
 - Fix for time picker dialog not showing correct default values
