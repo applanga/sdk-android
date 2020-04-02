@@ -5,9 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 3.0.124 (2 Mar 2020)
+### Version 3.0.125 (2 Apr 2020)
 #### Added
 - Screenshot interface for Flutter to provide a Bitmap of the current view
+- setDraftModelEnabled overide method
 
 ---
 ### Version 3.0.123 (30 Jan 2020)
