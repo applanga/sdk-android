@@ -5,6 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.126 (6 Apr 2020)
+#### Fixed
+- check for @NoApplanga annotation on methods
+- added check for null keys
+
+---
 ### Version 3.0.125 (2 Apr 2020)
 #### Added
 - Screenshot interface for Flutter to provide a Bitmap of the current view
