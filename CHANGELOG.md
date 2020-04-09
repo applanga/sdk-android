@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.128 (9 Apr 2020)
+#### Fixed
+- only request supported languages in update
+
+---
 ### Version 3.0.126 (6 Apr 2020)
 #### Fixed
 - check for @NoApplanga annotation on methods

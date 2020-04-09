@@ -3,7 +3,7 @@
   <groupId>com.applanga.android</groupId>
   <artifactId>Applanga</artifactId>
   <versioning>
-    <release>3.0.126</release>
+    <release>3.0.128</release>
     <versions>
       <version>1.0.1</version>
       <version>1.0.2</version>
@@ -114,7 +114,8 @@
       <version>3.0.124</version>
       <version>3.0.125</version>
       <version>3.0.126</version>
+      <version>3.0.128</version>
     </versions>
-    <lastUpdated>20200406105131</lastUpdated>
+    <lastUpdated>20200409160355</lastUpdated>
   </versioning>
 </metadata>
