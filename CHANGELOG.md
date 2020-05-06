@@ -5,6 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.129 (6 May 2020)
+#### Added
+- Allow flutter to take screenshots outside of draft mode
+- Optional OCR screenshots
+
+---
 ### Version 3.0.128 (9 Apr 2020)
 #### Fixed
 - only request supported languages in update
