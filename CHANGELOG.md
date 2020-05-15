@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.130 (15 May 2020)
+####Fixed
+- Plugin now compatible with Java 8
+
+---
 ### Version 3.0.129 (6 May 2020)
 #### Added
 - Allow flutter to take screenshots outside of draft mode

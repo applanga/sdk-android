@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.129
+*Version:* 3.0.130
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.129'
+        implementation 'com.applanga.android:Applanga:3.0.130'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.129'
+            classpath  'com.applanga.android:plugin:3.0.130'
         }
     }
     apply plugin: 'applanga'
@@ -286,7 +286,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
     </script>
     ```
 
-    7.1 **Strings**
+    8.1 **Strings**
 
     The inner text and html of tags wich have a ```applanga-text="STRING_ID"``` attribute will be replaced with the translated value of ***STRING_ID***
 
@@ -298,7 +298,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
     Alternatively you can call `Applanga.getString('STRING_ID')` directly.
 
-    7.2 **Arguments**
+    8.2 **Arguments**
 
     You can pass arguments with the ```applanga-args``` attribute.
     By default the arguments are parsed as a comma seperated list wich then will replace fields as %{arrayIndex}.
@@ -337,7 +337,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
      Direct call : `Applanga.getString('STRING_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
 
-    7.3 **Pluralisation**
+    8.3 **Pluralisation**
 
     To pluralize a html tag you can pass the ```applanga-plural-rule``` attribute with the value ```zero```, ```one```, ```two```, ```few```, ```many``` and ```other```.
 
@@ -361,7 +361,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
     Direct call : `Applanga.getQuantityString('STRING_ID', 42)` or with arguments :     `applanga.getQuantityString('STRING_ID', 42, 'arg1;arg2;etc', ';')`
 
-    7.4 **Update Content**
+    8.4 **Update Content**
 
     To trigger a content update from a WebView use javascript:
 
@@ -399,7 +399,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
      **NOTE:** To capture screenshots the app need the permission to *“Draw over other apps”* so on the first try to make a screenshot the app might redirect you to the permissions screen to enable it.
 
-     9.1 **Make screenshots manually**
+     10.1 **Make screenshots manually**
 
      To manually make a screenshot you first have to set your app into [draft mode](https://applanga.com/docs#draft_on_device_testing).
 
@@ -411,7 +411,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
      You can now choose a tag and press *capture screenshot* to capture and upload a screenshot including all meta data for the currently visible screen and assign it to the selected tag.
      Tags have to be created in the dashboard before they are available in the screenshot menu.
 
-     9.2 **Display screenshot menu programmatically**
+     10.2 **Display screenshot menu programmatically**
 
      You also have the option to display the screenshot menu programmatically, this also requires the app to be in draft mode:
 
@@ -419,7 +419,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
     Applanga.setScreenShotMenuVisible(true);
     ```
 
-     9.3 **Make screenshots programmatically**
+     10.3 **Make screenshots programmatically**
 
      To create a screenshot programmatically you call the following function:
 
@@ -433,11 +433,11 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
      The Applanga SDK tries to find all IDs on the screen but you can also pass additional IDs in the **applangaIDs** parameter.
 
-     9.4 **Make screenshots during UITests**
+     10.4 **Make screenshots during UITests**
 
      To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
      
-     9.5 **OCR screenshots**
+     10.5 **OCR screenshots**
      
      The applanga SDK automatically finds the tags of all texts on screen, but if for some reason a text is not tagged or the sdk cannot find the correct tag, you may take a screenshot programmatically using the enableOcr param like so.
 	```java
@@ -448,7 +448,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.129`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.130`.
 
 12. **Custom ViewPump Initialization**
 
