@@ -6,7 +6,7 @@
 ***
 
 ### Version 3.0.130 (15 May 2020)
-####Fixed
+#### Fixed
 - Plugin now compatible with Java 8
 
 ---
