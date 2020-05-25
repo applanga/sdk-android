@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.131 (25 May 2020)
+####Fixed
+- Automatic removal of language databases that dont exist on the dashboard
+
+---
 ### Version 3.0.130 (15 May 2020)
 #### Fixed
 - Plugin now compatible with Java 8
