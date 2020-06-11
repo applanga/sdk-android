@@ -5,12 +5,17 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.133 (11 Jun 2020)
+#### Fixed
+- Removed accidental debug log on gradle build
+
+---
 ### Version 3.0.132 (3 Jun 2020)
 #### Fixed
 - Fixed issues with Android Gradle Plugin 4.x and Android Studio 4.0
 
 ---
-### 3.0.131 (25 May 2020)
+### Version 3.0.131 (25 May 2020)
 #### Fixed
 - Automatic removal of language databases that dont exist on the dashboard
 
