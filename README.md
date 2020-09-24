@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.134
+*Version:* 3.0.135
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.134'
+        implementation 'com.applanga.android:Applanga:3.0.135'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.134'
+            classpath  'com.applanga.android:plugin:3.0.135'
         }
     }
     apply plugin: 'applanga'
@@ -68,29 +68,56 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             @android.webkit.JavascriptInterface <methods>;
     }
     ```
-4. The easiest way to initialize **Applanga** in your Application is by extending your `Application` class from ```ApplangaApplication```.
+    
+## Initialization
 
-    ```java
-    import com.applanga.android.ApplangaApplication;
+#### 1. **Auto init**
 
-    public class MyApplication extends ApplangaApplication {
+The easiest way to initialize **Applanga** in your Application is by extending your `Application` class from ```ApplangaApplication```.
+
+
+```java
+    
+import com.applanga.android.ApplangaApplication;
+
+public class MyApplication extends ApplangaApplication {
+        ...
+}
+    
+```
+
+
+If you do not have an `Application` class you can simply add the following to the `<application .../>` section of your AndroidManifest.xml
+
+```xml
+<application
+        android:name="com.applanga.android.ApplangaApplication"
+        ...
+        >
             ...
+</application>
+```
+
+***NOTE:*** *If you cannot extend ApplangaApplication, you have to call Applanga.init(), followed by Applanga.update() in your `Application` class manually (see **Update Content**).*
+
+#### 2. **Manual Init**
+
+You can also choose to manually init the applanga sdk like so:
+
+```java
+//called from an activity
+Applanga.init(this);
+Applanga.update(new ApplangaCallback() {
+    @Override
+    public void onLocalizeFinished(boolean b) {
+        //continue loading your app
     }
-    ```
+});
+        
+```
+The advantage of this method is that you could stop the app from loading any texts until the Applanga sdk has pulled the latest strings from the dash.
 
-    If you do not have an `Application` class you can simply add the following to the `<application .../>` section of your AndroidManifest.xml
-
-    ```xml
-    <application
-            android:name="com.applanga.android.ApplangaApplication"
-            ...
-            >
-                ...
-    </application>
-    ```
-
-    ***NOTE:*** *If you cannot extend ApplangaApplication, you have to call Applanga.init(), followed by Applanga.update() in your `Application` class manually (see **Update Content**).*
-
+In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you can see that we have a loading screen activity that inits and updates applanga, and then loads the first Activity in the app one update is complete.
 
 ## Configuration
 1. If you want to translate a android app with Applanga you need to download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***.
@@ -448,7 +475,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.134`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.135`.
 
 12. **Custom ViewPump Initialization**
 

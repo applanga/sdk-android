@@ -5,12 +5,22 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.135 (24 Sep 2020)
+#### Fixed
+- Error when key is too long
+
+#### Added
+- Added accessibility ids and changed screenshot overlay flags for appium testing
+- Added documentation for manual init
+
+---
 ### Version 3.0.134 (28 Jul 2020)
 #### Fixed
 - Gzip https rerquests as default
 - added optional interface for providing string positions
 - Updated to use the 'maven-publish' plugin for release
 - Updated to use latest android sdk and gradle plugin
+
 ---
 ### Version 3.0.133 (11 Jun 2020)
 #### Fixed
