@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.135
+*Version:* 3.0.136
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.135'
+        implementation 'com.applanga.android:Applanga:3.0.136'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.135'
+            classpath  'com.applanga.android:plugin:3.0.136'
         }
     }
     apply plugin: 'applanga'
@@ -475,7 +475,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.135`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.136`.
 
 12. **Custom ViewPump Initialization**
 
