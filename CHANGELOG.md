@@ -5,7 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 3.0.136 (28 Sep 2020)
+### Version 3.0.137 (30 Sep 2020)
+#### Fixed
+- Support for android gradle plugin 4.1+
+
+---
+### Version 3.0.135 (24 Sep 2020)
 #### Fixed
 - Error when key is too long
 
