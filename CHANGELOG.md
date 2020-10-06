@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.138 (6 Oct 2020)
+#### Added
+- Added extra logging to the init proccess to help with debugging database issues
+
+---
 ### Version 3.0.137 (30 Sep 2020)
 #### Fixed
 - Support for android gradle plugin 4.1+
