@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.140 (26 Nov 2020)
+#### Fixed
+- Moved ALLOG init so that it happens before anything else, thus enabling loggign at all stages of init process.
+
+---
 ### Version 3.0.139 (21 Oct 2020)
 #### Fixed
 - Fix for projects using android gradle plugin 4.1.0 with more than 2 build varients
