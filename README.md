@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.140
+*Version:* 3.0.141
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.140'
+        implementation 'com.applanga.android:Applanga:3.0.141'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.140'
+            classpath  'com.applanga.android:plugin:3.0.141'
         }
     }
     apply plugin: 'applanga'
@@ -475,7 +475,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.140`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.141`.
 
 12. **Custom ViewPump Initialization**
 
@@ -613,13 +613,18 @@ You can also use the following method at runtime
 	```
 Applanga.setDraftModelEnabled(bool);
    ```
-This will overide the setting in the manifest, but it will not override draft mode being disabled in the applanga dashboard.
+This will override the setting in the manifest, but it will not override draft mode being disabled in the applanga dashboard.
+
+## Jetpack Compose
+
+The ApplangaSDK will work correctly with jetpack compose based apps. The only difference is that string positions and values in screenshots may be a little less accurate compared to traditional views. We are working on improving this as more information about the framework becomes available.
+
 
 ## Known Issues
 
 1: Broken jar file
 
-Occasionally, after adding the applanga SDK you will see an error somehting like this: 
+Occasionally, after adding the applanga SDK you will see an error something like this: 
 
 ```
 javassist.NotFoundException: broken jar file?

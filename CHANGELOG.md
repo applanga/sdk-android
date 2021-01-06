@@ -5,7 +5,19 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.141 (6 Jan 2021)
+#### Added
+- Draft menu redesign
+- added method 'localizedStringsForCurrentLanguage'
+- Support for draft mode, plugin and ocr screenshots in jetpack compose  
+
+---
 ### Version 3.0.140 (26 Nov 2020)
+#### Fixed
+- Moved ALLOG init so that it happens before anything else, thus enabling loggign at all stages of init process.
+
+---
+### Version 3.0.139 (21 Oct 2020)
 #### Fixed
 - Moved ALLOG init so that it happens before anything else, thus enabling loggign at all stages of init process.
 
