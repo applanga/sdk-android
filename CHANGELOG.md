@@ -10,7 +10,6 @@
 - Automatic detection of androidx uitests for automated screenshots
 - Changed package name of flutter plugin to work with flutter V2
 - Support for menus with item groups
-- 
 #### Added
 - Support for AndroidX navigation view menu
 
