@@ -5,6 +5,16 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.142 (18 Mar 2021)
+#### Fixed
+- Automatic detection of androidx uitests for automated screenshots
+- Changed package name of flutter plugin to work with flutter V2
+- Support for menus with item groups
+- 
+#### Added
+- Support for AndroidX navigation view menu
+
+---
 ### Version 3.0.141 (6 Jan 2021)
 #### Added
 - Draft menu redesign
