@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.143 (24 Mar 2021) 
+#### Added
+- Extra logging for initial database errors
+
+---
 ### Version 3.0.142 (18 Mar 2021)
 #### Fixed
 - Automatic detection of androidx uitests for automated screenshots
