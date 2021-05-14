@@ -5,6 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.144 (14 May 2021) 
+#### Fixed
+- Auto detection of UITexts using androidX on device
+- crash in localizedStringsForCurrentLanguage
+
+---
 ### Version 3.0.143 (24 Mar 2021) 
 #### Added
 - Extra logging for initial database errors
@@ -15,6 +21,7 @@
 - Automatic detection of androidx uitests for automated screenshots
 - Changed package name of flutter plugin to work with flutter V2
 - Support for menus with item groups
+
 #### Added
 - Support for AndroidX navigation view menu
 
