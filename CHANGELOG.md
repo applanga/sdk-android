@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.145 (11 Jun 2021) 
+#### Fixed
+- resolved random gradle build issue
+
+---
 ### Version 3.0.144 (14 May 2021) 
 #### Fixed
 - Auto detection of UITexts using androidX on device
