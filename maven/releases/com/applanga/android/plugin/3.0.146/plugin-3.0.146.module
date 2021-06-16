@@ -1,0 +1,105 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.applanga.android",
+    "module": "plugin",
+    "version": "3.0.146",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.1.1",
+      "buildId": "ks34alevyngbviozlbvq4h73ga"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "plugin-3.0.146.jar",
+          "url": "plugin-3.0.146.jar",
+          "size": 123940,
+          "sha512": "46b8d9ddfb305733e4da12caaa89319b14eed96cf9a8b1b641f197ef83a8df114a0d2d3592f3a00d87309cf7e0ce8d938903af449ecba3689def15dcc5073a27",
+          "sha256": "bae24e2b5cc83829fb1e4688117c788750506660bf7eec6454a766314e7fb0c9",
+          "sha1": "7143479c71864b5a8b46221da0cfd88fef01188a",
+          "md5": "f0fd393963cb4abb7fcb53e21c203fb6"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.applanga.android",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.1"
+          }
+        },
+        {
+          "group": "org.javassist",
+          "module": "javassist",
+          "version": {
+            "requires": "3.28.0-GA"
+          }
+        },
+        {
+          "group": "com.github.stephanenicolas.javassist",
+          "module": "javassist-build-plugin-api",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "com.google.android",
+          "module": "android",
+          "version": {
+            "requires": "4.1.1.4"
+          }
+        },
+        {
+          "group": "com.google.android",
+          "module": "support-v4",
+          "version": {
+            "requires": "r7"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-java",
+          "version": {
+            "requires": "3.17.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "plugin-3.0.146.jar",
+          "url": "plugin-3.0.146.jar",
+          "size": 123940,
+          "sha512": "46b8d9ddfb305733e4da12caaa89319b14eed96cf9a8b1b641f197ef83a8df114a0d2d3592f3a00d87309cf7e0ce8d938903af449ecba3689def15dcc5073a27",
+          "sha256": "bae24e2b5cc83829fb1e4688117c788750506660bf7eec6454a766314e7fb0c9",
+          "sha1": "7143479c71864b5a8b46221da0cfd88fef01188a",
+          "md5": "f0fd393963cb4abb7fcb53e21c203fb6"
+        }
+      ]
+    }
+  ]
+}
