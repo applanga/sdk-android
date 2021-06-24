@@ -5,8 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 3.0.146 (16 Jun 2021) 
+### Version 3.0.147 (24 Jun 2021) 
+#### ADDED
+- first gradle 7+ and android plugin 7+ support
 
+---
+### Version 3.0.146 (16 Jun 2021)
 #### FIXED
 - improved fix for random gradle build issue 
 
