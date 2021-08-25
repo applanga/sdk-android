@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.147
+*Version:* 3.0.149
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.147'
+        implementation 'com.applanga.android:Applanga:3.0.149'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.147'
+            classpath  'com.applanga.android:plugin:3.0.149'
         }
     }
     apply plugin: 'applanga'
@@ -120,7 +120,7 @@ The advantage of this method is that you could stop the app from loading any tex
 In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you can see that we have a loading screen activity that inits and updates applanga, and then loads the first Activity in the app one update is complete.
 
 ## Configuration
-1. If you want to translate a android app with Applanga you need to download the *Applanga Settings File* for your app from the Applanga App Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***.
+1. If you want to translate a android app with Applanga you need to download the *Applanga Settings File* for your app from the Applanga Project Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***.
 2. Add the *Applanga Settings File* to your apps resources res/raw directory
 
 
@@ -475,7 +475,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.147`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.149`.
 
 12. **Custom ViewPump Initialization**
 
