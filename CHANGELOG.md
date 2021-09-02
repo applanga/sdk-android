@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.150 (2 Sep 2021) 
+
+#### ADDED
+- Applanga Show Id Mode
+
 ### Version 3.0.149 (25 Aug 2021) 
 
 #### ADDED

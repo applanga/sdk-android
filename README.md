@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.149
+*Version:* 3.0.150
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.149'
+        implementation 'com.applanga.android:Applanga:3.0.150'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.149'
+            classpath  'com.applanga.android:plugin:3.0.150'
         }
     }
     apply plugin: 'applanga'
@@ -463,8 +463,22 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
      10.4 **Make screenshots during UITests**
 
      To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
-     
-     10.5 **OCR screenshots**
+
+    The applanga SDK automatically finds the tags of all texts on screen, but if for some reason a text is not tagged or the sdk cannot find the correct tag. There are different reasons for it, the most common reason are strings set during runtime. The best method to get all current strings on the screen correctly tagged is with the show id mode.
+    
+    The show id mode shows all string id's instead of the translations. With this mode enabled the SDK is able to collect all string ids on the screen. It's more reliable then OCR and it works even with localisations set at runtime.
+
+    Usage:
+
+    ```java
+    Applanga.setShowIdModeEnabled(true);
+    ```
+
+    Note:
+    If setIdModeEnabled is set after showing specific screen, you have to recreate the activity or set the flag before intialising your screen.
+
+
+     10.6 **OCR screenshots**
      
      The applanga SDK automatically finds the tags of all texts on screen, but if for some reason a text is not tagged or the sdk cannot find the correct tag, you may take a screenshot programmatically using the enableOcr param like so.
 	```java
@@ -475,7 +489,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.149`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.150`.
 
 12. **Custom ViewPump Initialization**
 
