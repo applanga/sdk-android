@@ -5,19 +5,26 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 3.0.150 (2 Sep 2021) 
 
+### Version 3.0.151 (28 Oct 2021) 
+#### FIXED
+- support for simulator M1 macbook
+
+---
+### Version 3.0.150 (2 Sep 2021) 
 #### ADDED
 - Applanga Show Id Mode
+- Applanga Convert Placeholder
 
+---
 ### Version 3.0.149 (25 Aug 2021) 
-
 #### ADDED
 - setDraftModelEnabled() is deprecated and renamed to setDraftModeEnabled()
 
 #### FIXED
 - @NoApplanga was not respected on class level
 
+---
 ### Version 3.0.147 (24 Jun 2021) 
 #### ADDED
 - first gradle 7+ and android plugin 7+ support

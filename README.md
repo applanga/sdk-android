@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.150
+*Version:* 3.0.151
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.150'
+        implementation 'com.applanga.android:Applanga:3.0.151'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.150'
+            classpath  'com.applanga.android:plugin:3.0.151'
         }
     }
     apply plugin: 'applanga'
@@ -489,7 +489,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.150`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.151`.
 
 12. **Custom ViewPump Initialization**
 
@@ -622,14 +622,38 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
             ...
     </application>
     ```
-You can also use the following method at runtime
+    You can also use the following method at runtime
 
-	```
-Applanga.setDraftModelEnabled(bool);
-   ```
-This will override the setting in the manifest, but it will not override draft mode being disabled in the applanga dashboard.
+    ```
+    Applanga.setDraftModelEnabled(bool);
+    ```
+    
+	This will override the setting in the manifest, but it will not override draft mode being disabled in the applanga dashboard.
 
-## Jetpack Compose
+5. **Convert Placeholder**
+
+    To convert placeholders between iOS and Android style you need to enable the following in your Manifest:
+	
+    ```xml
+    <application>
+            ...
+            <meta-data android:name="ApplangaConvertPlaceholders" android:value="true"/>
+            ...
+    </application>
+    ```
+    
+	The ***Convert Placeholder*** feature has support for the following:
+	  - All Instances of `%@` will be convert to `%s`
+	  - Unsupported conversion types by default will be converted to `%s` 
+     - Float `%f`, double `%g`  and `%p` are converted to `%d`
+     - Objective C integer types like `%i` and `%u` are converted to `%d`
+     - Support Android Argument Index `%4$s`
+     - Support Android Relative Index `%<s`
+     - Support Android Ordinary indexing `%s`
+     - Length format is converted to `%d`
+
+
+## Jetpack Compose ##
 
 The ApplangaSDK will work correctly with jetpack compose based apps. The only difference is that string positions and values in screenshots may be a little less accurate compared to traditional views. We are working on improving this as more information about the framework becomes available.
 
@@ -641,7 +665,8 @@ The ApplangaSDK will work correctly with jetpack compose based apps. The only di
 Occasionally, after adding the applanga SDK you will see an error something like this: 
 
 ```
-javassist.NotFoundException: broken jar file?
+    javassist.NotFoundException: broken jar file?
 ```
+
 This is a gradle bug that is usually solved by restarting your computer, or restarting the gradle service.
-More info [here](https://github.com/mqzhangw/JIMU/issues/52). 
+More info [here](https://github.com/mqzhangw/JIMU/issues/52).
