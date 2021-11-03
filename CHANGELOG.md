@@ -6,6 +6,10 @@
 ***
 
 
+### Version 3.0.152 (3 Nov 2021) 
+#### ADDED
+- improved MaterialAlertDialogBuilder Applanga plugin support
+
 ### Version 3.0.151 (28 Oct 2021) 
 #### FIXED
 - support for simulator M1 macbook
