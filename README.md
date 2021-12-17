@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.152
+*Version:* 3.0.153
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.152'
+        implementation 'com.applanga.android:Applanga:3.0.153'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.152'
+            classpath  'com.applanga.android:plugin:3.0.153'
         }
     }
     apply plugin: 'applanga'
@@ -489,7 +489,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.152`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.153`.
 
 12. **Custom ViewPump Initialization**
 
@@ -653,10 +653,86 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
      - Length format is converted to `%d`
 
 
-## Jetpack Compose ##
+## Jetpack Compose
 
-The ApplangaSDK will work correctly with jetpack compose based apps. The only difference is that string positions and values in screenshots may be a little less accurate compared to traditional views. We are working on improving this as more information about the framework becomes available.
+The ApplangaSDK supports `stringResource()` and `stringArrayResource()`.
 
+### Jetpack Compose Screenshots
+
+Jetpack Compose screenshots are less accurate when doing screenshots manually with the draft menu. To have accurate string positions you have to pass them to the SDK while doing tests.
+A compose test rule is needed as shown in the example below. The example does two screenshots: One with showIdMode enabled - to link all strings correctly to the current tag - and then it does a 'normal' screenshot where all translations are visible.
+
+```kotlin
+@get:Rule
+val composeTestRule = createAndroidComposeRule(JetpackComposeActivity::class.java)
+
+private fun stringPositionsToString(
+    positions: Map<String, Rect>,
+    isInShowIdMode: Boolean
+): String {
+    var json = "{\"ALStringPositions\":[";
+    positions.forEach {
+        json += "{"
+        if (isInShowIdMode) {
+            json += "\"key\": \"${it.key}\","
+        }
+        json += "\"value\": \"${it.key}\","
+
+        json += "\"x\": \"${it.value.left}\"," +
+                "\"y\": \"${it.value.top}\"," +
+                "\"width\": \"${it.value.width}\"," +
+                "\"height\": \"${it.value.height}\"},"
+    }
+
+    json = json.substring(0, json.length - 1) + "]}"
+    return json
+}
+
+private fun getStringPositions(
+    nodes: Iterable<SemanticsNode>,
+    positions: Map<String, Rect> = mapOf()
+): Map<String, Rect> {
+    var mutablePositions = positions.toMutableMap();
+    nodes.forEach { node ->
+        val pos = Rect(node.positionInWindow, node.size.toSize())
+        node.config.forEach { configValue ->
+            val key = configValue.key.name
+            if (key === "Text") {
+                val values = configValue.value
+                if (values is Collection<*>) {
+                    values.forEach { value ->
+                        if (value is AnnotatedString) {
+                            mutablePositions[value.text] = pos;
+                        }
+                    }
+                }
+            }
+        }
+        mutablePositions =
+            getStringPositions(node.children, positions = mutablePositions).toMutableMap()
+    }
+    return mutablePositions;
+}
+
+@Test
+fun testUploadStringsWithShowIdMode() {
+    Applanga.setShowIdModeEnabled(true)
+    composeTestRule.activity.runOnUiThread {
+        composeTestRule.activity.recreate()
+    };
+    val pos = getStringPositions(composeTestRule.onAllNodes(isEnabled()).fetchSemanticsNodes())
+    val jsonString = stringPositionsToString(pos, true)
+    Applanga.captureScreenshot("jetpack_compose_activity", null, jsonString, null);
+    Applanga.setShowIdModeEnabled(false)
+}
+
+@Test
+fun testUploadStrings() {
+    val pos = getStringPositions(composeTestRule.onAllNodes(isEnabled()).fetchSemanticsNodes())
+    val jsonString = stringPositionsToString(pos, false)
+    Applanga.captureScreenshot("jetpack_compose_activity", null, jsonString, null);
+}
+```
 
 ## Known Issues
 

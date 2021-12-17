@@ -6,9 +6,14 @@
 ***
 
 
-### Version 3.0.152 (3 Nov 2021) 
+### Version 3.0.153 (17 Dec 2021) 
 #### ADDED
+- added support for JetpackCompose
+- improved Actionbar support
+- added exit button for screenshot menu
 - improved MaterialAlertDialogBuilder Applanga plugin support
+- Applanga setLanguageAndUpdate()
+- set minSdkVersion from 9 to 11
 
 ### Version 3.0.151 (28 Oct 2021) 
 #### FIXED
