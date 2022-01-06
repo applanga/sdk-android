@@ -6,6 +6,10 @@
 ***
 
 
+### Version 3.0.154 (6 Jan 2022) 
+#### FIXED
+- placeholder conversion bug fixed 
+
 ### Version 3.0.153 (17 Dec 2021) 
 #### ADDED
 - added support for JetpackCompose
