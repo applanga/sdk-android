@@ -6,6 +6,10 @@
 ***
 
 
+### Version 3.0.155 (18 Jan 2022) 
+#### FIXED
+- placeholder conversion database creation for multiple languages bug
+
 ### Version 3.0.154 (6 Jan 2022) 
 #### FIXED
 - placeholder conversion bug fixed 
