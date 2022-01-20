@@ -6,6 +6,16 @@
 ***
 
 
+### Version 3.0.156 (20 Jan 2022) 
+#### Added
+- improved placeholder conversion documentation
+
+#### Fixed
+- conversion `%g` remains `%g`
+- conversion `%U` converts to `%d`
+- conversion `%D` converts to `%d`
+
+
 ### Version 3.0.155 (18 Jan 2022) 
 #### FIXED
 - placeholder conversion database creation for multiple languages bug

@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.155
+*Version:* 3.0.156
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.155'
+        implementation 'com.applanga.android:Applanga:3.0.156'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.155'
+            classpath  'com.applanga.android:plugin:3.0.156'
         }
     }
     apply plugin: 'applanga'
@@ -489,7 +489,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.155`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.156`.
 
 12. **Custom ViewPump Initialization**
 
@@ -641,16 +641,33 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
             ...
     </application>
     ```
-    
-	The ***Convert Placeholder*** feature has support for the following:
-	  - All Instances of `%@` will be convert to `%s`
-	  - Unsupported conversion types by default will be converted to `%s` 
-     - Float `%f`, double `%g`  and `%p` are converted to `%d`
-     - Objective C integer types like `%i` and `%u` are converted to `%d`
-     - Support Android Argument Index `%4$s`
-     - Support Android Relative Index `%<s`
-     - Support Android Ordinary indexing `%s`
-     - Length format is converted to `%d`
+
+    ***Common placeholder***
+
+    These placeholder will not be converted as they are supported on iOS and Android.
+
+    - Scientific notation `%e` and `%E`
+    - `%c` and `%C` Unicode Characters
+    - `%f` floating point number
+    - `%g` and `%G` computerized scientific notation
+    - `%a` and `%A` Floating point numbers
+    - Octal integer `%o` (for `%O` see Android to iOS conversion)
+    - `%x` and `%X` hexadecimal presentation using lowercase letters (`%x`) or uppercase letters (`%X`)
+    - `%d` will remain `%d`
+    - Positional placeholder as `%1$s` are converted to `%1$@` and vice-versa
+
+
+    ***iOS placeholder***
+    - All Instances of `%@` will be convert to `%s`
+    - Unsupported conversion types by default will be converted to `%s`
+    - double `%g` and `%p` are converted to `%d`
+    - Objective C integer types like `%i,` and `%u` and `%U` are converted to `%d`
+    - Floating point numbers `%f` and `%F` will be converted to `%f`
+    - iOS `%s` is not supported and remains `%s` which will be and Android String
+    - `%p` iOS Pointer will be converted to Android integer `%d`
+    - `%O` Octal integer is converted to `%o`
+    - `%D` is converted to `%d`
+
 
 
 ## Jetpack Compose
