@@ -6,24 +6,31 @@
 ***
 
 
-### Version 3.0.157 (4 Feb 2022) 
-#### Added
+### Version 3.0.158 (4 Feb 2022) 
+#### FIXED
+- case where id was shown instead of translation at startup
+
+---
+### Version 3.0.156 (20 Jan 2022) 
+#### ADDED
 - improved placeholder conversion documentation
 
-#### Fixed
+#### FIXED
 - conversion `%g` remains `%g`
 - conversion `%U` converts to `%d`
 - conversion `%D` converts to `%d`
 
-
+---
 ### Version 3.0.155 (18 Jan 2022) 
 #### FIXED
 - placeholder conversion database creation for multiple languages bug
 
+---
 ### Version 3.0.154 (6 Jan 2022) 
 #### FIXED
 - placeholder conversion bug fixed 
 
+---
 ### Version 3.0.153 (17 Dec 2021) 
 #### ADDED
 - added support for JetpackCompose
@@ -33,6 +40,7 @@
 - Applanga setLanguageAndUpdate()
 - set minSdkVersion from 9 to 11
 
+---
 ### Version 3.0.151 (28 Oct 2021) 
 #### FIXED
 - support for simulator M1 macbook
