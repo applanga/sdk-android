@@ -6,6 +6,11 @@
 ***
 
 
+### Version 3.0.159 (17 Feb 2022) 
+#### ADDED
+- language mapping option
+- zh-Hant-HK support
+
 ### Version 3.0.158 (4 Feb 2022) 
 #### FIXED
 - case where id was shown instead of translation at startup

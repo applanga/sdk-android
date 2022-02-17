@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.158
+*Version:* 3.0.159
 
 *Website:* <https://www.applanga.com>
 
@@ -36,7 +36,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.158'
+        implementation 'com.applanga.android:Applanga:3.0.159'
     }
     buildscript {
         repositories {
@@ -44,7 +44,7 @@ To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`
             maven { url 'https://maven.applanga.com/' }
         }
         dependencies {
-            classpath  'com.applanga.android:plugin:3.0.158'
+            classpath  'com.applanga.android:plugin:3.0.159'
         }
     }
     apply plugin: 'applanga'
@@ -489,7 +489,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.158`.
+	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.159`.
 
 12. **Custom ViewPump Initialization**
 
@@ -667,6 +667,22 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
     - `%p` iOS Pointer will be converted to Android integer `%d`
     - `%O` Octal integer is converted to `%o`
     - `%D` is converted to `%d`
+
+6. **Language Mapping**
+
+    You can map a locale to another locale. For example if you don't have `es-CL` added to your dashboard it usually has a fallback to `es`. But if you want to treat `es-CL` as `es-MX` then you could add it to the map. Watch out for the log: `ApplangaLanguageMap: es-CL is mapped to es-MX`
+
+    Example:
+
+    ```xml
+    <application>
+            ...
+           <meta-data
+            android:name="ApplangaLanguageMap"
+            android:value="zh-Hant-HK=zh-HK,es-CL=es-MX" />
+            ...
+    </application>
+    ```
 
 
 
