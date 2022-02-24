@@ -5,12 +5,17 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.160 (24 Feb 2022) 
+#### Fixed
+- removed unused reference to bluetooth to fix API 31 warnings
 
+---
 ### Version 3.0.159 (17 Feb 2022) 
 #### ADDED
 - language mapping option
 - zh-Hant-HK support
 
+---
 ### Version 3.0.158 (4 Feb 2022) 
 #### FIXED
 - case where id was shown instead of translation at startup
