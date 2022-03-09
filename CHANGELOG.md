@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.161 (9 Mar 2022) 
+#### Added
+- localizeMap support for empty (null) translations
+
+---
 ### Version 3.0.160 (24 Feb 2022) 
 #### Fixed
 - removed unused reference to bluetooth to fix API 31 warnings
