@@ -5,6 +5,13 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.162 (14 Apr 2022) 
+#### Fixed
+- missing string upload for android gradle plugin 7.1.3 if package name differs from application id
+- menu and preferences translation if using android gradle plugin 7.1.3
+- activity.setTitle(resourceId)
+
+---
 ### Version 3.0.161 (9 Mar 2022) 
 #### Added
 - localizeMap support for empty (null) translations
