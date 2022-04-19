@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.163 (19 Apr 2022) 
+#### Fixed
+- screenshot menu keyboard for tag name not showing 
+
+---
 ### Version 3.0.162 (14 Apr 2022) 
 #### Fixed
 - missing string upload for android gradle plugin 7.1.3 if package name differs from application id
