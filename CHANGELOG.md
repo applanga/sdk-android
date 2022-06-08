@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.164 (8 Jun 2022) 
+#### Fixed
+- improved Applanga.init() startup time
+- fixed wrong missing string upload edge case while using instant run
+
 ### Version 3.0.163 (19 Apr 2022) 
 #### Fixed
 - screenshot menu keyboard for tag name not showing 
