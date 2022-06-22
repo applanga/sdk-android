@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.165 (22 Jun 2022) 
+#### Fixed
+- improved internal applanga_meta xml parsing time -> affecting Applanga.init() startup time
+
 ### Version 3.0.164 (8 Jun 2022) 
 #### Fixed
 - improved Applanga.init() startup time
