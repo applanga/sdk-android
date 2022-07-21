@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 3.0.167 (21 Jul 2022) 
+#### Fixed
+- build errors when using custom views with overloading setText method
+
 ### Version 3.0.166 (12 Jul 2022) 
 #### Fixed
 - RTL layouts were ignored for specific cases
