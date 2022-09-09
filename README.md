@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 3.0.167
+*Version:* 4.0.168
 
 *Website:* <https://www.applanga.com>
 
@@ -17,46 +17,90 @@
 
 ***
 
-# _Applanga 3.0 Upgrade Instructions_
-As of version **3.0** Applanga depends on [ViewPump](https://github.com/InflationX/ViewPump) to intercept the android view inflation process. The integration hasn't changed much but `localizeView` and `localizeContentView` have been removed from the SDK and jitpack.io needs to be added as a repository for [ViewPump](https://github.com/InflationX/ViewPump). (If your app already uses [ViewPump](https://github.com/InflationX/ViewPump) please see the docu section **12** about [Custom ViewPump Initialization](#usage))
+## Applanga 4.0 Major Changes 
 
-Preference items that need to be localized need to have a key please see the [Preference Localization](#usage) section for more details.
+### Plugin
+***The Applanga plugin only is compatible with projects using the Android Gradle Plugin 7+.***
+If you still depend on Android Gradle Plugin 4+ please use Applanga version 3+.
+We rewrote big parts of the plugin to align with the newest AGP API's. Which makes the build a lot faster and more stable.
+We changed the package name of the plugin, you also can add it now via the `plugins{}` block in your `build.gradle`.
 
-Applanga's gradle plugin will create a ***applanga_meta.xml*** file in your asset directory for each build variant. **Do not modify this file because it is needed at runtime for the SDK.**
+### SDK
+The Applanga SDK will automatically initialize as soon as the App starts. This overcomes a lot of issues we had in the past regarding wrong initialization especially connected to deep link scenarios.
+We deprecated `Applanga.getString` methods as we cover all usual `getString()` calls without further configurations and we have seen a lot of confusion about the existence of `Applanga.getString` calls.
 
-To delete all ***applanga_meta.xml*** files you just need to call `gradle clean`.
+***
 
 ## Installation
+The Applanga SDK comes with an Applanga Gradle Plugin. Both work closely together so make sure they have the exact version number. The responsibility of the plugin is to proxy all your `getString` or `setText` calls to the Applanga SDK that you receive the latest over-the-air updates.
 
-1. To localize your android app please add the following lines to the bottom of your Apps **build.gradle** to integrate the current version of the Applanga Plugin and Applanga localization SDK into your App.
+### SDK
+Add the Applanga maven repository and the Applanga dependency to your `app/build.gradle` file.
+```gradle
+// $projectDir/app/build.gradle
+repositories {
+    maven { url 'https://maven.applanga.com/'}
+}
+dependencies {
+    implementation 'com.applanga.android:Applanga:4.0.168'
+}
+```
 
-    ```gradle
+### Plugin
+As shortly described above, the plugin is responsible to proxy all relevant `getString` calls through the Applanga SDK.
+It also collects data from your resource files, which is needed for accurate translations of specific views.
+This metadata data is stored in `applanga_meta.xml` in your `assets/` folder. It's recommended to ignore these files and not commit them to your repository.
+```gradle
+// .gitignore
+...
+*applanga_meta.xml
+```
+
+There are two different ways how to apply this plugin.
+
+#### 1. Add the plugin via plugins DSL
+
+```gradle
+// $projectDir/app/build.gradle
+plugins {
+    ...
+    id 'com.applanga.gradle' version '4.0.168'
+}
+```
+Insert our Applanga maven repository to the `pluginManagement.repositories` section.
+```gradle
+// $projectDir/settings.gradle
+pluginManagement {
     repositories {
+        ...
+        google()
+        mavenCentral()
         maven { url 'https://maven.applanga.com/'}
-        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+#### 2. Add the plugin the old way
+Apply the plugin and add the Applanga maven repository to the `buildscript.repositories`.
+```gradle
+// $projectDir/app/build.gradle
+apply plugin: 'com.applanga.gradle'
+...
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        implementation 'com.applanga.android:Applanga:3.0.167'
+        classpath  'com.applanga.gradle:plugin:4.0.168'
     }
-    buildscript {
-        repositories {
-            jcenter()
-            maven { url 'https://maven.applanga.com/' }
-        }
-        dependencies {
-            classpath  'com.applanga.android:plugin:3.0.167'
-        }
-    }
-    apply plugin: 'applanga'
-    ```
-    _***IMPORTANT***:_ **Applanga SDK** and **Applanga Plugin** should always have the **same version number**!
-    
-2. Add the permission **android.permission.INTERNET** in your **AndroidManifest.xml** file to allow your App internet access, which is needed for Applanga to function.
+}
+```
+_***IMPORTANT***:_ **Applanga SDK** and **Applanga Plugin** should always have the **same version number**!
 
-    ```xml
-    <uses-permission android:name="android.permission.INTERNET" />
-    ```
-3. **Proguard:** In order to keep all SDK functionality fully available when using Proguard, please make sure that the following lines are part of your proguard configuration.
+### Proguard
+In order to keep all SDK functionality fully available when using Proguard, please make sure that the following lines are part of your Proguard configuration.
 
     ```
     -keep class **.R$* {
@@ -106,7 +150,6 @@ You can also choose to manually init the applanga sdk like so:
 
 ```java
 //called from an activity
-Applanga.init(this);
 Applanga.update(new ApplangaCallback() {
     @Override
     public void onLocalizeFinished(boolean b) {
@@ -127,7 +170,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 ## Usage
 
 1. **Missing Strings**
-    Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://www.applanga.com/docs/translation-management-dashboard/draft_on-device-testing) if new missing strings are found.
+    Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://www.applanga.com/docs/applanga-mobile-sdks/draft_on-device-testing) if new missing strings are found.
 
     All strings located in your project's values folder (e.g. `strings.xml`) will be uploaded. Applanga only skips the upload if they meet the following conditions (according to [Non-translatable Strings](http://tools.android.com/recent/non-translatablestrings)):
 
@@ -166,9 +209,14 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
     // @see http://developer.android.com/reference/java/util/Formatter.html
     ((Activity|Resources|Fragment)this).getString(R.string.STRING_ID, "arg1", "arg2", "arg3");
     ```
-    3.3 **Named Arguments**
+    3.3 **Named Arguments DEPRECATED!**
+
+    We deprecated named Arguments and it will be removed on the next major release.
+    If you want to align your placeholder logic on Android and iOS please have a look at the Convert Placeholders section.
 
     ```java
+    // DEPRECATED!
+    
     // if you pass a string map you can get translated string
     // with named arguments. %{someArg} %{anotherArg} etc.
     Map<String, String> args = new Map<String, String>();
@@ -489,7 +537,8 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 11. **Multi project setup**
 
-	The multi project setup is the same as described in *Installation*. It is important to include Applanga and as well the Plugin (`apply plugin: 'applanga'`) for every module/library, otherwise Applanga won't work properly regarding this module. To see if Applanga's plugin has applied to all modules, you will find a line at the beginning of your gradle log for each module similar to this: `:mylibrary: Applanga plugin version 3.0.167`.
+	The multi project setup is the same as described in *Installation*.
+    You only have to add the SDK and the Applanga plugin to your module if the module contains translatable resources (`string.xml` or layout files), if it inflates layouts from other modules or if you simply want to use the Applanga SDK for any reason. Otherwise modules without the Applanga SDK and plugin remain untranslated. 
 
 12. **Custom ViewPump Initialization**
 
@@ -530,11 +579,11 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
 		@Override
 		protected void attachBaseContext(Context newBase) {
-			super.attachBaseContext(com.applanga.android.Applanga.wrap(newBase));
+			super.attachBaseContext(com.applanga.android.ApplangaPlugin.wrap(newBase));
 		}
 		
 		public String getLocalizedString(int resId) {
-			return com.applanga.android.Applanga.getString(resId, super.getString(resId));
+			return com.applanga.android.Applanga.getString(resId);
 		}
 	}
 	```
@@ -596,7 +645,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo) you c
 
     To make sure that the script is running and to see when it does or doesnt update, check the detailed build report in Android studio. There you will find logs for each update step.
 
-    If the file is update successfully you shoudl see the log "Settingsfile updated!". If it is already up to date you will see the log "Settingsfile up-to-date".
+    If the file is update successfully you should see the log "Settings File UPDATED". If it is already up to date you will see the log "Settings File UP-TO-DATE".
 
 3. **Disable automatic string updates when extending the ApplangaApplication Class**
 
@@ -766,16 +815,3 @@ fun testUploadStrings() {
     Applanga.captureScreenshot("jetpack_compose_activity", null, jsonString, null);
 }
 ```
-
-## Known Issues
-
-1: Broken jar file
-
-Occasionally, after adding the applanga SDK you will see an error something like this: 
-
-```
-    javassist.NotFoundException: broken jar file?
-```
-
-This is a gradle bug that is usually solved by restarting your computer, or restarting the gradle service.
-More info [here](https://github.com/mqzhangw/JIMU/issues/52).

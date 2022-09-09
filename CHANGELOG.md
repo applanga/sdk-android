@@ -5,6 +5,19 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.168 (9 Sep 2022) 
+
+#### Added
+- better AGP version 7+ support
+- use of the new transforms API which make the build faster and more stable
+- automatic SDK initialization on app start
+- support for plugins{} notation
+- removed internal Applanga APIs from the Applanga Interface
+
+#### Fixed
+- broken jar / zip error
+- unstable builds because internal AGP APIs in complex build scenarios
+
 ### Version 3.0.167 (21 Jul 2022) 
 #### Fixed
 - build errors when using custom views with overloading setText method

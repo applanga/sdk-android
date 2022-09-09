@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.applanga.gradle</groupId>
+  <artifactId>plugin</artifactId>
+  <versioning>
+    <latest>4.0.168</latest>
+    <release>4.0.168</release>
+    <versions>
+      <version>4.0.168</version>
+    </versions>
+    <lastUpdated>20220909111346</lastUpdated>
+  </versioning>
+</metadata>
