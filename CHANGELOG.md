@@ -5,8 +5,15 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 4.0.169 (9 Sep 2022) 
+### Version 4.0.170 (14 Sep 2022) 
 
+#### Added
+- experimental support for kotlin multi-platform modules
+
+#### Fixed
+- sync issues if plugin version is declared in top-level build.gradle
+
+### Version 4.0.169 (9 Sep 2022) 
 #### Added
 - better AGP version 7+ support
 - use of the new transforms API which make the build faster and more stable
