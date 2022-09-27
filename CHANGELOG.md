@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.172 (27 Sep 2022)
+#### Fixed
+- overriding attachBaseContext stopped views to be translated in some cases
+
 ### Version 4.0.171 (15 Sep 2022) 
 #### Fixed
 - Java 11 issues with ASM transformer
