@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.173 (5 Oct 2022)
+#### Fixed
+- fragment.getString fixed in specific typed lambda methods
+
 ### Version 4.0.172 (27 Sep 2022)
 #### Fixed
 - overriding attachBaseContext stopped views to be translated in some cases
