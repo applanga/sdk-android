@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.174 (6 Oct 2022)
+#### Fixed
+- resolved proguard issues with fragment.getString in specific lambda methods
+
 ### Version 4.0.173 (5 Oct 2022)
 #### Fixed
 - fragment.getString fixed in specific typed lambda methods
