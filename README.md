@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.175
+*Version:* 4.0.177
 
 *Website:* <https://www.applanga.com>
 
@@ -52,7 +52,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.175'
+    implementation 'com.applanga.android:Applanga:4.0.177'
 }
 ```
 
@@ -74,7 +74,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.175'
+    id 'com.applanga.gradle' version '4.0.177'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -103,7 +103,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.175'
+        classpath  'com.applanga.gradle:plugin:4.0.177'
     }
 }
 ```
@@ -577,21 +577,10 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ViewPump.init(builder.build());
     ```
     
-13. **Robolectric Unit Testing**
+13. **Unit Testing and Robolectric**
 
-    We support Robolectric with a limitation until [this bug](https://issuetracker.google.com/issues/249940660) in the Android Gradle Plugin is fixed.
-    The idea with Roboelectric tests + Applanga is that all `getString` and other calls are redirected directly to the local resources to avoid initializing the SDK for every test.
-
-    To test over-the-air updates use the Instrumentation tests.   
-
-    Due to the AGP Bug limitation, we turn the whole byte code manipulation off for unit tests if Gradle was started with one of the `test` or `test${buildType}UnitTest` tasks.
-
-    **IMPORTANT** to mention is that chaining Gradle tasks with e.g. `./gradlew testDebugUnitTest assembleDebug` will result in a nonworking SDK version for the `assembleDebug` task.
-    If you run unit tests make sure to run them isolated as e.g. `./gradlew testDebugUnitTest`.
-    As soon as the AGP bug is fixed, we will remove this limitation and stub the SDK for unit tests. 
-    
-
-
+    We support Unit testing and Robolectric. `getString()` calls are redirected through Applanga, while Unit testing, Applanga only returns local resources and does not fully initialize. 
+    Applanga initializes itself on Activity startup, depending on your test you need to call `Applanga.init(mockedContext)` beforehand.
 ## Optional settings
 
 1. **Specify default groups or languages**

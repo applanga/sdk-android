@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.177 (26 Oct 2022)
+
+#### Fixed
+- Robolectric support and unit tests
+
 ### Version 4.0.175 (11 Oct 2022)
 #### Added
 - basic Robolectric support with limitations due to the AGP Plugin
