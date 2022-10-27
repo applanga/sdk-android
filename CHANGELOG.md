@@ -5,8 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 4.0.177 (26 Oct 2022)
+### Version 4.0.178 (27 Oct 2022)
+#### Fixed
+- Some configuration broke RTL layouts and TextView TextAlignment center
 
+### Version 4.0.177 (26 Oct 2022)
 #### Fixed
 - Robolectric support and unit tests
 
