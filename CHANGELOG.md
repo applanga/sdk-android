@@ -5,6 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.179 (3 Nov 2022)
+#### Added
+ - NavController label support
+#### Fixed
+ - Applanga.setLanguage() for unit tests returns false
+
 ### Version 4.0.178 (27 Oct 2022)
 #### Fixed
 - Some configuration broke RTL layouts and TextView TextAlignment center
