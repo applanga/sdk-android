@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.180 (10 Nov 2022)
+#### Fixed
+- unit test detection failed for different setups
+
 ### Version 4.0.179 (3 Nov 2022)
 #### Added
  - NavController label support

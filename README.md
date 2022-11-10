@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.179
+*Version:* 4.0.180
 
 *Website:* <https://www.applanga.com>
 
@@ -52,7 +52,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.179'
+    implementation 'com.applanga.android:Applanga:4.0.180'
 }
 ```
 
@@ -74,7 +74,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.179'
+    id 'com.applanga.gradle' version '4.0.180'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -103,7 +103,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.179'
+        classpath  'com.applanga.gradle:plugin:4.0.180'
     }
 }
 ```
@@ -579,8 +579,14 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     
 13. **Unit Testing and Robolectric**
 
-    We support Unit testing and Robolectric. `getString()` calls are redirected through Applanga, while Unit testing, Applanga only returns local resources and does not fully initialize. 
-    Applanga initializes itself on Activity startup, depending on your test you need to call `Applanga.init(mockedContext)` beforehand.
+    When running Unit tests, Applanga only returns local resources.
+    The Applanga Plugin replaces all `getString()` calls with the Applanga SDK.
+    Depending on your tests, make sure that Applanga is initialized with a (mocked) Context, to be able to access your local resources.
+    In most cases Applanga can initialize itself, so it's may not necessary to do so.
+    The following log output should appear: `Unit tests are running! Applanga returns local strings only.` and if you use Robolectric you should see `Robolectric in use.`.
+
+    If you don't see the logs or encounter any other issues please contact us.
+
 ## Optional settings
 
 1. **Specify default groups or languages**

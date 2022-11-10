@@ -3,8 +3,8 @@
   <groupId>com.applanga.gradle</groupId>
   <artifactId>plugin</artifactId>
   <versioning>
-    <latest>4.0.179</latest>
-    <release>4.0.179</release>
+    <latest>4.0.180</latest>
+    <release>4.0.180</release>
     <versions>
       <version>4.0.169</version>
       <version>4.0.170</version>
@@ -16,7 +16,8 @@
       <version>4.0.177</version>
       <version>4.0.178</version>
       <version>4.0.179</version>
+      <version>4.0.180</version>
     </versions>
-    <lastUpdated>20221103163639</lastUpdated>
+    <lastUpdated>20221110141321</lastUpdated>
   </versioning>
 </metadata>
