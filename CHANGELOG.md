@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.181 (24 Nov 2022)
+#### Fixed
+- Resources$NotFoundException for dynamic numeric string ids
+
 ### Version 4.0.180 (10 Nov 2022)
 #### Fixed
 - unit test detection failed for different setups
