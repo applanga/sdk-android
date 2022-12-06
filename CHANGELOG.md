@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.182 (6 Dec 2022)
+#### Added
+- getTranslation, getTranslationArray, getQuantityTranslation as a replacement of the deprecated Applanga.getString methods
+
 ### Version 4.0.181 (24 Nov 2022)
 #### Fixed
 - Resources$NotFoundException for dynamic numeric string ids

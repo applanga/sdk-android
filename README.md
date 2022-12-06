@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.181
+*Version:* 4.0.182
 
 *Website:* <https://www.applanga.com>
 
@@ -52,7 +52,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.181'
+    implementation 'com.applanga.android:Applanga:4.0.182'
 }
 ```
 
@@ -74,7 +74,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.181'
+    id 'com.applanga.gradle' version '4.0.182'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -103,7 +103,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.181'
+        classpath  'com.applanga.gradle:plugin:4.0.182'
     }
 }
 ```
@@ -207,9 +207,16 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     3.1 **Simple String**
 
+    If the string exists locally in your project: 
     ```java
     // get translated string for the current device locale
-    ((Activity|Resources|Fragment)this).getString(R.string.STRING_ID);
+    ((Activity|Resources|Fragment)this).getString(R.string.STRING_KEY);
+    ```
+    For dynamic keys retrieved from the backend or other sources outside of your resource files,
+    you can call `Applanga.getTranslation` but you need to make sure the key exists on Applanga or else the method will return null.
+    The dynamic keys will not be created automatically on the Applanga Dashboard.
+    ```java
+    Applanga.getTranslation("STRING_KEY");
     ```
     3.2 **Arguments**
 
@@ -217,7 +224,12 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     // get translated string with formatted arguments
     // using the default string format %s %d etc
     // @see http://developer.android.com/reference/java/util/Formatter.html
-    ((Activity|Resources|Fragment)this).getString(R.string.STRING_ID, "arg1", "arg2", "arg3");
+    ((Activity|Resources|Fragment)this).getString(R.string.STRING_KEY, "arg1", "arg2", "arg3");
+    ```
+
+    The dynamic key equivalent:
+    ```java
+    Applanga.getTranslation("STRING_KEY", "arg1", "arg2", "arg3");
     ```
     3.3 **Named Arguments DEPRECATED!**
 
@@ -232,12 +244,12 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     Map<String, String> args = new Map<String, String>();
     args.put("someArg","awesome");
     args.put("anotherArg","crazy");
-    Applanga.getString("STRING_ID", args);
+    Applanga.getString("STRING_KEY", args);
     ```
 
     Example:
 
-    *STRING_ID* = *"This value of the argument called someArg is %{someArg} and the value of anotherArg is **%{anotherArg}**. You can reuse arguments multiple times in your text wich is **%{someArg}**, **%{anotherArg}** and **%{someArg}.**"*
+    *STRING_ID* = *"This value of the argument called someArg is %{someArg} and the value of anotherArg is **%{anotherArg}**. You can reuse arguments multiple times in your text which is **%{someArg}**, **%{anotherArg}** and **%{someArg}.**"*
 
     gets converted to:
 
@@ -247,20 +259,33 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     
     ```java
     // get a string in the given quantity
-    ((Resources)res).getQuantityString(R.plurals.STRING_ID, quantity);
-
+    ((Resources)res).getQuantityString(R.plurals.STRING_KEY, quantity);
     ```
 
-    On the dashboard you create a **pluralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`. Plural strings also get automatically uploaded if you start the app in draft mode or with the debugger connected.
+    On the Dashboard, you create a **pluralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`. Plural strings also get automatically uploaded if you start the app in draft mode or with the debugger connected.
 
-    So the ***zero*** pluralized ID for ***"STRING_ID"*** is ***"STRING_ID[zero]"***
+    So the ***zero*** pluralized ID for ***"STRING_KEY"*** is ***"STRING_KEY[zero]"***
+
+    You also can get quantity strings dynamically:
+    ```java
+    Applanga.getQuantityTranslation("STRING_KEY", quantity);
+    ```
+    Dynamic quantity translations have the limitations as described for `getTranslation`: If the passed string key does not exist on the dashboard, it returns null.
+    It doesn't automatically create the string key on the dashboard if it doesn't exist yet.
 
     3.5 **String-Arrays**
     ```java
     //returns a string-array
-    ((Resources)res).getStringArray(R.array.STRING_ID);
+    ((Resources)res).getStringArray(R.array.STRING_KEY);
     ```
-    String-Arrays will automatically be uploaded as other strings from your string XML. The **ID**-format is the following: `STRING_ID[0]`, `STRING_ID[1]`, `STRING_ID[2]`, `STRING_ID[..]`.
+    String-Arrays will automatically be uploaded as other strings from your string XML. The **ID**-format is the following: `STRING_KEY[0]`, `STRING_KEY[1]`, `STRING_KEY[2]`, `STRING_KEY[..]`.
+
+    You also can get string arrays dynamically:
+    ```java
+    Applanga.getTranslationArray("STRING_KEY");
+    ```
+    Dynamic translation arrays have the limitations as described for `getTranslation`: If the passed string key does not exist on the dashboard, it returns null.
+    It doesn't automatically create the string key on the dashboard if it doesn't exist yet.
 
 4. **Preference Localization**
 
