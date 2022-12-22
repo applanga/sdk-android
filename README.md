@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.182
+*Version:* 4.0.183
 
 *Website:* <https://www.applanga.com>
 
@@ -52,7 +52,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.182'
+    implementation 'com.applanga.android:Applanga:4.0.183'
 }
 ```
 
@@ -74,7 +74,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.182'
+    id 'com.applanga.gradle' version '4.0.183'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -103,7 +103,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.182'
+        classpath  'com.applanga.gradle:plugin:4.0.183'
     }
 }
 ```
@@ -308,9 +308,41 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
   	</PreferenceScreen>
     ```
 
+    We added linter warnings for all preference items without a key.
+    To disable those warnings you can add `tools:ignore="ApplangaPreferenceKeyMissing"` to your item or to the parent to disable the linting for all child items as well. E.g.:
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+	<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  tools:ignore="ApplangaPreferenceKeyMissing">
+    	<PreferenceCategory
+    	android:title="@string/example_category_key_title">
+    		<Preference
+      		android:title="@string/example_pref_title"/>
+  		</PreferenceCategory>
+  	</PreferenceScreen>
+    ```
+
+
 5. **Menu Localization**
 
-    Menu localization does not require any additional code to work. Important is that **every menu item has to have an id**.
+    Menu localization does not require any additional code to work. Important is that **every menu item must have an id**.
+    The logic here is similar to the Preference Localization in the section above.
+    We also added lint checks, you can disable them with `tools:ignore="ApplangaMenuIdMissing"`.
+
+    Here is a small example with one item without an id and one with an id with disabled linting:
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <menu xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:title="@string/main_menu_no_id_title"
+            tools:ignore="ApplangaMenuIdMissing" />
+
+        <item android:id="@+id/main_menu_change_language"
+            android:title="@string/main_menu_change_language"/>
+    </menu>
+    ```
     
 
 6. **Update Content**

@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.183 (22 Dec 2022)
+#### Fixed
+- failure of screenshot uploads
+
 ### Version 4.0.182 (6 Dec 2022)
 #### Added
 - getTranslation, getTranslationArray, getQuantityTranslation as a replacement of the deprecated Applanga.getString methods
