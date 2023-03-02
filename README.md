@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.183
+*Version:* 4.0.184
 
 *Website:* <https://www.applanga.com>
 
@@ -52,7 +52,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.183'
+    implementation 'com.applanga.android:Applanga:4.0.184'
 }
 ```
 
@@ -74,7 +74,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.183'
+    id 'com.applanga.gradle' version '4.0.184'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -103,7 +103,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.183'
+        classpath  'com.applanga.gradle:plugin:4.0.184'
     }
 }
 ```
@@ -380,6 +380,22 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```
 
 7. **Change Language**
+
+    ### Recommended: Per-app language preferences
+
+    Android 13 introduced the [per-app language preference](https://developer.android.com/guide/topics/resources/app-languages).
+    If you implement your own language picker within your app, make sure to call `Applanga.update(groups, languages, callback)` with the new language, otherwise the language will change, but there are no OTA updates until the next `update` call.
+    Also, make sure your settings file is up-to-date.
+    That's how you can switch languages while the app is running and it will show the most recent strings from your settings file even though the `Applanga.update` wasn't working due to network connection or simply didn't happen. 
+
+    The AppCompat library also works together with the Applanga SDK. For switching languages you can do the following: `AppCompatDelegate.setApplicationLocales(appLocale);` 
+
+    **Important to note** if you have used the legacy method `Applanga.setLanguage()`. It stores the changed language to your device.
+    To delete its settings you need to call `Applanga.setLanguage(null)` once.
+
+    ### Legacy: Applanga.setLanguage(language)
+
+    **You should consider using the per-app language preferences as described above.**
 
       You can change your app language at runtime using the following call:
 
@@ -679,10 +695,15 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     **Be aware that the task will not fail if there is no internet connection, to be able to develop offline.** In this case, a warning is printed. To activate the Automatic Settings File Update put the following line into your `build.gradle`:
 
     ```
+    // for all builds:
     applanga.settingsFileAutoUpdate = true
+
+    // only for release builds:
+    applanga.settingsFileAutoUpdateRelease = true
     ```
 
-    To make sure that the script is running and to see when it does or doesn't update, check the detailed build report in Android studio. There you will find logs for each update step.
+    To make sure that the script is running and to see when it does or doesn't update, check the detailed build report in Android Studio after triggering a build.
+    There you will find logs for each update step.
 
     If the file is updated successfully you should see the log "Settings File UPDATED". If it is already up to date you will see the log "Settings File UP-TO-DATE".
 

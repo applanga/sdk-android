@@ -5,56 +5,75 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.184 (2 Mar 2023)
+#### Added
+- settingsFileAutoUpdateRelease to update the settings file only for release builds
+- support for per-app language preferences
+- new Draft Mode dialog
+
+---
 ### Version 4.0.183 (22 Dec 2022)
 #### Fixed
 - failure of screenshot uploads
 
+---
 ### Version 4.0.182 (6 Dec 2022)
 #### Added
 - getTranslation, getTranslationArray, getQuantityTranslation as a replacement of the deprecated Applanga.getString methods
 
+---
 ### Version 4.0.181 (24 Nov 2022)
 #### Fixed
 - Resources$NotFoundException for dynamic numeric string ids
 
+---
 ### Version 4.0.180 (10 Nov 2022)
 #### Fixed
 - unit test detection failed for different setups
 
+---
 ### Version 4.0.179 (3 Nov 2022)
 #### Added
  - NavController label support
 #### Fixed
  - Applanga.setLanguage() for unit tests returns false
 
+---
 ### Version 4.0.178 (27 Oct 2022)
 #### Fixed
 - Some configuration broke RTL layouts and TextView TextAlignment center
 
+---
 ### Version 4.0.177 (26 Oct 2022)
 #### Fixed
 - Robolectric support and unit tests
 
+---
 ### Version 4.0.175 (11 Oct 2022)
 #### Added
 - basic Robolectric support with limitations due to the AGP Plugin
 
+---
 ### Version 4.0.174 (6 Oct 2022)
 #### Fixed
 - resolved proguard issues with fragment.getString in specific lambda methods
 
+---
 ### Version 4.0.173 (5 Oct 2022)
 #### Fixed
 - fragment.getString fixed in specific typed lambda methods
 
+---
 ### Version 4.0.172 (27 Sep 2022)
 #### Fixed
 - overriding attachBaseContext stopped views to be translated in some cases
 
+---
 ### Version 4.0.171 (15 Sep 2022) 
 #### Fixed
 - Java 11 issues with ASM transformer
 
+---
 ### Version 4.0.170 (14 Sep 2022) 
 #### Added
 - experimental support for kotlin multi-platform modules
@@ -62,6 +81,7 @@
 #### Fixed
 - sync issues if plugin version is declared in top-level build.gradle
 
+---
 ### Version 4.0.169 (9 Sep 2022) 
 #### Added
 - better AGP version 7+ support
@@ -74,18 +94,22 @@
 - broken jar / zip error
 - unstable builds because internal AGP APIs in complex build scenarios
 
+---
 ### Version 3.0.167 (21 Jul 2022) 
 #### Fixed
 - build errors when using custom views with overloading setText method
 
+---
 ### Version 3.0.166 (12 Jul 2022) 
 #### Fixed
 - RTL layouts were ignored for specific cases
 
+---
 ### Version 3.0.165 (22 Jun 2022) 
 #### Fixed
 - improved internal applanga_meta xml parsing time -> affecting Applanga.init() startup time
 
+---
 ### Version 3.0.164 (8 Jun 2022) 
 #### Fixed
 - improved Applanga.init() startup time
