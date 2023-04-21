@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.184
+*Version:* 4.0.186
 
 *Website:* <https://www.applanga.com>
 
@@ -52,7 +52,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.184'
+    implementation 'com.applanga.android:Applanga:4.0.186'
 }
 ```
 
@@ -74,7 +74,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.184'
+    id 'com.applanga.gradle' version '4.0.186'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -103,7 +103,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.184'
+        classpath  'com.applanga.gradle:plugin:4.0.186'
     }
 }
 ```
@@ -390,7 +390,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     The AppCompat library also works together with the Applanga SDK. For switching languages you can do the following: `AppCompatDelegate.setApplicationLocales(appLocale);` 
 
-    **Important to note** if you have used the legacy method `Applanga.setLanguage()`. It stores the changed language to your device.
+    **Important to note** if you have used the legacy method `Applanga.setLanguage()` or `Applanga.setLanguageAndUpdate()`. It stores the changed language to your device.
     To delete its settings you need to call `Applanga.setLanguage(null)` once.
 
     ### Legacy: Applanga.setLanguage(language)
@@ -400,7 +400,12 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
       You can change your app language at runtime using the following call:
 
     ```java
-    boolean success = Applanga.setLanguage(language);
+    // this changes the language but your initial update call may have not covered this language
+    // so it's good practice to do an Applanga.update() afterwards or use the `setLanguageAndUpdate` method
+    boolean success = Applanga.setLanguage(language); 
+    // - or - 
+    // this sets the language and directly does an update for the language before returning here
+    Applanga.setLanguageAndUpdate(language, applangaCallback);
     ```
 
       *language* must be the iso string of a language that has been added to the dashboard.
@@ -412,11 +417,11 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
       Applanga.setLanguage(null);
     ```
 
-      For the app to reset to the device language it needs to be restarted.
+    For the app to reset to the device language it needs to be restarted.
 
-      The *language* parameter is expected in the format **[language]-[region]** or     **language****_region** with the region being optional. Examples: "fr_CA", "en-us", "de".
+    The *language* parameter is expected in the format **[language]-[region]** or     **language****_region** with the region being optional. Examples: "fr_CA", "en-us", "de".
 
-      If you have problems switching to a specific language you can update your settings file or specifically request that language within an update content call (see **8. Update Content**). You can also specify the language as a default language to have it requested on each update call (see **Optional settings**).
+    If you have problems switching to a specific language you can update your settings file or specifically request that language within an update content call (see **8. Update Content**). You can also specify the language as a default language to have it requested on each update call (see **Optional settings**).
 
 8. **WebViews**
 

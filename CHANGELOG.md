@@ -5,6 +5,17 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.186 (21 Apr 2023)
+#### Fixed
+- cleaned up some build warnings
+- handles translation for custom NavigationMenu.inflateMenu implementations
+- fixed translations for menus with sub-items
+- fixed dialog title translation for list preferences
+
+#### Added
+- added support for referenced (untranslatable) strings as preferences key
+
+---
 ### Version 4.0.184 (2 Mar 2023)
 #### Added
 - settingsFileAutoUpdateRelease to update the settings file only for release builds
