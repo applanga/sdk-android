@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.187 (25 Apr 2023)
+#### Fixed
+- specific NavigationMenu.inflateMenu crash at build time 
+
 ### Version 4.0.186 (21 Apr 2023)
 #### Fixed
 - cleaned up some build warnings
