@@ -5,10 +5,19 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.190 (25 May 2023)
+#### Fixed
+- wrongly showing MissingApplangaSDKException
+
+#### Added
+- improved settings file handling
+
+---
 ### Version 4.0.189 (11 May 2023)
 #### Fixed
 - proguard duplicate class build error
 
+---
 ### Version 4.0.188 (26 Apr 2023)
 #### Fixed
 - specific NavigationMenu.inflateMenu crash at runtime
