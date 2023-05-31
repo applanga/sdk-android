@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.191 (31 May 2023)
+#### Fixed
+- duplicated menu with same item id in sub menu was wrongly displayed in some circumstances
+
+---
 ### Version 4.0.190 (25 May 2023)
 #### Fixed
 - wrongly showing MissingApplangaSDKException
