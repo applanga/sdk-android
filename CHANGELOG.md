@@ -5,6 +5,13 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.193 (29 Jun 2023)
+#### Fixed
+- fixed name collisions for applanga_meta if modules (or sub/sub-sub-modules) have the same name
+#### Added 
+- improved applanga_meta clean task
+
+--- 
 ### Version 4.0.191 (31 May 2023)
 #### Fixed
 - duplicated menu with same item id in sub menu was wrongly displayed in some circumstances

@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.191
+*Version:* 4.0.193
 
 *Website:* <https://www.applanga.com>
 
@@ -14,6 +14,7 @@
   2. [Configuration](#configuration)
   3. [Usage](#usage)
   4. [Optional settings](#optional-settings)
+  5. [Branching](#branching)
 
 ***
 
@@ -52,7 +53,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.191'
+    implementation 'com.applanga.android:Applanga:4.0.193'
 }
 ```
 
@@ -74,7 +75,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.191'
+    id 'com.applanga.gradle' version '4.0.193'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -103,7 +104,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.191'
+        classpath  'com.applanga.gradle:plugin:4.0.193'
     }
 }
 ```
@@ -880,3 +881,24 @@ fun testUploadStrings() {
     Applanga.captureScreenshot("jetpack_compose_activity", null, jsonString, null);
 }
 ```
+
+## Branching
+
+If your project is a branching project use at least SDK version 4.0.193 and update your settings file.
+The settings file defines the default branch for your current app.
+This branch is used on app start and for update calls.
+To be sure branching is working look for the log line: `Branching is enabled.`
+
+To learn more about branching please have a look [here](https://www.applanga.com/docs/advanced-features/branching).
+
+### Draft Mode
+
+When enabling the Draft Mode you can switch your branch at runtime - an app restart is required.
+You also can use our draft overlay to switch your current branch.
+Every screenshot you take is linked to the current branch.
+
+### Production Apps
+
+Already published apps that still use settings files without branching and older SDKs will still work and they will use the default branch defined on the Applanga dashboard.
+
+ 
