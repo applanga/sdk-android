@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.193
+*Version:* 4.0.194
 
 *Website:* <https://www.applanga.com>
 
@@ -53,7 +53,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.193'
+    implementation 'com.applanga.android:Applanga:4.0.194'
 }
 ```
 
@@ -75,7 +75,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.193'
+    id 'com.applanga.gradle' version '4.0.194'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -104,7 +104,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.193'
+        classpath  'com.applanga.gradle:plugin:4.0.194'
     }
 }
 ```
@@ -884,7 +884,7 @@ fun testUploadStrings() {
 
 ## Branching
 
-If your project is a branching project use at least SDK version 4.0.193 and update your settings file.
+If your project is a branching project use at least SDK version 4.0.194 and update your settings file.
 The settings file defines the default branch for your current app.
 This branch is used on app start and for update calls.
 To be sure branching is working look for the log line: `Branching is enabled.`

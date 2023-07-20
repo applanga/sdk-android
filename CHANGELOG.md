@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.194 (20 Jul 2023)
+#### Added
+- branching support for Flutter and React-Native 
+
+--- 
 ### Version 4.0.193 (29 Jun 2023)
 #### Fixed
 - fixed name collisions for applanga_meta if modules (or sub/sub-sub-modules) have the same name
