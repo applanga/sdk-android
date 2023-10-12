@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.194
+*Version:* 4.0.195
 
 *Website:* <https://www.applanga.com>
 
@@ -53,7 +53,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.194'
+    implementation 'com.applanga.android:Applanga:4.0.195'
 }
 ```
 
@@ -75,7 +75,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.194'
+    id 'com.applanga.gradle' version '4.0.195'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -104,7 +104,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.194'
+        classpath  'com.applanga.gradle:plugin:4.0.195'
     }
 }
 ```
@@ -287,6 +287,23 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```
     Dynamic translation arrays have the limitations as described for `getTranslation`: If the passed string key does not exist on the dashboard, it returns null.
     It doesn't automatically create the string key on the dashboard if it doesn't exist yet.
+
+    3.6 **Styled Strings**
+    
+    We do not support html tags in xml files yet. To make the upload of styled strings from your `strings.xml` work you have to escape the html tags.
+
+    ```xml
+    <string name="styled_string">Hello, &lt;b>I am bold&lt;/b>.</string>
+    ```
+
+    If you don't escape your styled strings in your `strings.xml`, then the html tags a stripped out with the missing string upload.
+    However if you translate your strings on the Applanga dashboard, you don't have to escape the html tags.
+
+    To get the styled String as a SpannableString use `Html.fromHtml()` as explained in the official [Android documentation](https://developer.android.com/guide/topics/resources/string-resource#FormattingAndStyling).
+
+    ```java
+    textView.setText(Html.fromHtml(getString(R.string.styled_string), Html.FROM_HTML_MODE_LEGACY));
+    ```
 
 4. **Preference Localization**
 
@@ -799,7 +816,73 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     </application>
     ```
 
+    The locale is mapped in all places in the sdk, except when used in combination with [custom language fallback](#enable-custom-language-fallback). In this case the custom fallback performed as set in the referenced xml, no additional mapping occurres for the entries in that xml.
+    If you have a locale that maps to another locale that has a custom fallback, this would also work, and the custom fallback will be performed after the mapping.
 
+7. **Enable system language fallback**
+	
+	By default applanga uses a custom device locale order, this meta-data value makes the SDK iterate over the languages by using the priority set by the system. This order is used when translating strings and performing a fallback when the string wasn't found for a specified language. Then the SDK would try to translate using the next language in the list. The available possibilites are:
+
+	`applanga`: The default SDK order
+	`system`: Use the device system order
+
+	```xml
+	<application>
+            ...
+           <meta-data
+            android:name="ApplangaLanguageFallback"
+            android:value="system" />
+            ...
+    </application>
+	```
+
+8. **Enable custom language fallback**<a name="enable-custom-language-fallback"></a>
+	
+	This meta-data value is a resource reference to an xml which allows to set a custom fallback per language. When the SDK would need to translate a key with a specified language, it uses the order as provided. This overrides any other system or default fallbacks only for those languages. Other languages work according to the fallback specified using the ApplangaLanguageFallback value (or default if it's not set). The fallback is only overriden for the top level language, so it's not possible to "nest" the custom fallbacks.
+
+	Example
+
+	```xml
+	<application>
+            ...
+           <meta-data
+            android:name="ApplangaCustomLanguageFallback"
+            android:resource="@xml/custom_fallback" />
+            ...
+    </application>
+	```
+
+    the xml should be structured like this:
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <custom_fallback>
+        <language name="es-MX">
+            <item>es-MX</item>
+            <item>es-US</item>
+            <item>es</item>
+        </language>
+        <language name="de-DE">
+            <item>de-AT</item>
+            <item>en</item>
+        </language>
+    </custom_fallback>
+	```
+
+9. **Automatic upload of a tag with current app strings**
+
+	In case you would like to upload a tag with all the local strings in your app, add the following key in the Manifest
+    
+    ```xml
+    <application>
+            ...
+           <meta-data
+            android:name="ApplangaTagLocalStringsPrefix"
+            android:value="some_tag" />
+            ...
+    </application>
+    ```
+
+	This manifest value would be used as the tag prefix combined with the app version (for example some_tag1.0), then when you are running with the app with the debugger connected, an automatic tag upload would be performed after Applanga.update(), which is also done on app start. The tag would be created on the dashboard if it doesn't exist yet.
 
 ## Jetpack Compose
 
@@ -884,7 +967,7 @@ fun testUploadStrings() {
 
 ## Branching
 
-If your project is a branching project use at least SDK version 4.0.194 and update your settings file.
+If your project is a branching project use at least SDK version 4.0.195 and update your settings file.
 The settings file defines the default branch for your current app.
 This branch is used on app start and for update calls.
 To be sure branching is working look for the log line: `Branching is enabled.`
@@ -899,6 +982,6 @@ Every screenshot you take is linked to the current branch.
 
 ### Production Apps
 
-Already published apps that still use settings files without branching and older SDKs will still work and they will use the default branch defined on the Applanga dashboard.
+Already published apps that still use settings files without branching and older SDKs will still work and they will use the "main" branch.
 
  

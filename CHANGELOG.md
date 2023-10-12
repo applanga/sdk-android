@@ -5,6 +5,17 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.195 (12 Oct 2023)
+#### Added
+- option for system language fallback
+- more performant settings file handling
+- option for custom fallbacks
+- option for local string tagging in draft mode
+
+#### Fixed
+- new language on the dashboard sync on first app start
+
+---
 ### Version 4.0.194 (20 Jul 2023)
 #### Added
 - branching support for Flutter and React-Native 
