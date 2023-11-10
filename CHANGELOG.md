@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.196 (10 Nov 2023)
+#### Fixed
+- NullPointerException for specific AndroidManifest configurations 
+- reduced AAR size by removing accidentally added test resources 
+
 ### Version 4.0.195 (12 Oct 2023)
 #### Added
 - option for system language fallback
