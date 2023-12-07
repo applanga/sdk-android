@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.197 (7 Dec 2023)
+#### Fixed
+- workaround for specific androidx version bug: IllegalArgumentException in LocaleList
+- setLanguage persistency issue
+
 ### Version 4.0.196 (10 Nov 2023)
 #### Fixed
 - NullPointerException for specific AndroidManifest configurations 
