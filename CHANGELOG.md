@@ -5,7 +5,7 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 4.0.198 (25 Jan 2024)
+### Version 4.0.199 (25 Jan 2024)
 #### Added
 - shrinked very first Applanga.update() response
 - smaller general code optimizations
