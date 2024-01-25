@@ -5,16 +5,27 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.198 (25 Jan 2024)
+#### Added
+- shrinked very first Applanga.update() response
+- smaller general code optimizations
+
+#### Fixed
+- fixed possible caching issues
+
+---
 ### Version 4.0.197 (7 Dec 2023)
 #### Fixed
 - workaround for specific androidx version bug: IllegalArgumentException in LocaleList
 - setLanguage persistency issue
 
+---
 ### Version 4.0.196 (10 Nov 2023)
 #### Fixed
 - NullPointerException for specific AndroidManifest configurations 
 - reduced AAR size by removing accidentally added test resources 
 
+---
 ### Version 4.0.195 (12 Oct 2023)
 #### Added
 - option for system language fallback
