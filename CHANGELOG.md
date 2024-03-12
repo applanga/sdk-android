@@ -5,6 +5,16 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.200 (12 Mar 2024)
+#### Added
+- improved Appium Screenshot support
+- gradle configuration cache support
+
+#### Fixed
+- removed unnecessary warnings for Flutter and React-Native builds
+- missing string upload on windows machines
+
+---
 ### Version 4.0.199 (25 Jan 2024)
 #### Added
 - shrinked very first Applanga.update() response
