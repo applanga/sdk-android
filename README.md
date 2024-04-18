@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.200
+*Version:* 4.0.201
 
 *Website:* <https://www.applanga.com>
 
@@ -53,7 +53,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.200'
+    implementation 'com.applanga.android:Applanga:4.0.201'
 }
 ```
 
@@ -75,7 +75,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.200'
+    id 'com.applanga.gradle' version '4.0.201'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -104,7 +104,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.200'
+        classpath  'com.applanga.gradle:plugin:4.0.201'
     }
 }
 ```
@@ -683,6 +683,23 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     If you don't see the logs or encounter any other issues please contact us.
 
+14. **Get available languages**
+
+  	It is possible to get the currently added languages on the dashboard:
+  	
+	```java
+	// java
+    List<String> languages = Applanga.getAvailableLanguages();
+	```
+	```kotlin
+	// kotlin
+	val languages = Applanga.getAvailableLanguages()
+	```
+	
+	The result will contain the iso string of each language that has been added on the dashboard.
+	These values are synced during the `Applanaga.update()` response. So to retrieve any changes to the available languages on the dashboard, an update() should be performed manually before using this list. 
+
+
 ## Optional settings
 
 1. **Specify default groups or languages**
@@ -967,7 +984,7 @@ fun testUploadStrings() {
 
 ## Branching
 
-If your project is a branching project use at least SDK version 4.0.200 and update your settings file.
+If your project is a branching project use at least SDK version 4‎.0.184 and update your settings file.
 The settings file defines the default branch for your current app.
 This branch is used on app start and for update calls.
 To be sure branching is working look for the log line: `Branching is enabled.`
