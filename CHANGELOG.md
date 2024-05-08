@@ -5,6 +5,10 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.202 (8 May 2024)
+#### Fixed
+- setHint NullPointerException
+
 ### Version 4.0.201 (18 Apr 2024)
 #### Added
 - public method to retrieve available languages on the dashboard
