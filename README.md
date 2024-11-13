@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.202
+*Version:* 4.0.207
 
 *Website:* <https://www.applanga.com>
 
@@ -53,7 +53,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.202'
+    implementation 'com.applanga.android:Applanga:4.0.207'
 }
 ```
 
@@ -75,7 +75,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.202'
+    id 'com.applanga.gradle' version '4.0.207'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -104,7 +104,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.202'
+        classpath  'com.applanga.gradle:plugin:4.0.207'
     }
 }
 ```

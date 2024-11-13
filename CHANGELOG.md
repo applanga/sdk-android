@@ -5,19 +5,28 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.207 (13 Nov 2024)
+#### Added
+- internal exception logging
+- applanga sdk + plugin version warnings
+
+---
 ### Version 4.0.202 (8 May 2024)
 #### Fixed
 - setHint NullPointerException
 
+---
 ### Version 4.0.201 (18 Apr 2024)
 #### Added
 - public method to retrieve available languages on the dashboard
 
+---
 ### Version 4.0.200 (12 Mar 2024)
 #### Added
 - improved Appium Screenshot support
 - gradle configuration cache support
 
+---
 #### Fixed
 - removed unnecessary warnings for Flutter and React-Native builds
 - missing string upload on windows machines
