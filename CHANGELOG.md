@@ -5,6 +5,12 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+
+### Version 4.0.210 (29 Nov 2024)
+#### Added
+- improved screenshot algorithm
+
+---
 ### Version 4.0.209 (21 Nov 2024)
 #### Added
 - added additional checks for system apps
@@ -12,6 +18,8 @@
 #### Fixed
 - missing string upload for release builds
 
+---
+### Version 4.0.209 (21 Nov 2024)
 ### Version 4.0.207 (13 Nov 2024)
 #### Added
 - internal exception logging
