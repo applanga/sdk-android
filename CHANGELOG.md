@@ -6,6 +6,11 @@
 ***
 
 
+### Version 4.0.211 (10 Dec 2024)
+#### Fixed
+- improved internal requests
+
+---
 ### Version 4.0.210 (29 Nov 2024)
 #### Added
 - improved screenshot algorithm
@@ -19,7 +24,6 @@
 - missing string upload for release builds
 
 ---
-### Version 4.0.209 (21 Nov 2024)
 ### Version 4.0.207 (13 Nov 2024)
 #### Added
 - internal exception logging
