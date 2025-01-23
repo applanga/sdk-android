@@ -6,6 +6,11 @@
 ***
 
 
+### Version 4.0.214 (23 Jan 2025)
+#### Added
+- smaller bugfixes and internal performance improvements 
+
+---
 ### Version 4.0.213 (12 Dec 2024)
 #### Fixed
 - gradle 8 build issue for submodules
