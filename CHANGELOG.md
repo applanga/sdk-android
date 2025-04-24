@@ -6,6 +6,14 @@
 ***
 
 
+### Version 4.0.215 (24 Apr 2025)
+#### Fixed
+- NullPointerException while parsing failed requests
+
+#### Added
+- increased minSDK version to 21
+
+---
 ### Version 4.0.214 (23 Jan 2025)
 #### Added
 - smaller bugfixes and internal performance improvements 

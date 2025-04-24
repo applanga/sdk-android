@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.214
+*Version:* 4.0.215
 
 *Website:* <https://www.applanga.com>
 
@@ -21,29 +21,33 @@
 ## Applanga 4.0 Major Changes 
 
 ### Plugin
-***The Applanga plugin only is compatible with projects using the Android Gradle Plugin 7+.***
-If you still depend on Android Gradle Plugin 4+ please use Applanga version 3+.
-We rewrote big parts of the plugin to align with the newest AGP APIs. Which makes the build a lot faster and more stable.
-We changed the package name of the plugin, you also can add it now via the `plugins{}` block in your `build.gradle`.
+
+* ***The Applanga plugin is only compatible with projects that use the Android Gradle Plugin 7+.***
+If you still depend on Android Gradle Plugin 4+, please use Applanga version 3+. We rewrote big parts of the plugin to align with the newest AGP APIs, which makes the build a lot faster and more stable.
+
+* We changed the package name of the plugin, you also can add it now via the `plugins{}` block in your `build.gradle`.
 
 ### SDK
-The Applanga SDK will automatically initialize as soon as the first activity starts. This overcomes a lot of issues we had in the past regarding wrong initialization especially connected to deep link scenarios.
-You still can manually initialize Applanga, this is only needed if you want to use Applanga before an activity has started. For example, if you want to do an Applanga.update() on startup before an activity has started.
 
-`Applanga.wrap()` is not needed anymore, it's done automatically by the plugin.
+* The Applanga SDK will automatically initialize as soon as the first activity starts. This overcomes a lot of issues we had in the past regarding wrong initialization, especially connected to deep link scenarios.
 
-We deprecated `Applanga.getString` methods as we cover all usual `getString()` calls without further configurations and we have seen a lot of confusion about the existence of `Applanga.getString` calls.
+* You can still manually initialize Applanga, but this is only needed if you want to use Applanga before an activity has started. For example, if you want to do an `Applanga.update()` on startup before an activity has started.
 
-We removed all `Applanga.getQuantityString` calls as all native `getQuantityString` calls are covered by Applanga.
+* `Applanga.wrap()` isn't needed anymore, it's done automatically by the plugin.
 
-`Applanga.setDraftModelEnabled` has a typo and was renamed to `Applanga.setDraftModeEnabled`.
+* We deprecated `Applanga.getString` methods as we cover all usual `getString()` calls without further configurations and we have seen a lot of confusion about the existence of `Applanga.getString` calls.
+ 
+* We removed all `Applanga.getQuantityString` calls as all native `getQuantityString` calls are covered by Applanga.
 
-Applanga does not require `jitpack.io` as a repository in your build.gradle files anymore. If you still use `jitpack.io` for any reason, we recommend to move `mavenCentral()` above `jitpack.io` as it's more reliable and order matters.
+* `Applanga.setDraftModelEnabled` has a typo and was renamed to `Applanga.setDraftModeEnabled`.
+
+* Applanga doesn't require `jitpack.io` as a repository in your build.gradle files anymore. If you still use `jitpack.io` for any reason, we recommend to move `mavenCentral()` above `jitpack.io` as it's more reliable and order matters.
 
 ***
 
 ## Installation
-The Applanga SDK comes with an Applanga Gradle Plugin. Both work closely together so make sure they have the exact version number. The responsibility of the plugin is to proxy all your `getString` or `setText` calls to the Applanga SDK so that you receive the latest over-the-air updates.
+
+The Applanga SDK comes with an Applanga Gradle Plugin. Both work closely together so make sure they have the same version number. The responsibility of the plugin is to proxy all your `getString` or `setText` calls to the Applanga SDK so that you receive the latest over-the-air updates.
 
 ### SDK
 Add the Applanga maven repository and the Applanga dependency to your `app/build.gradle` file.
@@ -53,21 +57,21 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.214'
+    implementation 'com.applanga.android:Applanga:4.0.215'
 }
 ```
 
 ### Plugin
-As shortly described above, the plugin is responsible for proxy all relevant `getString` calls through the Applanga SDK.
+As shortly described above, the plugin is responsible for proxying all relevant `getString` calls through the Applanga SDK.
 It also collects data from your resource files, which is needed for accurate translations of specific views.
-This metadata data is stored in `applanga_meta.xml` in your `assets/` folder. It's recommended to ignore these files and not commit them to your repository.
+This metadata data is stored in `applanga_meta.xml` in your `assets/` folder. We recommend that you ignore this file and that you don't commit it to your repository.
 ```gradle
 // .gitignore
 ...
 *applanga_meta.xml
 ```
 
-There are two different ways how to apply this plugin.
+There are two different ways how to apply this plugin:
 
 #### 1. Add the plugin via plugins DSL
 
@@ -75,7 +79,7 @@ There are two different ways how to apply this plugin.
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.214'
+    id 'com.applanga.gradle' version '4.0.215'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -104,14 +108,14 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.214'
+        classpath  'com.applanga.gradle:plugin:4.0.215'
     }
 }
 ```
 _***IMPORTANT***:_ **Applanga SDK** and **Applanga Plugin** should always have the **same version number**!
 
 ### Proguard
-In order to keep all SDK functionality fully available when using Proguard, please make sure that the following lines are part of your Proguard configuration.
+In order to keep all SDK functionality fully available when using Proguard, please make sure that the following lines are part of your Proguard configuration:
 
     ```
     -keep class **.R$* {
@@ -142,7 +146,7 @@ public class MyApplication extends ApplangaApplication {
 ```
 
 
-If you do not have an `Application` class you can simply add the following to the `<application .../>` section of your AndroidManifest.xml
+If you don't have an `Application` class, you can simply add the following to the `<application .../>` section of your AndroidSettings File.xml:
 
 ```xml
 <application
@@ -153,7 +157,7 @@ If you do not have an `Application` class you can simply add the following to th
 </application>
 ```
 
-***NOTE:*** *If you cannot extend ApplangaApplication, you have to call Applanga.init(), followed by Applanga.update() in your `Application` class manually (see **Update Content**).*
+***NOTE:*** *If you can't extend `ApplangaApplication`, you have to call `Applanga.init()`, followed by `Applanga.update()` in your `Application` class manually (see **Update Content**).*
 
 #### 2. **Manual Init**
 
@@ -169,13 +173,13 @@ Applanga.update(new ApplangaCallback() {
 });
         
 ```
-The advantage of this method is that you could stop the app from loading any texts until the Applanga SDK has pulled the latest strings from the dashboard.
+The advantage of this method is that you can stop the app from loading any texts until the Applanga SDK has pulled the latest strings from the dashboard.
 
 In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you can see that we have a loading screen activity that inits and updates Applanga, and then loads the first Activity in the app once the update is complete.
 
 ## Configuration
-1. If you want to translate an android app with Applanga you need to download the *Applanga Settings File* for your app from the Applanga Project Overview by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***.
-2. Add the *Applanga Settings File* to your apps resources res/raw directory
+1. If you want to translate an Android app with Applanga, you need to download the Applanga Settings File for your app from the Applanga project dashboard by clicking the ***[Prepare Release]*** button and then clicking ***[Get Settings File]***.
+2. Add the Applanga Settings File to your app's resources res/raw directory.
 
 
 ## Usage
@@ -183,15 +187,15 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 1. **Missing Strings**
     Once Applanga is integrated and configured, it synchronizes your local strings with the Applanga dashboard every time you start your app in [Debug Mode](http://developer.android.com/tools/building/building-studio.html#RunningOnDeviceStudio) or [Draft Mode](https://www.applanga.com/docs/applanga-mobile-sdks/draft_on-device-testing) if new missing strings are found.
 
-    All strings located in your project's values folder (e.g. `strings.xml`) will be uploaded. Applanga only skips the upload if they meet the following conditions (according to [Non-translatable Strings](http://tools.android.com/recent/non-translatablestrings)):
+    All strings located in your project's values folder (e.g. `strings.xml`) will be uploaded. Applanga only skips the upload of strings that meet the following conditions (according to [Non-translatable Strings](http://tools.android.com/recent/non-translatablestrings)):
 
     Strings annotated with `translatable="false"` will be ignored, e.g.:
     ```xml
-    <string name="STRING_ID_IGNORED" translatable="false">This string will not be uploaded</string>
+    <string name="STRING_ID_IGNORED" translatable="false">This string won't be uploaded</string>
     ```
-    Strings inside an XML file named `donottranslate.xml` or a file with the following prefix: `donottranslate-` will not be uploaded.
+    Strings inside an XML file named `donottranslate.xml` or a file with the `donottranslate-` prefix won't be uploaded.
 2. **Callbacks**
-    To get notified on Localization Updates (e.g. to show a LoadingScreen at beginning of your App) override the ```onLocalizeFinished``` method in your Application class ( assuming you extend ApplangaApplication ).
+    To get notified on localization updates (e.g. to show a LoadingScreen at beginning of your App) override the ```onLocalizeFinished``` method in your Application class (assuming you extend ApplangaApplication).
     ```java
     public class MyApplication extends ApplangaApplication {
             ...
@@ -204,7 +208,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```
 3. **String Localization**
 
-    There is not always the need to rewrite your code everywhere you want to get translated Strings. The following shows the usage with and without explicit Applanga calls:
+    You don't need to rewrite your code everywhere you want to get translated strings. The following shows the usage with and without explicit Applanga calls:
 
     3.1 **Simple String**
 
@@ -213,9 +217,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     // get translated string for the current device locale
     ((Activity|Resources|Fragment)this).getString(R.string.STRING_KEY);
     ```
-    For dynamic keys retrieved from the backend or other sources outside of your resource files,
-    you can call `Applanga.getTranslation` but you need to make sure the key exists on Applanga or else the method will return null.
-    The dynamic keys will not be created automatically on the Applanga Dashboard.
+    For dynamic keys retrieved from the backend or other sources outside of your resource files, you can call `Applanga.getTranslation`. However, dynamic keys won't be created automatically in the Applanga project. You need to make sure the key exists in the project or else the method will return `null`. 
     ```java
     Applanga.getTranslation("STRING_KEY");
     ```
@@ -235,7 +237,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     3.3 **Named Arguments DEPRECATED!**
 
     We deprecated named Arguments and it will be removed on the next major release.
-    If you want to align your placeholder logic on Android and iOS please have a look at the Convert Placeholders section.
+    If you want to align your placeholder logic on Android and iOS, please read the **Convert Placeholders section** in this article.
 
     ```java
     // DEPRECATED!
@@ -263,7 +265,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ((Resources)res).getQuantityString(R.plurals.STRING_KEY, quantity);
     ```
 
-    On the Dashboard, you create a **pluralized ID** by appending the Pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`. Plural strings also get automatically uploaded if you start the app in draft mode or with the debugger connected.
+    On the dashboard, you can create a **pluralized ID** by appending the pluralisation rule to your **ID** in the following format: `[zero]`, `[one]`,`[two]`,`[few]`,`[many]`, `[other]`. Plural strings also get automatically uploaded if you start the app in Draft Mode or with the debugger connected.
 
     So the ***zero*** pluralized ID for ***"STRING_KEY"*** is ***"STRING_KEY[zero]"***
 
@@ -271,7 +273,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```java
     Applanga.getQuantityTranslation("STRING_KEY", quantity);
     ```
-    Dynamic quantity translations have the limitations as described for `getTranslation`: If the passed string key does not exist on the dashboard, it returns null.
+    Dynamic quantity translations have the limitation than `Applanga.getTranslation`: if the passed string key doesn't exist on the dashboard, it will return `null`.
     It doesn't automatically create the string key on the dashboard if it doesn't exist yet.
 
     3.5 **String-Arrays**
@@ -279,27 +281,26 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     //returns a string-array
     ((Resources)res).getStringArray(R.array.STRING_KEY);
     ```
-    String-Arrays will automatically be uploaded as other strings from your string XML. The **ID**-format is the following: `STRING_KEY[0]`, `STRING_KEY[1]`, `STRING_KEY[2]`, `STRING_KEY[..]`.
+    String-Arrays will automatically be uploaded like the other strings from your strings.xml file. The **ID** format is the following: `STRING_KEY[0]`, `STRING_KEY[1]`, `STRING_KEY[2]`, `STRING_KEY[..]`.
 
     You also can get string arrays dynamically:
     ```java
     Applanga.getTranslationArray("STRING_KEY");
     ```
-    Dynamic translation arrays have the limitations as described for `getTranslation`: If the passed string key does not exist on the dashboard, it returns null.
-    It doesn't automatically create the string key on the dashboard if it doesn't exist yet.
+    Dynamic translation arrays have the limitations as described for `getTranslation`: if the passed string key doesn't exist on the dashboard, it returns `null`. That is, it doesn't automatically create the string key on the dashboard if it doesn't exist yet.
 
     3.6 **Styled Strings**
     
-    We do not support html tags in xml files yet. To make the upload of styled strings from your `strings.xml` work you have to escape the html tags.
+    We don't support HTML tags in XML files yet. To make the upload of styled strings from your `strings.xml` work, you have to escape the HTML tags.
 
     ```xml
     <string name="styled_string">Hello, &lt;b>I am bold&lt;/b>.</string>
     ```
 
-    If you don't escape your styled strings in your `strings.xml`, then the html tags a stripped out with the missing string upload.
-    However if you translate your strings on the Applanga dashboard, you don't have to escape the html tags.
+    If you don't escape your styled strings in your strings.xml file, then the HTML tags are stripped out with the missing string upload.
+    However if you translate your strings on the Applanga dashboard, you don't have to escape the HTML tags.
 
-    To get the styled String as a SpannableString use `Html.fromHtml()` as explained in the official [Android documentation](https://developer.android.com/guide/topics/resources/string-resource#FormattingAndStyling).
+    To get the styled string as a SpannableString, use `Html.fromHtml()` as explained in the official [Android documentation](https://developer.android.com/guide/topics/resources/string-resource#FormattingAndStyling).
 
     ```java
     textView.setText(Html.fromHtml(getString(R.string.styled_string), Html.FROM_HTML_MODE_LEGACY));
@@ -307,10 +308,9 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 4. **Preference Localization**
 
-    With Applanga's plugin Preference Localization is mostly automated as of Applanga version 3.0 but it is important that **every PreferenceItem**, even a `PreferenceCategory`, **has to have a key** - if you want to enable Applanga's localization.
-    After a preferences has been localized there will be a log output stating: "localize Preferences!".
+    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.215 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
 
-	As an example a working preference XML would look like this:
+	As an example, a working preference XML would look like this:
 	
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
@@ -345,11 +345,11 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 5. **Menu Localization**
 
-    Menu localization does not require any additional code to work. Important is that **every menu item must have an id**.
-    The logic here is similar to the Preference Localization in the section above.
+    Menu localization doesn't require any additional code to work, but every menu item **must have an ID**.
+    The logic in this case is similar to the Preference Localization in the section above.
     We also added lint checks, you can disable them with `tools:ignore="ApplangaMenuIdMissing"`.
 
-    Here is a small example with one item without an id and one with an id with disabled linting:
+    Below you can find a small example with one item without an ID and one with an ID with disabled linting:
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
     <menu xmlns:tools="http://schemas.android.com/tools"
@@ -402,13 +402,12 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ### Recommended: Per-app language preferences
 
     Android 13 introduced the [per-app language preference](https://developer.android.com/guide/topics/resources/app-languages).
-    If you implement your own language picker within your app, make sure to call `Applanga.update(groups, languages, callback)` with the new language, otherwise the language will change, but there are no OTA updates until the next `update` call.
-    Also, make sure your settings file is up-to-date.
-    That's how you can switch languages while the app is running and it will show the most recent strings from your settings file even though the `Applanga.update` wasn't working due to network connection or simply didn't happen. 
+    If you implement your own language picker within your app, make sure to call `Applanga.update(groups, languages, callback)` with the new language. Otherwise the language will change but there will be no over-the-air updates until the next `update` call.
+    Additionally, make sure that your Settings File is up to date. This way, you can switch languages while the app is running and get the most recent strings from your Settings File even if the `Applanga.update` doesn’t work due to network connection issues or if it simply didn't happen.  
 
-    The AppCompat library also works together with the Applanga SDK. For switching languages you can do the following: `AppCompatDelegate.setApplicationLocales(appLocale);` 
+    The AppCompat library also works together with the Applanga SDK. To switch languages, you can do the following: `AppCompatDelegate.setApplicationLocales(appLocale);` 
 
-    **Important to note** if you have used the legacy method `Applanga.setLanguage()` or `Applanga.setLanguageAndUpdate()`. It stores the changed language to your device.
+    **Important:** the legacy methods `Applanga.setLanguage()` or `Applanga.setLanguageAndUpdate()` store the changed language to your device.
     To delete its settings you need to call `Applanga.setLanguage(null)` once.
 
     ### Legacy: Applanga.setLanguage(language)
@@ -418,7 +417,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
       You can change your app language at runtime using the following call:
 
     ```java
-    // this changes the language but your initial update call may have not covered this language
+    // this changes the language but your initial update call may not cover this language
     // so it's good practice to do an Applanga.update() afterwards or use the `setLanguageAndUpdate` method
     boolean success = Applanga.setLanguage(language); 
     // - or - 
@@ -426,20 +425,22 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     Applanga.setLanguageAndUpdate(language, applangaCallback);
     ```
 
-      *language* must be the iso string of a language that has been added to the dashboard.
-      The return value will be *true* if the language could be set, or if it already was the current language, otherwise, it will be *false*.
-      After a successful call, you should recreate the current activity, for the changes to take effect.
-      The set language will be saved, to reset to the     device language call:
+      `language` must be the ISO language code of the language that has been added to the project dashboard.
+      
+      The return value will be `true` if the language has been set or if it already is the current language. Otherwise, the return value will be `false`.
+
+      After a successful call, you should recreate the current activity for the changes to take effect.
+      The set language will be saved.
+      
+      To reset the app to the device language, call the following method and restart the app:
 
     ```java
       Applanga.setLanguage(null);
     ```
 
-    For the app to reset to the device language it needs to be restarted.
+    The *language* parameter is expected in the format **[language]-[region]** or **language****_region** (the region is optional). Examples: "fr_CA", "en-us", "de".
 
-    The *language* parameter is expected in the format **[language]-[region]** or     **language****_region** with the region being optional. Examples: "fr_CA", "en-us", "de".
-
-    If you have problems switching to a specific language you can update your settings file or specifically request that language within an update content call (see **8. Update Content**). You can also specify the language as a default language to have it requested on each update call (see **Optional settings**).
+    If you have problems switching to a specific language, you can update your Settings File or specifically request that language within an update content call (see **8. Update Content**). You can also define a default language to have it requested on each update call (see **Optional settings**).
 
 8. **WebViews**
 
@@ -458,7 +459,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     <meta-data android:name="ApplangaTranslateWebViews" android:value="true" />
     ```
 
-    To initialize Applanga for your web content you need to initialize Applanga from JavaScript:
+    To initialize Applanga for your web content, you need to initialize Applanga from JavaScript:
 
     ```html
     <script type="text/javascript">
@@ -484,7 +485,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     8.2 **Arguments**
 
     You can pass arguments with the ```applanga-args``` attribute.
-    By default, the arguments are parsed as a comma-separated list which then will replace fields as %{arrayIndex}.
+    By default, the arguments are parsed as a comma-separated list that will then replace fields as %{arrayIndex}.
 
     ```html
     <div applanga-text="STRING_ID" applanga-args="arg1,arg2,etc">
@@ -495,7 +496,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     Direct call : `Applanga.getString('STRING_ID', 'arg1,arg2,etc')`
 
-    To define a different separator instead of ```,``` e.g. if your arguments contain commas use ```applanga-args-separator```.
+    To define a different separator instead of a comma (e.g. in case your arguments contain commas), use `applanga-args-separator`.
 
     ```html
     <div applanga-text="STRING_ID"
@@ -531,7 +532,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     </div>
     ```
 
-    Direct call : `Applanga.getPluralString('STRING_ID', 'one')` or with arguments :     `applanga.getPluralString('STRING_ID', 'one', 'arg1;arg2;etc', ';')`
+    Direct call : `Applanga.getPluralString('STRING_ID', 'one')` or with arguments:     `applanga.getPluralString('STRING_ID', 'one', 'arg1;arg2;etc', ';')`
 
     You can also pluralize by quantity via `applanga-plural-quantity`
 
@@ -556,7 +557,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 9. **Draft Mode**
 
-    To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down four fingers for four seconds in this activity. A dialog appears asking you to enter a key code, which is the first four characters of your app secret and can also be found in your app's main view on the dashboard. When the right key is entered, the application will switch to Draft mode and quit, restart it manually. The Draft mode can be disabled in the same way as it was enabled. Please be aware that not all Android devices support multitouch with four fingers.
+    To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down six fingers for six seconds in this activity. A dialog will appear asking you to enter a key code. The code is the first four characters of your app secret and can be found in the Applanga project dashboard. If the key is correct, the application will switch to Draft Mode and quit, so you will need to restart it manually. The Draft Mode can be disabled in the same way it was enabled. Please be aware that not all Android devices support multitouch with six fingers.
 
     ```java
     @Override
@@ -566,7 +567,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     }
     ```
 
-    The draft mode overlay also requres the alert permission to work, please add it to your manifest like so:
+    The Draft Mode menu also requires the alert permission to work. Please add it to your Manifest like so:
 
     ```xml
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -575,28 +576,28 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 10. **Automatic Screenshot Upload**
 
-     The Applanga SDK offers the functionality to upload screenshots of your app, while collecting meta-data such as the current language, resolution and the Applanga translated strings that are visible,     including their positions.
-     Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta-data: language, app version, device, platform, OS, and resolution.
+     The Applanga SDK offers the functionality to upload screenshots of your app while collecting meta-data such as the current language, resolution and the Applanga translated strings that are visible, including their positions.
+     Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta-data (e.g. language, app version, device, platform, OS, and resolution).
 
-     You can read more here: [Manage Tags](https://applanga.com/docs#manage_tags) and here: [Uploading screenshots](https://applanga.com/docs#uploading_screenshots).
+     You can read more on our [Tags](https://www.applanga.com/docs/translation-management-dashboard/applanga-tags) and [Uploading screenshots](https://www.applanga.com/docs/applanga-screenshots/uploading-screenshots) articles.
 
-     **NOTE:** To capture screenshots the app needs permission to _“_Draw over other apps”* so on the first try to make a screenshot the app might redirect you to the permissions screen to enable it.
+     **NOTE:** to capture screenshots the app needs permission to _“_Draw over other apps”. When you first try to make a screenshot, the app might redirect you to the permissions screen to enable it.
 
      10.1 **Make screenshots manually**
 
-     To manually make a screenshot you first have to set your app into [draft mode](https://www.applanga.com/docs/translation-management-dashboard/draft_on-device-testing).
+     To manually make a screenshot you first have to set your app into [Draft Mode](https://www.applanga.com/docs/applanga-mobile-sdks/draft_on-device-testing).
 
-     With your app in draft mode, all you have to do is to make a two-finger swipe downwards.
-     This will show the screenshot menu and load a list of [tags](https://applanga.com/docs#manage_tags).
+     With your app in Draft Mode, all you have to do is to make a two-finger swipe downwards.
+     This will show the screenshot menu and load a list of [tags](https://www.applanga.com/docs/translation-management-dashboard/applanga-tags).
 
-     The two-finger swipe will work in activities that pass on their mouse events via ***dispatchTouchEvent*** as shown previously.
+     As shown previously, the two-finger swipe will work in activities that pass on their mouse events via ***dispatchTouchEvent***.
 
-     You can now choose a tag and press *capture screenshot* to capture and upload a screenshot including all meta-data for the currently visible screen and assign it to the selected tag.
+     You can now choose a tag and press *capture screenshot* to capture and upload a screenshot (including all meta-data for the currently visible screen) and assign it to the selected tag.
      Tags have to be created in the dashboard before they are available in the screenshot menu.
 
      10.2 **Display screenshot menu programmatically**
 
-     You also have the option to display the screenshot menu programmatically, this also requires the app to be in draft mode:
+     You also have the option to display the screenshot menu programmatically, this also requires the app to be in Draft Mode:
 
     ```java
     Applanga.setScreenShotMenuVisible(true);
@@ -604,7 +605,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
      10.3 **Make screenshots programmatically**
 
-     To create a screenshot programmatically you call the following function:
+     To create a screenshot programmatically, call the following function:
 
     ```java
     String tag = "Mainmenu";
@@ -614,15 +615,15 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     Applanga.captureScreenshot(tag, applangaIDs);
     ```
 
-     The Applanga SDK tries to find all IDs on the screen but you can also pass additional IDs in the **applangaIDs** parameter.
+     The Applanga SDK will try to find all IDs on the screen, but you can also pass additional IDs in the **applangaIDs** parameter.
 
      10.4 **Make screenshots during UITests**
 
-     To capture screenshots from UITests like espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in draft mode or debug mode.
+     To capture screenshots from UITests like Espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in Draft Mode or debug mode.
 
-    The Applanga SDK automatically finds the tags of all texts on screen, but if for some reason a text is not tagged or the SDK cannot find the correct tag. There are different reasons for it, the most common reason is strings set during runtime. The best method to get all current strings on the screen correctly tagged is with the show id mode.
+    The Applanga SDK should automatically find the tags of all the text strings on the screen. However, it’s possible that a text string isn't tagged, or that the SDK can't find the correct tag. There are different reasons for it, the most common reason is strings set during runtime. The best method to get all current strings on the screen correctly tagged is to use the `showIdMode`.
     
-    The show id mode shows all string ids instead of the translations. With this mode enabled the SDK can collect all string IDs on the screen. It's more reliable than OCR and it works even with localizations set at runtime.
+    The `showIdMode` shows all string IDs instead of the translations. When this mode is enabled, the SDK can collect all string IDs on the screen. It's more reliable than OCR and it works even with localizations set at runtime. 
 
     Usage:
 
@@ -631,26 +632,26 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```
 
     Note:
-    If setIdModeEnabled is set after showing a specific screen, you have to recreate the activity or set the flag before initializing your screen.
+    if `setIdModeEnabled` is set after showing a specific screen, you have to recreate the activity or set the flag before initializing your screen.
 
 
      10.6 **OCR screenshots**
      
-     The Applanga SDK automatically finds the tags of all texts on screen, but if for some reason a text is not tagged or the SDK cannot find the correct tag, you may take a screenshot programmatically using the enableOcr param like so.
+     The Applanga SDK automatically finds the tags of all texts on screen, but if for some reason a text isn't tagged or the SDK can't find the correct tag, you can take a screenshot programmatically using the `enableOcr` parameter like so:
 	```java
 	Applanga.captureScreenshot(tag, applangaIDs, true);
 	```
 	
-	Please note: in most cases enabling OCR is not necessary and will slow down the processing of screenshots for the dashboard, so please only use it if needed. Feel free to reach out to Applanga support for more info.
+	Please note that in most cases, enabling OCR isn't necessary and will slow down the processing of screenshots for the dashboard, so please only use it if needed. If you need more information or have any questions, feel free to reach out to [support@applanga.com](support@applanga.com) or use the support chat in the bottom right corner of the website.
 
 11. **Multi-project setup**
 
-	The multi-project setup is the same as described in *Installation*.
-    You only have to add the SDK and the Applanga plugin to your module if the module contains translatable resources (`string.xml` or layout files), if it inflates layouts from other modules or if you simply want to use the Applanga SDK for any reason. Otherwise, modules without the Applanga SDK and plugin remain untranslated. 
+	The multi-project setup is the same as described in the *Installation* section.
+    You only have to add the SDK and the Applanga plugin to your module if the module contains translatable resources (string.xml or layout files), if it inflates layouts from other modules, or if you simply want to use the Applanga SDK for any reason. Otherwise, modules without the Applanga SDK and plugin remain untranslated. 
 
 12. **Custom ViewPump Initialization**
 
-	If you are already using [ViewPump](https://github.com/InflationX/ViewPump) in your app for example if you use [Calligraphy](https://github.com/InflationX/Calligraphy) it is advised to initialize [ViewPump](https://github.com/InflationX/ViewPump) before `Applanga.init(...)` because that way all interceptors will stay active. If you need to initialize it at a later stage please make sure to cache and re-add the existing interceptors as shown in the sample below.
+	If you are already using [ViewPump](https://github.com/InflationX/ViewPump) in your app (i.e. [Calligraphy](https://github.com/InflationX/Calligraphy)) it is advised to initialize [ViewPump](https://github.com/InflationX/ViewPump) before `Applanga.init(...)` because that way all interceptors will stay active. If you need to initialize it at a later stage, please make sure to cache and re-add the existing interceptors as shown in the sample below.
 	
     ```java
     //cache existing (Applanga) interceptors
@@ -676,16 +677,16 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 13. **Unit Testing and Robolectric**
 
     When running Unit tests, Applanga only returns local resources.
-    The Applanga Plugin replaces all `getString()` calls with the Applanga SDK.
-    Depending on your tests, make sure that Applanga is initialized with a (mocked) Context, to be able to access your local resources.
-    In most cases Applanga can initialize itself, so it's may not necessary to do so.
-    The following log output should appear: `Unit tests are running! Applanga returns local strings only.` and if you use Robolectric you should see `Robolectric in use.`.
+    The Applanga plugin replaces all `getString()` calls with the Applanga SDK.
+    Depending on your tests, make sure that the Applanga SDK is initialized with a (mocked) Context, to be able to access your local resources.
+    In most cases the Applanga SDK can initialize itself, so it may not be necessary to do so.
+    The following log output should appear: `Unit tests are running! Applanga returns local strings only.`. If you use Robolectric, you should see: `Robolectric in use.`.
 
-    If you don't see the logs or encounter any other issues please contact us.
+    If you don't see the logs or encounter any other issues please contact us at [support@applanga.com](support@applanga.com) or use the support chat in the bottom right corner of the website
 
 14. **Get available languages**
 
-  	It is possible to get the currently added languages on the dashboard:
+  	It is possible to get the list of languages that are currently part of a project:
   	
 	```java
 	// java
@@ -696,16 +697,16 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 	val languages = Applanga.getAvailableLanguages()
 	```
 	
-	The result will contain the iso string of each language that has been added on the dashboard.
-	These values are synced during the `Applanaga.update()` response. So to retrieve any changes to the available languages on the dashboard, an update() should be performed manually before using this list. 
+	The result will contain the ISO language code of each language that has been added to the project.
+	These values are synced during the `Applanaga.update()` response. To retrieve any changes to the available languages on the dashboard, an `Applanaga.update()` should be performed manually before using this list. 
 
 
 ## Optional settings
 
 1. **Specify default groups or languages**
 
-    You can specify a set of default groups and languages in the manifest, which will be updated on every Applanga.update() call. These groups and languages will be added to any that are specified in the call itself, they will *always* be requested.
-    The Parameter value must be a string, with a list of groups or languages separated by commata.
+    You can specify a set of default groups and languages in the Manifest, which will be updated on every `Applanga.update()` call. These groups and languages will be added to any that are specified in the call itself, they will *always* be requested.
+    The parameter value must be a string with a comma-separated list of groups or languages.
 
     *Specify default groups*
 
@@ -728,11 +729,11 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```
 2. **Automatic Applanga Settings File Update**
 
-    In case your app's user has no internet connection, new translation updates can't be fetched, so the Applanga SDK falls back to the last locally cached version. If the app was started for the first time, there are no strings locally cached yet so Applanga SDK falls back to the Applanga Settings File which contains all strings from the moment it was generated, downloaded, and integrated into your app before release.
+    In case your app's user has no Internet connection, new translation updates can't be fetched, so the Applanga SDK falls back to the last locally cached version. If the app is started for the first time, there will no strings locally cached yet. In this case, the Applanga SDK falls back to the Applanga Settings File, which contains all strings from the moment it was generated, downloaded, and integrated into your app before release.
 
-    To minimize the manual effort of updating the Applanga Settings File, we created a task that triggers the Applanga Settings File generation if changes were made and replace the old one with the new one in your app.
+    To minimize the manual effort of updating the Applanga Settings File, we created a task that triggers the Applanga Settings File generation if changes were made and replaces the old one with the new one in your app.
 
-    **Be aware that the task will not fail if there is no internet connection, to be able to develop offline.** In this case, a warning is printed. To activate the Automatic Settings File Update put the following line into your `build.gradle`:
+    **Be aware that the task will work  even if there is no Internet connection. This way, you can continue to develop  offline.** In this case, a warning is printed. To activate the automatic Settings File update, add the following line to your `build.gradle`:
 
     ```
     // for all builds:
@@ -745,11 +746,11 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     To make sure that the script is running and to see when it does or doesn't update, check the detailed build report in Android Studio after triggering a build.
     There you will find logs for each update step.
 
-    If the file is updated successfully you should see the log "Settings File UPDATED". If it is already up to date you will see the log "Settings File UP-TO-DATE".
+    If the file is successfully updated, you should see "Settings File UPDATED" on the log. If it is already up to date, you will see "Settings File UP-TO-DATE" on the log.
 
 3. **Disable automatic string updates when extending the ApplangaApplication Class**
 
-    If you are initializing the SDK by extending or including the provided ApplangaApplication class, but you wish to manually control when the SDK communicates with our servers and updates to the latest strings, then you can include the following setting in your application manifest. 
+    If you are initializing the SDK by extending or including the provided `ApplangaApplication` class, but you wish to manually control when the SDK communicates with our servers and updates to the latest strings, then you can include the following setting in your app's Manifest: 
 
     ```xml
     <application>
@@ -758,11 +759,11 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
             ...
     </application>
     ```
-	This setting will stop the automatic updates and allow you to call Applanga.update() at any time that suits you
+	This setting will stop the automatic updates and allow you to call `Applanga.update()` at any time that suits you.
 	
 4. **Disable Draft Mode**
 
-    If you wish to create a build that cannot enable draft mode at any time, you can include the following setting in your manifest.
+    If you wish to create a build that can't enable Draft Mode at any time, you can include the following setting in your Manifest.
 
     ```xml
     <application>
@@ -771,17 +772,17 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
             ...
     </application>
     ```
-    You can also use the following method at runtime
+    You can also use the following method at runtime:
 
     ```
     Applanga.setDraftModelEnabled(bool);
     ```
     
-	This will override the setting in the manifest, but it will not override draft mode being disabled in the Applanga dashboard.
+	This will override the setting in the Manifest, but it won't override the [Draft Mode setting from the Applanga dashboard](https://www.applanga.com/docs/applanga-mobile-sdks/draft_on-device-testing#how-to-enable-or-disable-draft-mode-from-the-dashboard).
 
 5. **Convert Placeholder**
 
-    To convert placeholders between iOS and Android styles you need to enable the following in your Manifest:
+    To convert placeholders between iOS and Android styles, you need to enable the following in your Manifest:
 	
     ```xml
     <application>
@@ -793,7 +794,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     ***Common placeholder***
 
-    These placeholders will not be converted as they are supported on iOS and Android.
+    These placeholders won't be converted as they are supported on iOS and Android:
 
     - Scientific notation `%e` and `%E`
     - `%c` and `%C` Unicode Characters
@@ -812,14 +813,14 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     - double `%g` and `%p` are converted to `%d`
     - Objective C integer types like `%i`, `%u`, `%U` are converted to `%d`
     - Floating point numbers `%f` and `%F` will be converted to `%f`
-    - iOS `%s` is not supported and remains `%s` which will be an Android String
+    - iOS `%s` isn't supported and remains `%s` which will be an Android String
     - `%p` iOS Pointer will be converted to Android integer `%d`
     - `%O` Octal integer is converted to `%o`
     - `%D` is converted to `%d`
 
 6. **Language Mapping**
 
-    You can map a locale to another locale. For example, if you don't have `es-CL` added to your dashboard it usually has a fallback to `es`. But if you want to treat `es-CL` as `es-MX` then you could add it to the map. Watch out for the log: `ApplangaLanguageMap: es-CL is mapped to es-MX`
+    You can map a locale to another locale. For example, if you don't have `es-CL` added to your dashboard, it usually has a fallback to `es`. But if you want to treat `es-CL` as `es-MX`, then you can add it to the map. Watch out for the log: `ApplangaLanguageMap: es-CL is mapped to es-MX`
 
     Example:
 
@@ -833,12 +834,12 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     </application>
     ```
 
-    The locale is mapped in all places in the sdk, except when used in combination with [custom language fallback](#enable-custom-language-fallback). In this case the custom fallback performed as set in the referenced xml, no additional mapping occurres for the entries in that xml.
+    The locale is mapped in all places in the SDK, except when used in combination with [custom language fallback](#enable-custom-language-fallback). In this case, the custom fallback is performed as set in the referenced XML, no additional mapping occurs for the entries in that XML.
     If you have a locale that maps to another locale that has a custom fallback, this would also work, and the custom fallback will be performed after the mapping.
 
 7. **Enable system language fallback**
 	
-	By default applanga uses a custom device locale order, this meta-data value makes the SDK iterate over the languages by using the priority set by the system. This order is used when translating strings and performing a fallback when the string wasn't found for a specified language. Then the SDK would try to translate using the next language in the list. The available possibilites are:
+	By default, Applanga uses a custom device locale order. This meta-data value makes the SDK iterate the languages by using the priority set by the system. This order is used when downloading the translated strings, or if the SDK performs a fallback when a string isn’t found for a specified language. Then the SDK will try to translate strings with the next language in the list. The available possibilities are:
 
 	`applanga`: The default SDK order
 	`system`: Use the device system order
@@ -855,9 +856,9 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 8. **Enable custom language fallback**<a name="enable-custom-language-fallback"></a>
 	
-	This meta-data value is a resource reference to an xml which allows to set a custom fallback per language. When the SDK would need to translate a key with a specified language, it uses the order as provided. This overrides any other system or default fallbacks only for those languages. Other languages work according to the fallback specified using the ApplangaLanguageFallback value (or default if it's not set). The fallback is only overriden for the top level language, so it's not possible to "nest" the custom fallbacks.
+	This meta-data value is a resource reference to an XML that allows to set a custom fallback per language. When the SDK needs to translate a key with a given language, it iterates the fallback languages in order. This overrides any other system or default fallbacks only for those languages. Other languages work according to the fallback specified using the `ApplangaLanguageFallback` value (or the default one if it's not set). The fallback is only overridden for the top level language, so it's not possible to "nest" the custom fallbacks.
 
-	Example
+	Example:
 
 	```xml
 	<application>
@@ -869,7 +870,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     </application>
 	```
 
-    the xml should be structured like this:
+    The XML should be structured like this:
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
     <custom_fallback>
@@ -887,7 +888,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 9. **Automatic upload of a tag with current app strings**
 
-	In case you would like to upload a tag with all the local strings in your app, add the following key in the Manifest
+	If you want to upload a tag with all the local strings in your app, add the following key to the Manifest:
     
     ```xml
     <application>
@@ -899,16 +900,16 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     </application>
     ```
 
-	This manifest value would be used as the tag prefix combined with the app version (for example some_tag1.0), then when you are running with the app with the debugger connected, an automatic tag upload would be performed after Applanga.update(), which is also done on app start. The tag would be created on the dashboard if it doesn't exist yet.
+	This Manifest value would be used as the tag prefix combined with the app version (for example some_tag1.0). Then when you start or run your app with the debugger connected, an automatic tag upload will be performed after `Applanga.update()`. The tag will be created in the project if it doesn't exist yet.
 
 ## Jetpack Compose
 
-The ApplangaSDK supports `stringResource()` and `stringArrayResource()`.
+The Applanga SDK supports `stringResource()` and `stringArrayResource()`.
 
 ### Jetpack Compose Screenshots
 
-Jetpack Compose screenshots are less accurate when doing screenshots manually with the draft menu. To have accurate string positions you have to pass them to the SDK while doing tests.
-A compose test rule is needed as shown in the example below. The example does two screenshots: One with showIdMode enabled - to link all strings correctly to the current tag - and then it does a 'normal' screenshot where all translations are visible.
+Jetpack Compose screenshots are less accurate if they have been created manually via the Draft Mode menu. To have accurate string positions you have to pass them to the SDK while doing tests.
+A compose test rule is needed as shown in the example below. The example creates two screenshots: one with `showIdMode` enabled (to link all strings correctly to the current tag), and a 'normal' screenshot where all translations are visible.
 
 ```kotlin
 @get:Rule
@@ -979,26 +980,26 @@ fun testUploadStrings() {
     val pos = getStringPositions(composeTestRule.onAllNodes(isEnabled()).fetchSemanticsNodes())
     val jsonString = stringPositionsToString(pos, false)
     Applanga.captureScreenshot("jetpack_compose_activity", null, jsonString, null);
-}
+}Internet
 ```
 
 ## Branching
 
-If your project is a branching project use at least SDK version 4‎.0.184 and update your settings file.
-The settings file defines the default branch for your current app.
+If your project is a branching project, use at least the SDK version 4‎.0.184 and update your Settings File.
+The Settings File defines the default branch for your current app.
 This branch is used on app start and for update calls.
 To be sure branching is working look for the log line: `Branching is enabled.`
 
-To learn more about branching please have a look [here](https://www.applanga.com/docs/advanced-features/branching).
+To learn more about branching, please check our [Branching](https://www.applanga.com/docs/advanced-features/branching) article.
 
 ### Draft Mode
 
-When enabling the Draft Mode you can switch your branch at runtime - an app restart is required.
-You also can use our draft overlay to switch your current branch.
+When enabling the Draft Mode, you can switch your branch at runtime - an app restart is required.
+You also can use our Draft Mode menu to switch your current branch.
 Every screenshot you take is linked to the current branch.
 
 ### Production Apps
 
-Already published apps that still use settings files without branching and older SDKs will still work and they will use the "main" branch.
+Already published apps that still use Settings Files without branching and older SDKs will still work and they will use the "main" branch.
 
  
