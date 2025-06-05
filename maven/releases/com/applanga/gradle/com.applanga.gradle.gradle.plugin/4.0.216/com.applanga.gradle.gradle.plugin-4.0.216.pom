@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.applanga.gradle</groupId>
+  <artifactId>com.applanga.gradle.gradle.plugin</artifactId>
+  <version>4.0.216</version>
+  <packaging>pom</packaging>
+  <name>Applanga Plugin</name>
+  <description>This plugin comes along with the Applanga Android SDK.</description>
+  <dependencies>
+    <dependency>
+      <groupId>com.applanga.gradle</groupId>
+      <artifactId>plugin</artifactId>
+      <version>4.0.216</version>
+    </dependency>
+  </dependencies>
+</project>

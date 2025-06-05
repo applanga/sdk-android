@@ -6,6 +6,15 @@
 ***
 
 
+### Version 4.0.216 (5 Jun 2025)
+#### Fixed
+- fixed issues for custom views using customView.setText(int id)
+
+#### Added
+- general security checks
+- improved dev experience when working with different settings files linked to different projects on one device
+
+---
 ### Version 4.0.215 (24 Apr 2025)
 #### Fixed
 - NullPointerException while parsing failed requests
