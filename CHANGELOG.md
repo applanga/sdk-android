@@ -6,6 +6,11 @@
 ***
 
 
+### Version 4.0.217 (17 Jul 2025)
+#### Fixed
+- missing string upload with non transitive R classes
+- navigation controller title translation for some edge cases
+
 ### Version 4.0.216 (5 Jun 2025)
 #### Fixed
 - fixed issues for custom views using customView.setText(int id)

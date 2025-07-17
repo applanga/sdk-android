@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.216
+*Version:* 4.0.217
 
 *Website:* <https://www.applanga.com>
 
@@ -57,7 +57,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.216'
+    implementation 'com.applanga.android:Applanga:4.0.217'
 }
 ```
 
@@ -79,7 +79,7 @@ There are two different ways how to apply this plugin:
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.216'
+    id 'com.applanga.gradle' version '4.0.217'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -108,7 +108,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.216'
+        classpath  'com.applanga.gradle:plugin:4.0.217'
     }
 }
 ```
@@ -308,7 +308,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 4. **Preference Localization**
 
-    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.216 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
+    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.217 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
 
 	As an example, a working preference XML would look like this:
 	
@@ -857,6 +857,10 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 8. **Enable custom language fallback**<a name="enable-custom-language-fallback"></a>
 	
 	This meta-data value is a resource reference to an XML that allows to set a custom fallback per language. When the SDK needs to translate a key with a given language, it iterates the fallback languages in order. This overrides any other system or default fallbacks only for those languages. Other languages work according to the fallback specified using the `ApplangaLanguageFallback` value (or the default one if it's not set). The fallback is only overridden for the top level language, so it's not possible to "nest" the custom fallbacks.
+
+	> [!IMPORTANT]
+	> The specified array of languages fully overrides the order for a given language.
+	You should include that language itself in the array otherwise it will <b>not</b> be added automatically into the list, and skipped during localization. 
 
 	Example:
 
