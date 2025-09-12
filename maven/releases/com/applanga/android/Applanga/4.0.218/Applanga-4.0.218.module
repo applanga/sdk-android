@@ -1,0 +1,111 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.applanga.android",
+    "module": "Applanga",
+    "version": "4.0.218",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.applanga.android",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "Applanga-4.0.218.aar",
+          "url": "Applanga-4.0.218.aar",
+          "size": 381583,
+          "sha512": "e4a8df515d58b7575410420d6a2b7b77375c04e6b6642e42a9fea94316ab891a115f09464c58a9233870219323f42f400419a85c97c32806271e0eb715f63858",
+          "sha256": "a589e7076464ea6709363cff808e268a738523d3fb983a5172ef8e859c556088",
+          "sha1": "61bcdac3aa54986b541f5f788d8aee0385295d71",
+          "md5": "cfe9e6f9c769274627cc7d7ca0cf118b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.appcompat",
+          "module": "appcompat",
+          "version": {
+            "requires": "1.4.2"
+          }
+        },
+        {
+          "group": "androidx.preference",
+          "module": "preference",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "io.github.inflationx",
+          "module": "viewpump",
+          "version": {
+            "requires": "2.0.3"
+          }
+        },
+        {
+          "group": "com.google.android.material",
+          "module": "material",
+          "version": {
+            "requires": "1.6.1"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.4.0"
+          }
+        },
+        {
+          "group": "com.applanga.android",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "Applanga-4.0.218.aar",
+          "url": "Applanga-4.0.218.aar",
+          "size": 381583,
+          "sha512": "e4a8df515d58b7575410420d6a2b7b77375c04e6b6642e42a9fea94316ab891a115f09464c58a9233870219323f42f400419a85c97c32806271e0eb715f63858",
+          "sha256": "a589e7076464ea6709363cff808e268a738523d3fb983a5172ef8e859c556088",
+          "sha1": "61bcdac3aa54986b541f5f788d8aee0385295d71",
+          "md5": "cfe9e6f9c769274627cc7d7ca0cf118b"
+        }
+      ]
+    }
+  ]
+}
