@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.218
+*Version:* 4.0.219
 
 *Website:* <https://www.applanga.com>
 
@@ -57,7 +57,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.218'
+    implementation 'com.applanga.android:Applanga:4.0.219'
 }
 ```
 
@@ -79,7 +79,7 @@ There are two different ways how to apply this plugin:
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.218'
+    id 'com.applanga.gradle' version '4.0.219'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -108,7 +108,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.218'
+        classpath  'com.applanga.gradle:plugin:4.0.219'
     }
 }
 ```
@@ -308,7 +308,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 4. **Preference Localization**
 
-    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.218 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
+    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.219 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
 
 	As an example, a working preference XML would look like this:
 	

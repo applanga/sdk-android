@@ -6,6 +6,13 @@
 ***
 
 
+### Version 4.0.219 (18 Sep 2025)
+#### Fixed
+- improved screenshot string position matching
+- BottomAppBar not fully localized
+- action bar title not localized when using setupActionBarWithNavController
+
+---
 ### Version 4.0.218 (12 Sep 2025)
 #### Fixed
 - minor bug fixes
