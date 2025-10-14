@@ -6,7 +6,7 @@
 ***
 
 
-### Version 4.0.219 (18 Sep 2025)
+### Version 4.0.220 (14 Oct 2025)
 #### Fixed
 - improved screenshot string position matching
 - BottomAppBar not fully localized
