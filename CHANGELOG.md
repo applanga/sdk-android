@@ -6,7 +6,12 @@
 ***
 
 
-### Version 4.0.220 (14 Oct 2025)
+### Version 4.0.221 (14 Oct 2025)
+#### Fixed
+- applanga settings file update task failed when using gradle configuration cache
+- tag local strings did not tag all tags from all modules
+
+### Version 4.0.219 (18 Sep 2025)
 #### Fixed
 - improved screenshot string position matching
 - BottomAppBar not fully localized
