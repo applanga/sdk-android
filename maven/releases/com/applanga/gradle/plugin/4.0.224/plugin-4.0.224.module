@@ -1,0 +1,126 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.applanga.gradle",
+    "module": "plugin",
+    "version": "4.0.224",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "plugin-4.0.224.jar",
+          "url": "plugin-4.0.224.jar",
+          "size": 141590,
+          "sha512": "a0124eb617ff573161108547df860d716e7d755754e991d7583a53b550504b539b2ae1bed0992a4426371838eab26901795c0922ef9cdb9e892a18ebbb1c9ee8",
+          "sha256": "de8ec0be200d849f51f879708bb535ea1e569474ac5f161dc1ebdb3d74f7e458",
+          "sha1": "6deef15e898163d4f920226a33c9a913cc42b5cf",
+          "md5": "93bc37974b8c82b2be7cb7dcc71a3451"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.applanga.android",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.1"
+          }
+        },
+        {
+          "group": "com.google.code.gson",
+          "module": "gson",
+          "version": {
+            "requires": "2.9.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.24"
+          }
+        },
+        {
+          "group": "com.android.tools.build",
+          "module": "gradle-api",
+          "version": {
+            "requires": "7.2.2"
+          }
+        },
+        {
+          "group": "org.ow2.asm",
+          "module": "asm-util",
+          "version": {
+            "requires": "7.0"
+          }
+        },
+        {
+          "group": "com.android.tools.build",
+          "module": "gradle",
+          "version": {
+            "requires": "7.2.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "plugin-4.0.224.jar",
+          "url": "plugin-4.0.224.jar",
+          "size": 141590,
+          "sha512": "a0124eb617ff573161108547df860d716e7d755754e991d7583a53b550504b539b2ae1bed0992a4426371838eab26901795c0922ef9cdb9e892a18ebbb1c9ee8",
+          "sha256": "de8ec0be200d849f51f879708bb535ea1e569474ac5f161dc1ebdb3d74f7e458",
+          "sha1": "6deef15e898163d4f920226a33c9a913cc42b5cf",
+          "md5": "93bc37974b8c82b2be7cb7dcc71a3451"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      }
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      }
+    }
+  ]
+}

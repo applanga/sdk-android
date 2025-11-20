@@ -6,6 +6,10 @@
 ***
 
 
+### Version 4.0.224 (20 Nov 2025)
+#### Added
+- draft ovelray position and visibility controls
+
 ### Version 4.0.222 (30 Oct 2025)
 #### Fixed
 - placeholder conversion while being in Draft Mode
