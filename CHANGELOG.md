@@ -6,9 +6,14 @@
 ***
 
 
+### Version 4.0.225 (12 Dec 2025)
+#### Fixed
+- race condition crashes at build time
+- crash when overriding setString in class inheriting from AppCompatEditText
+
 ### Version 4.0.224 (20 Nov 2025)
 #### Added
-- draft ovelray position and visibility controls
+- draft overlay position and visibility controls
 
 ### Version 4.0.222 (30 Oct 2025)
 #### Fixed
