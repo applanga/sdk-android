@@ -6,6 +6,10 @@
 ***
 
 
+### Version 4.0.227 (9 Jan 2026)
+#### Fixed
+- crash with custom setText method in Fragments
+
 ### Version 4.0.226 (18 Dec 2025)
 #### Fixed
 - keys might remain tagged when uploading new keys for same tag
