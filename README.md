@@ -447,7 +447,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     It is possible to get a translation for a key regardless of the currently set language.
     
     ```Java
-    Applanga.getTranslation("APPLANGA_KEY", "de");
+    Applanga.getTranslationForLanguage("APPLANGA_KEY", "de");
     ```
     
     When using this method, it might be this language is not part of the original device language fallback.
