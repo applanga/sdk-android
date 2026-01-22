@@ -6,7 +6,18 @@
 ***
 
 
+### Version 4.0.228 (22 Jan 2026)
+#### Added
+- new methods to get translated values for keys in specific language
+- support for TabLayout.Tab.setText
+
+---
 ### Version 4.0.227 (9 Jan 2026)
+#### Fixed
+- crash with custom setText method in Fragments
+
+---
+### Version 4.0.226 (18 Dec 2025)
 #### Fixed
 - crash with custom setText method in Fragments
 

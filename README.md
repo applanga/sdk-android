@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.227
+*Version:* 4.0.228
 
 *Website:* <https://www.applanga.com>
 
@@ -57,7 +57,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.227'
+    implementation 'com.applanga.android:Applanga:4.0.228'
 }
 ```
 
@@ -79,7 +79,7 @@ There are two different ways how to apply this plugin:
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.227'
+    id 'com.applanga.gradle' version '4.0.228'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -108,7 +108,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.227'
+        classpath  'com.applanga.gradle:plugin:4.0.228'
     }
 }
 ```
@@ -308,7 +308,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 4. **Preference Localization**
 
-    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.227 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
+    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.228 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
 
 	As an example, a working preference XML would look like this:
 	
@@ -442,7 +442,22 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     If you have problems switching to a specific language, you can update your Settings File or specifically request that language within an update content call (see **8. Update Content**). You can also define a default language to have it requested on each update call (see **Optional settings**).
 
-8. **WebViews**
+8. **Localize key for specific language**
+
+    It is possible to get a translation for a key regardless of the currently set language.
+    
+    ```Java
+    Applanga.getTranslation("APPLANGA_KEY", "de");
+    ```
+    
+    When using this method, it might be this language is not part of the original device language fallback.
+    If it is already known which languages will be used with this method,
+    it is best to include them in the Applanga.update call, to have the newest translations.
+    
+    You can use the AndroidManifest meta-data `ApplangaUpdateLanguages`, or directly add the languages to the [update call](#update-content).
+
+
+9. **WebViews**
 
     Applanga can also translate content in your WebViews. You have to enable JavaScript and pass your WebView to Applanga's `attachWebView(WebView webView)`:
 
@@ -470,7 +485,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     </script>
     ```
 
-    8.1 **Strings**
+    9.1 **Strings**
 
     The inner text and HTML of tags that have a `applanga-text=`"STRING_ID"``` attribute will be replaced with the translated value of ***STRING_ID***
 
@@ -482,7 +497,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     Alternatively, you can call `Applanga.getString('STRING_ID')` directly.
 
-    8.2 **Arguments**
+    9.2 **Arguments**
 
     You can pass arguments with the ```applanga-args``` attribute.
     By default, the arguments are parsed as a comma-separated list that will then replace fields as %{arrayIndex}.
@@ -521,7 +536,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
      Direct call : `Applanga.getString('STRING_ID', "{'arg1':'value1', 'arg2':'value2', 'arg3':'etc'}", 'json')`
 
-    8.3 **Pluralisation**
+    9.3 **Pluralisation**
 
     To pluralize an HTML tag you can pass the ```applanga-plural-rule``` attribute with the values `zero`, ```one```, ```two```, ```few```, ```many```, and ```other```.
 
@@ -545,7 +560,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     Direct call : `Applanga.getQuantityString('STRING_ID', 42)` or with arguments :     `applanga.getQuantityString('STRING_ID', 42, 'arg1;arg2;etc', ';')`
 
-    8.4 **Update Content**
+    9.4 **Update Content**
 
     To trigger a content update from a WebView use javascript:
 
@@ -555,7 +570,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     });
     ```
 
-9. **Draft Mode**
+10. **Draft Mode**
 
     To enable support for **Draft Mode** in your application, override the ```dispatchTouchEvent``` method in your targeted activity and forward the event to Applanga.dispatchTouchEvent. To enable Draft Mode, hold down six fingers for six seconds in this activity. A dialog will appear asking you to enter a key code. The code is the first four characters of your app secret and can be found in the Applanga project dashboard. If the key is correct, the application will switch to Draft Mode and quit, so you will need to restart it manually. The Draft Mode can be disabled in the same way it was enabled. Please be aware that not all Android devices support multitouch with six fingers.
 
@@ -574,7 +589,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```
 
 
-10. **Automatic Screenshot Upload**
+11. **Automatic Screenshot Upload**
 
      The Applanga SDK offers the functionality to upload screenshots of your app while collecting meta-data such as the current language, resolution and the Applanga translated strings that are visible, including their positions.
      Each screenshot will be assigned to a tag. A tag may have multiple screenshots with differing core meta-data (e.g. language, app version, device, platform, OS, and resolution).
@@ -583,7 +598,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
      **NOTE:** to capture screenshots the app needs permission to _“_Draw over other apps”. When you first try to make a screenshot, the app might redirect you to the permissions screen to enable it.
 
-     10.1 **Make screenshots manually**
+     11.1 **Make screenshots manually**
 
      To manually make a screenshot you first have to set your app into [Draft Mode](https://www.applanga.com/docs/applanga-mobile-sdks/draft_on-device-testing).
 
@@ -595,7 +610,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
      You can now choose a tag and press *capture screenshot* to capture and upload a screenshot (including all meta-data for the currently visible screen) and assign it to the selected tag.
      Tags have to be created in the dashboard before they are available in the screenshot menu.
 
-     10.2 **Display screenshot menu programmatically**
+     11.2 **Display screenshot menu programmatically**
 
      You also have the option to display the screenshot menu programmatically, this also requires the app to be in Draft Mode:
 
@@ -603,7 +618,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     Applanga.setScreenShotMenuVisible(true);
     ```
 
-     10.3 **Make screenshots programmatically**
+     11.3 **Make screenshots programmatically**
 
      To create a screenshot programmatically, call the following function:
 
@@ -617,7 +632,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
      The Applanga SDK will try to find all IDs on the screen, but you can also pass additional IDs in the **applangaIDs** parameter.
 
-     10.4 **Make screenshots during UITests**
+     11.4 **Make screenshots during UITests**
 
      To capture screenshots from UITests like Espresso, you just have to call the above function shown in ***Make screenshots programmatically*** while executing a test with Googles UITest frameworks. This function will also work in Draft Mode or debug mode.
 
@@ -635,7 +650,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     if `setIdModeEnabled` is set after showing a specific screen, you have to recreate the activity or set the flag before initializing your screen.
 
 
-     10.6 **OCR screenshots**
+     11.6 **OCR screenshots**
      
      The Applanga SDK automatically finds the tags of all texts on screen, but if for some reason a text isn't tagged or the SDK can't find the correct tag, you can take a screenshot programmatically using the `enableOcr` parameter like so:
 	```java
@@ -644,12 +659,12 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 	
 	Please note that in most cases, enabling OCR isn't necessary and will slow down the processing of screenshots for the dashboard, so please only use it if needed. If you need more information or have any questions, feel free to reach out to [support@applanga.com](support@applanga.com) or use the support chat in the bottom right corner of the website.
 
-11. **Multi-project setup**
+12. **Multi-project setup**
 
 	The multi-project setup is the same as described in the *Installation* section.
     You only have to add the SDK and the Applanga plugin to your module if the module contains translatable resources (string.xml or layout files), if it inflates layouts from other modules, or if you simply want to use the Applanga SDK for any reason. Otherwise, modules without the Applanga SDK and plugin remain untranslated. 
 
-12. **Custom ViewPump Initialization**
+13. **Custom ViewPump Initialization**
 
 	If you are already using [ViewPump](https://github.com/InflationX/ViewPump) in your app (i.e. [Calligraphy](https://github.com/InflationX/Calligraphy)) it is advised to initialize [ViewPump](https://github.com/InflationX/ViewPump) before `Applanga.init(...)` because that way all interceptors will stay active. If you need to initialize it at a later stage, please make sure to cache and re-add the existing interceptors as shown in the sample below.
 	
@@ -674,7 +689,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ViewPump.init(builder.build());
     ```
     
-13. **Unit Testing and Robolectric**
+14. **Unit Testing and Robolectric**
 
     When running Unit tests, Applanga only returns local resources.
     The Applanga plugin replaces all `getString()` calls with the Applanga SDK.
@@ -684,7 +699,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
     If you don't see the logs or encounter any other issues please contact us at [support@applanga.com](support@applanga.com) or use the support chat in the bottom right corner of the website
 
-14. **Get available languages**
+15. **Get available languages**
 
   	It is possible to get the list of languages that are currently part of a project:
   	
@@ -1007,3 +1022,6 @@ Every screenshot you take is linked to the current branch.
 Already published apps that still use Settings Files without branching and older SDKs will still work and they will use the "main" branch.
 
  
+## Library size
+
+**Total size**: 0.39 MB
