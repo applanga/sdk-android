@@ -6,6 +6,14 @@
 ***
 
 
+### Version 4.0.229 (30 Jan 2026)
+#### Fixed
+- getTranslationForLanguage fixed
+
+#### Added
+- support for TabLayout TabItem in XML Views
+
+---
 ### Version 4.0.228 (22 Jan 2026)
 #### Added
 - new methods to get translated values for keys in specific language
