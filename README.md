@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.229
+*Version:* 4.0.230
 
 *Website:* <https://www.applanga.com>
 
@@ -57,7 +57,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.229'
+    implementation 'com.applanga.android:Applanga:4.0.230'
 }
 ```
 
@@ -79,7 +79,7 @@ There are two different ways how to apply this plugin:
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.229'
+    id 'com.applanga.gradle' version '4.0.230'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -108,7 +108,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.229'
+        classpath  'com.applanga.gradle:plugin:4.0.230'
     }
 }
 ```
@@ -308,7 +308,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 4. **Preference Localization**
 
-    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.229 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
+    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.230 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
 
 	As an example, a working preference XML would look like this:
 	
@@ -447,7 +447,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     It is possible to get a translation for a key regardless of the currently set language.
     
     ```Java
-    Applanga.getTranslation("APPLANGA_KEY", "de");
+    Applanga.getTranslationForLanguage("APPLANGA_KEY", "de");
     ```
     
     When using this method, it might be this language is not part of the original device language fallback.

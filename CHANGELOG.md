@@ -6,6 +6,10 @@
 ***
 
 
+### Version 4.0.230 (12 Feb 2026)
+#### Fixed 
+- possible crash when update response contains null values
+
 ### Version 4.0.229 (30 Jan 2026)
 #### Fixed
 - getTranslationForLanguage fixed
