@@ -6,9 +6,13 @@
 ***
 
 
-### Version 4.0.230 (12 Feb 2026)
-#### Fixed 
+### Version 4.0.231 (5 Mar 2026)
+#### Fixed
 - possible crash when update response contains null values
+- fixing support for draft mode in landscape mode
+
+#### Improved
+- refactored TabLayout text handling to ensure proper handling of screenshots and tagging
 
 ### Version 4.0.229 (30 Jan 2026)
 #### Fixed
