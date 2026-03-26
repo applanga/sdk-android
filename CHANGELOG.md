@@ -6,7 +6,7 @@
 ***
 
 
-### Version 4.0.232 (13 Mar 2026)
+### Version 4.0.233 (26 Mar 2026)
 #### Improved
 - better logging for Toolbar inflation.
 
@@ -36,6 +36,9 @@
 #### Added
 - new methods to get translated values for keys in specific language
 - support for TabLayout.Tab.setText
+
+#### Fixed
+- limiting the length of tag names to 400 characters
 
 ---
 ### Version 4.0.227 (9 Jan 2026)
