@@ -6,6 +6,11 @@
 ***
 
 
+### Version 4.0.234 (27 Mar 2026)
+#### Improved
+- Better support for customviews and toolbars.
+
+---
 ### Version 4.0.233 (26 Mar 2026)
 #### Improved
 - better logging for Toolbar inflation.
