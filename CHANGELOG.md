@@ -6,6 +6,11 @@
 ***
 
 
+### Version 4.0.235 (16 Apr 2026)
+#### Improved
+- Enhanced diagnostics mechanism to simplify debugging and improve error reporting.
+
+---
 ### Version 4.0.234 (27 Mar 2026)
 #### Improved
 - Better support for customviews and toolbars.
