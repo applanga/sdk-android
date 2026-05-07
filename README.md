@@ -1,6 +1,6 @@
 # Applanga SDK for Android Localization
 ***
-*Version:* 4.0.235
+*Version:* 4.0.236
 
 *Website:* <https://www.applanga.com>
 
@@ -57,7 +57,7 @@ repositories {
     maven { url 'https://maven.applanga.com/'}
 }
 dependencies {
-    implementation 'com.applanga.android:Applanga:4.0.235'
+    implementation 'com.applanga.android:Applanga:4.0.236'
 }
 ```
 
@@ -79,7 +79,7 @@ There are two different ways how to apply this plugin:
 // $projectDir/app/build.gradle
 plugins {
     ...
-    id 'com.applanga.gradle' version '4.0.235'
+    id 'com.applanga.gradle' version '4.0.236'
 }
 ```
 Insert our Applanga maven repository to the `pluginManagement.repositories` section.
@@ -108,7 +108,7 @@ buildscript {
         maven { url 'https://maven.applanga.com/' }
     }
     dependencies {
-        classpath  'com.applanga.gradle:plugin:4.0.235'
+        classpath  'com.applanga.gradle:plugin:4.0.236'
     }
 }
 ```
@@ -308,7 +308,7 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
 
 4. **Preference Localization**
 
-    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.235 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
+    With the Applanga plugin, Preference Localization is mostly automated as of Applanga version 4.0.236 However, if you want to enable Preference localization, every `PreferenceItem` (including `PreferenceCategory`) must have a key. After a Preference has been localized, there will be a log output stating: "localize Preferences!".
 
 	As an example, a working preference XML would look like this:
 	
@@ -437,7 +437,11 @@ In [this example app](https://github.com/applanga/AndroidBasicUseCaseDemo), you 
     ```java
       Applanga.setLanguage(null);
     ```
-
+    
+    #### Note about `ApplangaCallback`: 
+    When OTA updates are disabled at the project level, the `onLocalizeFinished` callback will be called with `success = false` even if the language was applied correctly using local translations. This `success = false` should not be treated as a language change failure - it may simply indicate that the remote update step was skipped. In any case of failure, developers should always proceed with recreating the activity rather than blocking the flow or showing an error.
+    
+    
     The *language* parameter is expected in the format **[language]-[region]** or **language****_region** (the region is optional). Examples: "fr_CA", "en-us", "de".
 
     If you have problems switching to a specific language, you can update your Settings File or specifically request that language within an update content call (see **8. Update Content**). You can also define a default language to have it requested on each update call (see **Optional settings**).

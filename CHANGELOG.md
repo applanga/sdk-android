@@ -6,7 +6,7 @@
 ***
 
 
-### Version 4.0.235 (16 Apr 2026)
+### Version 4.0.236 (7 May 2026)
 #### Improved
 - Enhanced diagnostics mechanism to simplify debugging and improve error reporting.
 
