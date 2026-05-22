@@ -5,7 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.238 (22 May 2026)
+#### Fixed
+- Settingsfile partial extraction issue for offline apps
 
+---
 ### Version 4.0.236 (7 May 2026)
 #### Improved
 - Enhanced diagnostics mechanism to simplify debugging and improve error reporting.
