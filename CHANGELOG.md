@@ -5,6 +5,11 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
+### Version 4.0.239 (27 May 2026)
+#### Fixed
+- Placeholder conversion now runs properly after a settings file update.
+
+---
 ### Version 4.0.238 (22 May 2026)
 #### Fixed
 - Settingsfile partial extraction issue for offline apps
