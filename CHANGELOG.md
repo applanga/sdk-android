@@ -11,17 +11,13 @@
 #### Improved
 - Support for Android 16 (API 36). Apps do not need to raise their own compileSdk to use this release.
 - Enhanced emulator detection.
-- Livestream string detection (AL-9653): values that are exactly an invisible id are recognized; livestream edits accept any translation key (plurals included) via a new base64 key extra; livestream hints keep their invisible id during a session so they resolve.
 - Enhanced update calls in draft mode.
 - Minor internal improvements.
 #### Added
 - Jetpack Compose `pluralStringResource` calls are now localized by Applanga, like `stringResource` and `stringArrayResource` already were. Plurals Applanga has no translation for yet fall back to the local `<plurals>` resource.
-- Livestream resolve-assist: the Appium runner can reverse-resolve plain on-screen strings (e.g. Jetpack Compose) to translation keys over an ordered-broadcast RPC on the existing liveedit action; the lookup is draft-aware, so it matches the values actually displayed during a livestream session.
-- Livestream detection now recognizes interpolated strings (e.g. "5 items"), Jetpack Compose and React Native text via a render-time key/value map captured during a session — text the reverse database lookup cannot match on its own.
 #### Fixed
 - Outdated languages are now cleaned up properly after a settings file update.
 - Repeated SDK initialization (e.g. after a language change) no longer accumulates duplicate module entries.
-- Livestream no longer highlights non-translatable strings (`translatable="false"` resources such as arrow glyphs): only keys that are synced or in the build-time allow-list are published to the accessibility tree or returned by resolve-assist (AL-9730).
 - Applanga.update() callback on startup is optimized for apps with many modules.
 
 ---
