@@ -5,7 +5,249 @@
 *Applanga Android Documentation:* <https://www.applanga.com/docs-integration/android> 
 ***
 
-### Version 4.0.240 (24 Nov 2026)
+### Version 4.0.241 (24 Nov 2026)
+#### Changed
+- The Applanga Gradle plugin no longer supports the Android Gradle Plugin below 8.1. Projects that are still using AGP 7.x should keep using Applanga 4.0.239 or older until they upgrade their Android Gradle Plugin.
+#### Improved
+- Support for Android 16 (API 36). Apps do not need to raise their own compileSdk to use this release.
+- Enhanced emulator detection.
+- Livestream string detection (AL-9653): values that are exactly an invisible id are recognized; livestream edits accept any translation key (plurals included) via a new base64 key extra; livestream hints keep their invisible id during a session so they resolve.
+- Enhanced update calls in draft mode.
+- Minor internal improvements.
+#### Added
+- Jetpack Compose `pluralStringResource` calls are now localized by Applanga, like `stringResource` and `stringArrayResource` already were. Plurals Applanga has no translation for yet fall back to the local `<plurals>` resource.
+- Livestream resolve-assist: the Appium runner can reverse-resolve plain on-screen strings (e.g. Jetpack Compose) to translation keys over an ordered-broadcast RPC on the existing liveedit action; the lookup is draft-aware, so it matches the values actually displayed during a livestream session.
+- Livestream detection now recognizes interpolated strings (e.g. "5 items"), Jetpack Compose and React Native text via a render-time key/value map captured during a session — text the reverse database lookup cannot match on its own.
+#### Fixed
+- Outdated languages are now cleaned up properly after a settings file update.
+- Repeated SDK initialization (e.g. after a language change) no longer accumulates duplicate module entries.
+- Livestream no longer highlights non-translatable strings (`translatable="false"` resources such as arrow glyphs): only keys that are synced or in the build-time allow-list are published to the accessibility tree or returned by resolve-assist (AL-9730).
+
+---
+### Version 4.0.239 (27 May 2026)
+#### Fixed
+- Placeholder conversion now runs properly after a settings file update.
+
+---
+### Version 4.0.238 (22 May 2026)
+#### Fixed
+- Settingsfile partial extraction issue for offline apps
+
+---
+### Version 4.0.236 (7 May 2026)
+#### Improved
+- Enhanced diagnostics mechanism to simplify debugging and improve error reporting.
+
+---
+### Version 4.0.234 (27 Mar 2026)
+#### Improved
+- Better support for customviews and toolbars.
+
+---
+### Version 4.0.233 (26 Mar 2026)
+#### Improved
+- better logging for Toolbar inflation.
+
+---
+### Version 4.0.231 (5 Mar 2026)
+#### Fixed
+- fixing support for draft mode in landscape mode
+
+#### Improved
+- refactored TabLayout text handling to ensure proper handling of screenshots and tagging
+
+---
+### Version 4.0.230 (12 Feb 2026)
+#### Fixed
+- possible crash when update response contains null values
+
+---
+### Version 4.0.229 (30 Jan 2026)
+#### Fixed
+- getTranslationForLanguage fixed
+
+#### Added
+- support for TabLayout TabItem in XML Views
+
+---
+### Version 4.0.228 (22 Jan 2026)
+#### Added
+- new methods to get translated values for keys in specific language
+- support for TabLayout.Tab.setText
+
+#### Fixed
+- limiting the length of tag names to 400 characters
+
+---
+### Version 4.0.227 (9 Jan 2026)
+#### Fixed
+- crash with custom setText method in Fragments
+
+---
+### Version 4.0.226 (18 Dec 2025)
+#### Fixed
+- crash with custom setText method in Fragments
+
+### Version 4.0.226 (18 Dec 2025)
+#### Fixed
+- keys might remain tagged when uploading new keys for same tag
+
+---
+### Version 4.0.225 (12 Dec 2025)
+#### Fixed
+- race condition crashes at build time
+- crash when overriding setString in class inheriting from AppCompatEditText
+
+---
+### Version 4.0.224 (20 Nov 2025)
+#### Added
+- draft overlay position and visibility controls
+
+---
+### Version 4.0.222 (30 Oct 2025)
+#### Fixed
+- placeholder conversion while being in Draft Mode
+- skip string detection for hidden views (visibilty set to gone) while capturing screenshots
+
+#### Added
+- support for dynamic menu creation
+- support for tooltipText in menus
+
+---
+### Version 4.0.221 (14 Oct 2025)
+#### Fixed
+- applanga settings file update task failed when using gradle configuration cache
+- tag local strings did not tag all tags from all modules
+
+---
+### Version 4.0.219 (18 Sep 2025)
+#### Fixed
+- improved screenshot string position matching
+- BottomAppBar not fully localized
+- action bar title not localized when using setupActionBarWithNavController
+
+---
+### Version 4.0.218 (12 Sep 2025)
+#### Fixed
+- minor bug fixes
+
+---
+### Version 4.0.217 (17 Jul 2025)
+#### Fixed
+- missing string upload with non transitive R classes
+- navigation controller title translation for some edge cases
+
+---
+### Version 4.0.216 (5 Jun 2025)
+#### Fixed
+- fixed issues for custom views using customView.setText(int id)
+
+#### Added
+- general security checks
+- improved dev experience when working with different settings files linked to different projects on one device
+
+---
+### Version 4.0.215 (24 Apr 2025)
+#### Fixed
+- NullPointerException while parsing failed requests
+
+#### Added
+- increased minSDK version to 21
+
+---
+### Version 4.0.214 (23 Jan 2025)
+#### Added
+- smaller bugfixes and internal performance improvements 
+
+---
+### Version 4.0.213 (12 Dec 2024)
+#### Fixed
+- gradle 8 build issue for submodules
+
+---
+### Version 4.0.212 (10 Dec 2024)
+#### Fixed
+- improved internal requests
+
+---
+### Version 4.0.210 (29 Nov 2024)
+#### Added
+- improved screenshot algorithm
+
+---
+### Version 4.0.209 (21 Nov 2024)
+#### Added
+- added additional checks for system apps
+
+#### Fixed
+- missing string upload for release builds
+
+---
+### Version 4.0.207 (13 Nov 2024)
+#### Added
+- internal exception logging
+- applanga sdk + plugin version warnings
+
+---
+### Version 4.0.202 (8 May 2024)
+#### Fixed
+- setHint NullPointerException
+
+---
+### Version 4.0.201 (18 Apr 2024)
+#### Added
+- public method to retrieve available languages on the dashboard
+
+---
+### Version 4.0.200 (12 Mar 2024)
+#### Added
+- improved Appium Screenshot support
+- gradle configuration cache support
+
+---
+#### Fixed
+- removed unnecessary warnings for Flutter and React-Native builds
+- missing string upload on windows machines
+
+---
+### Version 4.0.199 (25 Jan 2024)
+#### Added
+- shrinked very first Applanga.update() response
+- smaller general code optimizations
+
+#### Fixed
+- fixed possible caching issues
+
+---
+### Version 4.0.197 (7 Dec 2023)
+#### Fixed
+- workaround for specific androidx version bug: IllegalArgumentException in LocaleList
+- setLanguage persistency issue
+
+---
+### Version 4.0.196 (10 Nov 2023)
+#### Fixed
+- NullPointerException for specific AndroidManifest configurations 
+- reduced AAR size by removing accidentally added test resources 
+
+---
+### Version 4.0.195 (12 Oct 2023)
+#### Added
+- option for system language fallback
+- more performant settings file handling
+- option for custom fallbacks
+- option for local string tagging in draft mode
+
+#### Fixed
+- new language on the dashboard sync on first app start
+
+---
+### Version 4.0.194 (20 Jul 2023)
+#### Added
+- branching support for Flutter and React-Native 
+
+--- 
+### Version 4.0.193 (29 Jun 2023)
 #### Fixed
 - fixed name collisions for applanga_meta if modules (or sub/sub-sub-modules) have the same name
 #### Added 
